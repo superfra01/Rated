@@ -1,1 +1,5 @@
 3.2.1 sospensione degli utenti: il moderatore devo solo rimuovere le recenzioni o anche sospendere gli account?
+
+
+RAD
+use case degli utenti: visualizza catalogo extend o include visualizza film?
