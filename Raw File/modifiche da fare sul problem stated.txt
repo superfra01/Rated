@@ -4,4 +4,3 @@ Aggiungere la possibilità di visualizzare gli altri utenti a tutti gli "utenti"
 
 Modifiche requirement analysis:
 Fare l'indice
-Togliere UC12 e al suo posto mettere: Aggiunta film, Rimozione film, modifica film.
