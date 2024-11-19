@@ -2,4 +2,4 @@
 
 
 RAD
-use case degli utenti: visualizza catalogo extend o include visualizza film?
+come possiamo gestire i report? va creata una relazione tra utente e recensione?
