@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/25.0.2 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="25.0.2">
   <diagram name="Page-1" id="2YBvvXClWsGukQMizWep">
-    <mxGraphModel dx="862" dy="426" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1034" dy="511" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -32,10 +32,16 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="_Ce9uf1wOAP1MZpKsaxj-17" value=":Catalogo_Boundary" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="1" vertex="1">
-          <mxGeometry x="550" y="410" width="140" height="300" as="geometry" />
+          <mxGeometry x="560" y="410" width="140" height="300" as="geometry" />
         </mxCell>
         <mxCell id="_Ce9uf1wOAP1MZpKsaxj-23" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="_Ce9uf1wOAP1MZpKsaxj-17" vertex="1">
           <mxGeometry x="65" y="50" width="10" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="EzrTpVOWXjxOWBj55a4b-4" value="showCatalogo(films)" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;entryX=0;entryY=0.067;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="_Ce9uf1wOAP1MZpKsaxj-10" target="_Ce9uf1wOAP1MZpKsaxj-17" edge="1">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="370" y="570" as="sourcePoint" />
+            <mxPoint x="450" y="570" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="EzrTpVOWXjxOWBj55a4b-6" value="GetFilms()" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="1" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
@@ -57,13 +63,6 @@
         </mxCell>
         <mxCell id="EzrTpVOWXjxOWBj55a4b-9" value="" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};participant=umlActor;" parent="1" vertex="1">
           <mxGeometry x="60" y="240" width="20" height="300" as="geometry" />
-        </mxCell>
-        <mxCell id="3g_ueOu1PGlt0KmzWCwc-1" value="createCatalogo(films)" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1">
-          <mxGeometry x="0.0323" y="10" width="160" relative="1" as="geometry">
-            <mxPoint x="370" y="430" as="sourcePoint" />
-            <mxPoint x="550" y="430" as="targetPoint" />
-            <mxPoint as="offset" />
-          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
