@@ -1,0 +1,76 @@
+<mxfile host="app.diagrams.net" modified="2025-01-02T18:37:30.799Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" etag="8JiQc94HfWzaoXJZKGJJ" version="24.6.4" type="device">
+  <diagram name="Pagina-1" id="o4DtswbN1K1owY70Qp4d">
+    <mxGraphModel dx="779" dy="616" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="gzilah3jmk4_1WQa3hfa-3" value="" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};participant=umlActor;" vertex="1" parent="1">
+          <mxGeometry x="70" y="170" width="20" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="gzilah3jmk4_1WQa3hfa-4" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="gzilah3jmk4_1WQa3hfa-3">
+          <mxGeometry x="5" y="60" width="10" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="gzilah3jmk4_1WQa3hfa-6" value=":Film_Boundary" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="1">
+          <mxGeometry x="160" y="160" width="116" height="310" as="geometry" />
+        </mxCell>
+        <mxCell id="gzilah3jmk4_1WQa3hfa-7" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="gzilah3jmk4_1WQa3hfa-6">
+          <mxGeometry x="53" y="70" width="10" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="gzilah3jmk4_1WQa3hfa-23" value="" style="shape=umlDestroy;whiteSpace=wrap;html=1;strokeWidth=3;targetShapes=umlLifeline;" vertex="1" parent="gzilah3jmk4_1WQa3hfa-6">
+          <mxGeometry x="43" y="180" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="gzilah3jmk4_1WQa3hfa-9" value="clickUserName()" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="85" y="270" as="sourcePoint" />
+            <mxPoint x="217.5" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gzilah3jmk4_1WQa3hfa-16" value=":Utenti_Control" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="1">
+          <mxGeometry x="340" y="160" width="110" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="gzilah3jmk4_1WQa3hfa-19" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="gzilah3jmk4_1WQa3hfa-16">
+          <mxGeometry x="50" y="110" width="10" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="gzilah3jmk4_1WQa3hfa-17" value="getUserProfile(username)" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="220" y="280" as="sourcePoint" />
+            <mxPoint x="389.5" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gzilah3jmk4_1WQa3hfa-18" value=":Registro_Utenti" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="1">
+          <mxGeometry x="510" y="160" width="100" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="gzilah3jmk4_1WQa3hfa-22" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="gzilah3jmk4_1WQa3hfa-18">
+          <mxGeometry x="45" y="110" width="10" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gzilah3jmk4_1WQa3hfa-20" value="getUtente(username)" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1" target="gzilah3jmk4_1WQa3hfa-18">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="400" y="290" as="sourcePoint" />
+            <mxPoint x="470" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gzilah3jmk4_1WQa3hfa-21" value="User_Info" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;" edge="1" parent="1" target="gzilah3jmk4_1WQa3hfa-16">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="560" y="330" as="sourcePoint" />
+            <mxPoint x="480" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gzilah3jmk4_1WQa3hfa-24" value="showUserProfilePage(User_Info)" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="400" y="380" as="sourcePoint" />
+            <mxPoint x="650" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gzilah3jmk4_1WQa3hfa-26" value=":UserProfile_Boundary" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="1">
+          <mxGeometry x="650" y="360" width="130" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="gzilah3jmk4_1WQa3hfa-27" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="gzilah3jmk4_1WQa3hfa-26">
+          <mxGeometry x="60" y="50" width="10" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gzilah3jmk4_1WQa3hfa-28" value="Utente&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="52" y="140" width="60" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
