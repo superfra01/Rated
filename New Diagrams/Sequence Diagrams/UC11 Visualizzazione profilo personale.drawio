@@ -43,13 +43,13 @@
         <mxCell id="gzilah3jmk4_1WQa3hfa-22" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="gzilah3jmk4_1WQa3hfa-18" vertex="1">
           <mxGeometry x="65" y="115" width="10" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="gzilah3jmk4_1WQa3hfa-20" value="getRecensioni" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="1" target="gzilah3jmk4_1WQa3hfa-22" edge="1">
+        <mxCell id="gzilah3jmk4_1WQa3hfa-20" value="getRecensioniUtente()" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="1" target="gzilah3jmk4_1WQa3hfa-22" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
             <mxPoint x="400" y="290" as="sourcePoint" />
             <mxPoint x="470" y="290" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gzilah3jmk4_1WQa3hfa-21" value="recensioni" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;" parent="1" edge="1" source="gzilah3jmk4_1WQa3hfa-22">
+        <mxCell id="gzilah3jmk4_1WQa3hfa-21" value="recensioni" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;" parent="1" source="gzilah3jmk4_1WQa3hfa-22" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="565.5" y="330" as="sourcePoint" />
             <mxPoint x="400" y="330" as="targetPoint" />
@@ -64,7 +64,7 @@
         <mxCell id="gzilah3jmk4_1WQa3hfa-28" value="Utente Recensore" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="50" y="140" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="lEvvQnDW6HwQnRVdpPCO-2" value="showUserProfilePage(user, recensioni)" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="gzilah3jmk4_1WQa3hfa-19">
+        <mxCell id="lEvvQnDW6HwQnRVdpPCO-2" value="showUserProfilePage(user, recensioni)" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" parent="1" source="gzilah3jmk4_1WQa3hfa-19" edge="1">
           <mxGeometry y="10" width="160" relative="1" as="geometry">
             <mxPoint x="460" y="390" as="sourcePoint" />
             <mxPoint x="670" y="390" as="targetPoint" />
