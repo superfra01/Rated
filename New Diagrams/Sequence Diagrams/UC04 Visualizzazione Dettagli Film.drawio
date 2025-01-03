@@ -5,10 +5,10 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="gqs00I4YRgpX0SxIWQAl-1" value="" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};participant=umlActor;" parent="1" vertex="1">
-          <mxGeometry x="60" y="40" width="25" height="300" as="geometry" />
+          <mxGeometry x="60" y="40" width="25" height="420" as="geometry" />
         </mxCell>
         <mxCell id="gqs00I4YRgpX0SxIWQAl-6" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="gqs00I4YRgpX0SxIWQAl-1" vertex="1">
-          <mxGeometry x="7.5" y="50" width="10" height="180" as="geometry" />
+          <mxGeometry x="7.5" y="50" width="10" height="330" as="geometry" />
         </mxCell>
         <mxCell id="gqs00I4YRgpX0SxIWQAl-2" value=":Film" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="1" vertex="1">
           <mxGeometry x="550" y="40" width="100" height="300" as="geometry" />
@@ -83,12 +83,18 @@
         <mxCell id="gqs00I4YRgpX0SxIWQAl-29" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="gqs00I4YRgpX0SxIWQAl-27" vertex="1">
           <mxGeometry x="45" y="50" width="10" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="KCKTgaGlRNXpbUZ3kqbI-1" value="CreateFilm(film, recensioni)" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="gqs00I4YRgpX0SxIWQAl-9">
+        <mxCell id="KCKTgaGlRNXpbUZ3kqbI-1" value="CreateFilm(film, recensioni)" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" parent="1" source="gqs00I4YRgpX0SxIWQAl-9" edge="1">
           <mxGeometry y="10" width="160" relative="1" as="geometry">
             <mxPoint x="345" y="240" as="sourcePoint" />
             <mxPoint x="660" y="240" as="targetPoint" />
             <mxPoint as="offset" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="U1-n7gbLK0Uk885jhh_d-1" value="Text" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="390" y="80" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="U1-n7gbLK0Uk885jhh_d-2" value="Utente" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="42.5" y="20" width="60" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
