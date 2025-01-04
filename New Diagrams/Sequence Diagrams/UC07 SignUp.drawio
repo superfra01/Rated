@@ -1,6 +1,6 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/25.0.2 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="25.0.2">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.3 Chrome/130.0.6723.137 Electron/33.2.1 Safari/537.36" version="26.0.3">
   <diagram name="Page-1" id="2YBvvXClWsGukQMizWep">
-    <mxGraphModel dx="1034" dy="511" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1020" dy="496" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -14,10 +14,10 @@
           <mxGeometry x="55" y="110" width="30" height="30" as="geometry" />
         </mxCell>
         <mxCell id="10zAAHeCgwnA3tIotYlX-4" value="" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};participant=umlActor;" parent="1" vertex="1">
-          <mxGeometry x="40" y="40" width="20" height="300" as="geometry" />
+          <mxGeometry x="40" y="40" width="20" height="590" as="geometry" />
         </mxCell>
         <mxCell id="10zAAHeCgwnA3tIotYlX-8" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="10zAAHeCgwnA3tIotYlX-4" vertex="1">
-          <mxGeometry x="5" y="50" width="10" height="230" as="geometry" />
+          <mxGeometry x="5" y="50" width="10" height="490" as="geometry" />
         </mxCell>
         <mxCell id="10zAAHeCgwnA3tIotYlX-5" value="Utente Guest" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="20" y="10" width="60" height="30" as="geometry" />
@@ -56,6 +56,9 @@
           <mxGeometry width="80" relative="1" as="geometry">
             <mxPoint x="275" y="250" as="sourcePoint" />
             <mxPoint x="355" y="250" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="140" y="210" />
+            </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="10zAAHeCgwnA3tIotYlX-20" value="submit()" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="1" target="10zAAHeCgwnA3tIotYlX-15" edge="1">
@@ -125,7 +128,7 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="_ByZHPxXr-Ih_yTNb9HZ-6" value="Verifica Dati" style="html=1;align=left;spacingLeft=2;endArrow=block;rounded=0;edgeStyle=orthogonalEdgeStyle;curved=0;rounded=0;" parent="1" target="10zAAHeCgwnA3tIotYlX-21" edge="1">
+        <mxCell id="CbgyPezi7PSFHmorDOJw-2" value="Verifica Dati" style="html=1;align=left;spacingLeft=2;endArrow=block;rounded=0;edgeStyle=orthogonalEdgeStyle;curved=0;rounded=0;" edge="1" target="10zAAHeCgwnA3tIotYlX-21" parent="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="320" y="280" as="sourcePoint" />
             <Array as="points">
