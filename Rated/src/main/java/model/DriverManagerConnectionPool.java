@@ -22,7 +22,7 @@ public class DriverManagerConnectionPool {
 	
 	private static Connection createDBConnection() throws SQLException {
 		Connection newConnection = null;
-		String db = "GourmetSpicesDB";
+		String db = "RatedDB";
 		String username = "root";
 		String password = "root";
 
