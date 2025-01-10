@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rated - About Us</title>
-    <link rel="stylesheet" href="src/main/webapp/static/css/homepage.css">
+    <link rel="stylesheet" href="src/main/webapp/static/css/HomePage.css">
 </head>
 <body>
     <header>
