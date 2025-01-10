@@ -26,7 +26,7 @@ public class ValutazioneDAO {
         }
     }
 
-    public void save(ValutazioneBean valutazione) throws SQLException {
+    public void save(ValutazioneBean valutazione) {
         String query = "INSERT INTO Valutazione (likeDislike, email, emailRecensore, idFilm) VALUES (?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -35,10 +35,12 @@ public class ValutazioneDAO {
             ps.setString(3, valutazione.getEmailRecensore());
             ps.setInt(4, valutazione.getIdFilm());
             ps.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public ValutazioneBean findById(String email, String emailRecensore, int idFilm) throws SQLException {
+    public ValutazioneBean findById(String email, String emailRecensore, int idFilm) {
         String query = "SELECT * FROM Valutazione WHERE email = ? AND emailRecensore = ? AND idFilm = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -55,11 +57,13 @@ public class ValutazioneDAO {
                     return valutazione;
                 }
             }
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
 
-    public void delete(String email, String emailRecensore, int idFilm) throws SQLException {
+    public void delete(String email, String emailRecensore, int idFilm) {
         String query = "DELETE FROM Valutazione WHERE email = ? AND emailRecensore = ? AND idFilm = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -67,6 +71,8 @@ public class ValutazioneDAO {
             ps.setString(2, emailRecensore);
             ps.setInt(3, idFilm);
             ps.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

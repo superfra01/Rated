@@ -26,7 +26,7 @@ public class UtenteDAO {
         }
     }
 
-    public void save(UtenteBean utente) throws SQLException {
+    public void save(UtenteBean utente) {
         String query = "INSERT INTO Utente (email, icona, username, password, tipoUtente, nWarning) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -37,10 +37,12 @@ public class UtenteDAO {
             ps.setString(5, utente.getTipoUtente());
             ps.setInt(6, utente.getNWarning());
             ps.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public UtenteBean findByEmail(String email) throws SQLException {
+    public UtenteBean findByEmail(String email) {
         String query = "SELECT * FROM Utente WHERE email = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -57,11 +59,35 @@ public class UtenteDAO {
                     return utente;
                 }
             }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public UtenteBean findByUsername(String username) {
+        String query = "SELECT * FROM Utente WHERE username = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    UtenteBean user = new UtenteBean();
+                    user.setUsername(rs.getString("username"));
+                    user.setEmail(rs.getString("email"));
+                    user.setPassword(rs.getString("password"));
+                    user.setTipoUtente(rs.getString("tipoUtente"));
+                    user.setIcona(rs.getBytes("icona"));
+                    user.setNWarning(rs.getInt("nWarning"));
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
 
-    public List<UtenteBean> findAll() throws SQLException {
+    public List<UtenteBean> findAll() {
         String query = "SELECT * FROM Utente";
         List<UtenteBean> utenti = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
@@ -77,11 +103,13 @@ public class UtenteDAO {
                 utente.setNWarning(rs.getInt("nWarning"));
                 utenti.add(utente);
             }
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
         return utenti;
     }
 
-    public void update(UtenteBean utente) throws SQLException {
+    public void update(UtenteBean utente) {
         String query = "UPDATE Utente SET icona = ?, username = ?, password = ?, tipoUtente = ?, nWarning = ? WHERE email = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -92,15 +120,19 @@ public class UtenteDAO {
             ps.setInt(5, utente.getNWarning());
             ps.setString(6, utente.getEmail());
             ps.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public void delete(String email) throws SQLException {
+    public void delete(String email) {
         String query = "DELETE FROM Utente WHERE email = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, email);
             ps.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

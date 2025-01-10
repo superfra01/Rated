@@ -26,7 +26,7 @@ public class ReportDAO {
         }
     }
 
-    public void save(ReportBean report) throws SQLException {
+    public void save(ReportBean report) {
         String query = "INSERT INTO Report (email, emailRecensore, idFilm) VALUES (?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -34,10 +34,12 @@ public class ReportDAO {
             ps.setString(2, report.getEmailRecensore());
             ps.setInt(3, report.getIdFilm());
             ps.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public ReportBean findById(String email, String emailRecensore, int idFilm) throws SQLException {
+    public ReportBean findById(String email, String emailRecensore, int idFilm) {
         String query = "SELECT * FROM Report WHERE email = ? AND emailRecensore = ? AND idFilm = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -53,11 +55,13 @@ public class ReportDAO {
                     return report;
                 }
             }
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
 
-    public void delete(String email, String emailRecensore, int idFilm) throws SQLException {
+    public void delete(String email, String emailRecensore, int idFilm) {
         String query = "DELETE FROM Report WHERE email = ? AND emailRecensore = ? AND idFilm = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -65,6 +69,8 @@ public class ReportDAO {
             ps.setString(2, emailRecensore);
             ps.setInt(3, idFilm);
             ps.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

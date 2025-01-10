@@ -26,7 +26,7 @@ public class FilmDAO {
         }
     }
 
-    public void save(FilmBean film) throws SQLException {
+    public void save(FilmBean film) {
         String query = "INSERT INTO Film (idFilm, locandina, nome, anno, durata, generi, regista, attori) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -39,10 +39,12 @@ public class FilmDAO {
             ps.setString(7, film.getRegista());
             ps.setString(8, film.getAttori());
             ps.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public FilmBean findById(int idFilm) throws SQLException {
+    public FilmBean findById(int idFilm) {
         String query = "SELECT * FROM Film WHERE idFilm = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -61,11 +63,13 @@ public class FilmDAO {
                     return film;
                 }
             }
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
 
-    public List<FilmBean> findAll() throws SQLException {
+    public List<FilmBean> findAll() {
         String query = "SELECT * FROM Film";
         List<FilmBean> films = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
@@ -83,11 +87,13 @@ public class FilmDAO {
                 film.setAttori(rs.getString("attori"));
                 films.add(film);
             }
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
         return films;
     }
 
-    public void update(FilmBean film) throws SQLException {
+    public void update(FilmBean film) {
         String query = "UPDATE Film SET locandina = ?, nome = ?, anno = ?, durata = ?, generi = ?, regista = ?, attori = ? WHERE idFilm = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -100,15 +106,19 @@ public class FilmDAO {
             ps.setString(7, film.getAttori());
             ps.setInt(8, film.getIdFilm());
             ps.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public void delete(int idFilm) throws SQLException {
+    public void delete(int idFilm) {
         String query = "DELETE FROM Film WHERE idFilm = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, idFilm);
             ps.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

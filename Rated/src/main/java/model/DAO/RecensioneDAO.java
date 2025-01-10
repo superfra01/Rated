@@ -26,7 +26,7 @@ public class RecensioneDAO {
         }
     }
 
-    public void save(RecensioneBean recensione) throws SQLException {
+    public void save(RecensioneBean recensione) {
         String query = "INSERT INTO Recensione (titolo, contenuto, valutazione, nLike, nDislike, nReports, email, idFilm) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -39,10 +39,12 @@ public class RecensioneDAO {
             ps.setString(7, recensione.getEmail());
             ps.setInt(8, recensione.getIdFilm());
             ps.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public RecensioneBean findById(String email, int idFilm) throws SQLException {
+    public RecensioneBean findById(String email, int idFilm)  {
         String query = "SELECT * FROM Recensione WHERE email = ? AND idFilm = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -62,6 +64,8 @@ public class RecensioneDAO {
                     return recensione;
                 }
             }
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
