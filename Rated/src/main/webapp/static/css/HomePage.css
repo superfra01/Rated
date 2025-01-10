@@ -6,46 +6,6 @@ body {
     text-align: center;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #1f1f1f;
-}
-
-header .logo {
-    display: flex;
-    align-items: center;
-}
-
-header .logo img {
-    height: 40px;
-    margin-right: 10px;
-}
-
-header .logo span {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-header .search-bar {
-    flex-grow: 1;
-    margin: 0 20px;
-}
-
-header .search-bar input {
-    width: 100%;
-    padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-header .user-icon a {
-    text-decoration: none;
-    color: white;
-}
-
 main {
     padding: 50px 20px;
 }
@@ -53,15 +13,29 @@ main {
 .about-container {
     max-width: 800px;
     margin: 0 auto;
+    text-align: center;
 }
 
 .about-container .logo-large {
-    width: 150px;
-    margin-bottom: 20px;
+    width: 350px; 
 }
 
 .about-container .description {
     font-size: 18px;
     line-height: 1.6;
     color: #ccc;
+    margin-bottom: 30px;
 }
+
+.catalogue-button {
+    padding: 10px 20px;
+    background-color: #ff4c4c; 
+    border: none;   
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;}
+    
+.catalogue-button:hover {
+	background-color: #e60000;}
