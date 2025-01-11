@@ -6,7 +6,6 @@ import java.util.List;
 
 import model.DAO.RecensioneDAO;
 import model.Entity.RecensioneBean;
-import model.Entity.UtenteBean;
 
 public class RecensioniService {
     private RecensioneDAO RecensioneDAO;

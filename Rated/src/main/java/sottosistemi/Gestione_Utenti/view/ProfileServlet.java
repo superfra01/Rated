@@ -2,14 +2,18 @@ package sottosistemi.Gestione_Utenti.view;
 
 
 import model.Entity.UtenteBean;
+import model.Entity.ValutazioneBean;
+import model.Entity.FilmBean;
 import model.Entity.RecensioneBean;
 import sottosistemi.Gestione_Utenti.service.AutenticationService;
 import sottosistemi.Gestione_Utenti.service.ProfileService;
+import sottosistemi.Gestione_Film.service.CatalogoService;
 import sottosistemi.Gestione_Recensioni.service.RecensioniService;
 import utilities.FieldValidator;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,12 +35,20 @@ public class ProfileServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	HttpSession session = request.getSession(true);
-    	UtenteBean user = (UtenteBean) session.getAttribute("user");
+    	UtenteBean user = (UtenteBean) session.getAttribute("visitedUser");
         if(user!=null) {
         	
-        	RecensioniService RecensoniService = new RecensioniService();
-        	List<RecensioneBean> recensioni = RecensoniService.FindRecensioni(user.getEmail());
+        	RecensioniService RecensioniService = new RecensioniService();
+        	List<RecensioneBean> recensioni = RecensioniService.FindRecensioni(user.getEmail());
         	session.setAttribute("recensioni", recensioni);
+        	HashMap<Integer, FilmBean> FilmMap = new HashMap<>();
+        	for(RecensioneBean Recensione:recensioni) {
+        		CatalogoService CatalogoService = new CatalogoService();
+        		int key = Recensione.getIdFilm();
+        		FilmBean Film = CatalogoService.getFilm(key);
+        		FilmMap.put(key, Film);
+        	}
+        	session.setAttribute("films", FilmMap);
         	request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(request, response);	
         }else {
         	response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -85,6 +97,9 @@ public class ProfileServlet extends HttpServlet {
     		HttpSession session = request.getSession(true);
     		String email = ((UtenteBean)session.getAttribute("user")).getEmail();
     		int ID_Film = (int) session.getAttribute("DeleteFilmID");
+    		
+    		RecensioniService RecensioniService = new RecensioniService();
+    		RecensioniService.deleteRecensione(email, ID_Film);
     		
     		response.sendRedirect(request.getContextPath() + "/profile");
     	}

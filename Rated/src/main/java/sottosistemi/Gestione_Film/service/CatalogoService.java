@@ -1,4 +1,4 @@
-package sottosistemi.Gestione_Recensioni.service;
+package sottosistemi.Gestione_Film.service;
 
 import model.DAO.FilmDAO;
 
