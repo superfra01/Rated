@@ -68,6 +68,32 @@ public class FilmDAO {
         }
         return null;
     }
+    
+    public List<FilmBean> findByName(String name) {
+        String query = "SELECT * FROM Film WHERE nome LIKE ?";
+        List<FilmBean> films = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, name + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    FilmBean film = new FilmBean();
+                    film.setIdFilm(rs.getInt("idFilm"));
+                    film.setLocandina(rs.getBytes("locandina"));
+                    film.setNome(rs.getString("nome"));
+                    film.setAnno(rs.getInt("anno"));
+                    film.setDurata(rs.getInt("durata"));
+                    film.setGeneri(rs.getString("generi"));
+                    film.setRegista(rs.getString("regista"));
+                    film.setAttori(rs.getString("attori"));
+                    films.add(film);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return films;
+    }
 
     public List<FilmBean> findAll() {
         String query = "SELECT * FROM Film";

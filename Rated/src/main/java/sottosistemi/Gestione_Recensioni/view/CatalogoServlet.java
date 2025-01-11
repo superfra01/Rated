@@ -1,4 +1,5 @@
-package sottosistemi.Gestione_Utenti.view;
+package sottosistemi.Gestione_Recensioni.view;
+
 
 
 import model.Entity.UtenteBean;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebServlet("/profile")
-public class ProfileServlet extends HttpServlet {
+public class CatalogoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProfileService ProfileService;
 
