@@ -64,7 +64,7 @@
         <%
             for (FilmBean film : films) {
                 // Costruiamo un url di dettaglio, ad esempio film.jsp?id=...
-                String dettaglioUrl = "film.jsp?id=" + film.getIdFilm();
+                String dettaglioUrl = "film.jsp?idFilm=" + film.getIdFilm();
         %>
             <div class="film-card" onclick="window.location.href='<%=dettaglioUrl%>'">
                 <!-- Se volessi mostrare la locandina come immagine, potresti voler usare un
