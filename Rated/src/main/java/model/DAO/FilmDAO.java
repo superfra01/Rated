@@ -27,7 +27,7 @@ public class FilmDAO {
     }
 
     public void save(FilmBean film) {
-        String query = "INSERT INTO Film (idFilm, locandina, nome, anno, durata, generi, regista, attori) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Film (idFilm, locandina, nome, anno, durata, generi, regista, attori, valutazione) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, film.getIdFilm());
@@ -38,6 +38,7 @@ public class FilmDAO {
             ps.setString(6, film.getGeneri());
             ps.setString(7, film.getRegista());
             ps.setString(8, film.getAttori());
+            ps.setInt(9, film.getValutazione());
             ps.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
@@ -60,6 +61,7 @@ public class FilmDAO {
                     film.setGeneri(rs.getString("generi"));
                     film.setRegista(rs.getString("regista"));
                     film.setAttori(rs.getString("attori"));
+                    film.setValutazione(rs.getInt("valutazione"));
                     return film;
                 }
             }
@@ -86,6 +88,7 @@ public class FilmDAO {
                     film.setGeneri(rs.getString("generi"));
                     film.setRegista(rs.getString("regista"));
                     film.setAttori(rs.getString("attori"));
+                    film.setValutazione(rs.getInt("valutazione"));
                     films.add(film);
                 }
             }
@@ -111,6 +114,7 @@ public class FilmDAO {
                 film.setGeneri(rs.getString("generi"));
                 film.setRegista(rs.getString("regista"));
                 film.setAttori(rs.getString("attori"));
+                film.setValutazione(rs.getInt("valutazione"));
                 films.add(film);
             }
         }catch (SQLException e) {
@@ -120,7 +124,7 @@ public class FilmDAO {
     }
 
     public void update(FilmBean film) {
-        String query = "UPDATE Film SET locandina = ?, nome = ?, anno = ?, durata = ?, generi = ?, regista = ?, attori = ? WHERE idFilm = ?";
+        String query = "UPDATE Film SET locandina = ?, nome = ?, anno = ?, durata = ?, generi = ?, regista = ?, attori = ?, valutazione = ? WHERE idFilm = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setBytes(1, film.getLocandina());
@@ -130,7 +134,8 @@ public class FilmDAO {
             ps.setString(5, film.getGeneri());
             ps.setString(6, film.getRegista());
             ps.setString(7, film.getAttori());
-            ps.setInt(8, film.getIdFilm());
+            ps.setInt(8, film.getValutazione());
+            ps.setInt(9, film.getIdFilm());
             ps.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();

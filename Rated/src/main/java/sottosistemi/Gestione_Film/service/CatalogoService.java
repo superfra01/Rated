@@ -59,4 +59,15 @@ public class CatalogoService {
         return FilmMap;
     }
     
+    public void addFilm(int anno, String Attori, int durata, String Generi, byte[] Locandina, String Nome, String Regista){
+    	FilmBean film = new FilmBean();
+    	film.setAnno(anno);
+    	film.setAttori(Attori);
+    	film.setDurata(durata);
+    	film.setGeneri(Generi);
+    	film.setLocandina(Locandina);
+    	film.setNome(Nome);
+    	film.setRegista(Regista);
+    	FilmDAO.save(film);
+    }
 }

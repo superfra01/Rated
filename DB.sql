@@ -21,6 +21,7 @@ CREATE TABLE Film (
     Durata INT NOT NULL,
     Generi VARCHAR(255),
     Regista VARCHAR(255),
+    Valutazione INT DEFAULT 1 CHECK (Valutazione BETWEEN 1 AND 5),
     Attori TEXT
 );
 

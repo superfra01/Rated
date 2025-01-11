@@ -14,6 +14,7 @@ public class FilmBean implements Serializable {
     private String generi;
     private String regista;
     private String attori;
+    private int valutazione;
 
     public FilmBean() {
         idFilm = 0;
@@ -24,6 +25,7 @@ public class FilmBean implements Serializable {
         generi = "";
         regista = "";
         attori = "";
+        valutazione = 1;
     }
 
     public FilmBean(int idFilm, byte[] locandina, String nome, int anno, int durata, String generi, String regista, String attori) {
@@ -35,6 +37,7 @@ public class FilmBean implements Serializable {
         this.generi = generi;
         this.regista = regista;
         this.attori = attori;
+        this.valutazione = 1;
     }
 
     public int getIdFilm() {
@@ -99,5 +102,12 @@ public class FilmBean implements Serializable {
 
     public void setAttori(String attori) {
         this.attori = attori;
+    }
+    public int getValutazione() {
+        return valutazione;
+    }
+
+    public void setValutazione(int valutazione) {
+        this.valutazione = valutazione;
     }
 }
