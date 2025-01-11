@@ -4,6 +4,7 @@ package sottosistemi.Gestione_Utenti.view;
 import model.Entity.UtenteBean;
 import sottosistemi.Gestione_Utenti.service.AutenticationService;
 import sottosistemi.Gestione_Utenti.service.ProfileService;
+import sottosistemi.Gestione_Recensioni.service.RecensoniService;
 import utilities.FieldValidator;
 
 import java.io.IOException;
@@ -29,7 +30,9 @@ public class ProfileServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	HttpSession session = request.getSession(true);
         if(session.getAttribute("user")!=null) {
-        	
+        	RecensoniService RecensoniService = new RecensoniService();
+        	List<RecensioneBean> recensioni = RecensoniService
+        	session.setAttribute("recensioni", recensioni);
         	request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(request, response);	
         }else {
         	response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
