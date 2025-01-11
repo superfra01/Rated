@@ -1,115 +1,150 @@
-const nomeCognomePattern = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const usernamePattern = /^[a-zA-Z0-9]+$/;
 const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-const nomeErrorMessage = "Il nome può contenere solo lettere";
-const cognomeErrorMessage = "Il cognome può contenere solo lettere";
-const emailErrorMessage = "Inserire un indirizzo email valido nella forma: name@domain.ext";
-const usernameErrorMessage = "Lo username può contenere solo lettere e numeri";
-const passwordErrorMessage = "La password deve contenere almeno 8 caratteri, inclusa una cifra";
-const confirmPasswordErrorMessage = "Le password non corrispondono";
+const messages = {
+    email: "Inserire un indirizzo email valido nella forma: name@domain.ext",
+    username: "Lo username può contenere solo lettere e numeri",
+    password: "La password deve contenere almeno 8 caratteri, inclusa una cifra",
+    confirmPassword: "Le password non corrispondono",
+    profileIcon: "Seleziona un'icona valida (formato immagine, non un altro tipo di file)",
+    bio: "La biografia non può essere vuota"
+};
+
+function validateFormElem(formElem, pattern, message) {
+    const span = document.getElementById("error" + capitalize(formElem.name));
+    if (!formElem.value.match(pattern)) {
+        setError(formElem, span, message);
+        return false;
+    }
+    clearError(formElem, span);
+    return true;
+}
 
 function validate() {
     let valid = true;
-    let form = document.getElementById("regForm");
+    const form = document.getElementById("regForm");
 
-    let spanNome = document.getElementById("errorNome");
-    if (!validateFormElem(form.nome, nomeCognomePattern, spanNome, nomeErrorMessage)) {
-        valid = false;
-    }
-    let spanCognome = document.getElementById("errorCognome");
-    if (!validateFormElem(form.cognome, nomeCognomePattern, spanCognome, cognomeErrorMessage)) {
-        valid = false;
-    }
-    let spanEmail = document.getElementById("errorEmail");
-    if (!validateFormElem(form.email, emailPattern, spanEmail, emailErrorMessage)) {
-        valid = false;
-    }
-    let spanUsername = document.getElementById("errorUsername");
-    if (!validateFormElem(form.username, usernamePattern, spanUsername, usernameErrorMessage)) {
-        valid = false;
-    }
-    let spanPassword = document.getElementById("errorPassword");
-    if (!validateFormElem(form.password, passwordPattern, spanPassword, passwordErrorMessage)) {
-        valid = false;
-    }
-    let spanConfirmPassword = document.getElementById("errorConfirmPassword");
-    if (form.password.value !== form.confirm_password.value) {
-        spanConfirmPassword.innerHTML = confirmPasswordErrorMessage;
-        spanConfirmPassword.style.color = "red";
-        form.confirm_password.classList.add("error");
+    // Validazione username
+    valid = validateFormElem(form.username, usernamePattern, messages.username) && valid;
+
+    // Validazione email
+    valid = validateFormElem(form.email, emailPattern, messages.email) && valid;
+
+    // Validazione password
+    valid = validateFormElem(form.password, passwordPattern, messages.password) && valid;
+
+    // Validazione conferma password
+    const confirmPassword = form.confirm_password;
+    if (confirmPassword.value !== form.password.value) {
+        setError(confirmPassword, document.getElementById("errorConfirmPassword"), messages.confirmPassword);
         valid = false;
     } else {
-        spanConfirmPassword.innerHTML = "";
-        form.confirm_password.classList.remove("error");
+        clearError(confirmPassword, document.getElementById("errorConfirmPassword"));
+    }
+
+    // Validazione immagine
+    const profileIcon = form.profile_icon;
+    const spanProfileIcon = document.getElementById("errorProfileIcon");
+    if (!profileIcon.files[0] || !profileIcon.files[0].type.startsWith("image/")) {
+        setError(profileIcon, spanProfileIcon, messages.profileIcon);
+        valid = false;
+    } else {
+        clearError(profileIcon, spanProfileIcon);
+    }
+
+    // Validazione biografia
+    const bio = form.bio;
+    const spanBio = document.getElementById("errorBio");
+    if (!bio.value.trim()) {
+        setError(bio, spanBio, messages.bio);
+        valid = false;
+    } else {
+        clearError(bio, spanBio);
     }
 
     return valid;
 }
 
-function validateFormElem(formElem, pattern, span, message) {
-    if (!formElem.value.match(pattern)) {
-        formElem.classList.add("error");
-        span.innerHTML = message;
-        span.style.color = "red";
-        return false;
-    }
-    formElem.classList.remove("error");
-    span.style.color = "black";
-    span.innerHTML = "";
-    return true;
+function setError(input, span, message) {
+    input.classList.add("error");
+    span.innerHTML = message;
+    span.style.color = "red";
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("regForm").onsubmit = function(event) {
+function clearError(input, span) {
+    input.classList.remove("error");
+    span.innerHTML = "";
+}
+
+function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+// Eventi
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("regForm");
+
+    // Blocco la sottomissione se ci sono errori
+    form.onsubmit = function (event) {
         if (!validate()) {
             event.preventDefault();
         }
     };
 
-    // Validazione in tempo reale
-    let inputs = document.querySelectorAll("#regForm input[type='text'], #regForm input[type='password']");
-    inputs.forEach(input => {
-        input.addEventListener("input", function() {
-            let spanId = "error" + input.name.charAt(0).toUpperCase() + input.name.slice(1);
-            let span = document.getElementById(spanId);
-            let pattern;
-            let message;
-            switch (input.name) {
-                case "nome":
-                case "cognome":
-                    pattern = nomeCognomePattern;
-                    message = input.name === "nome" ? nomeErrorMessage : cognomeErrorMessage;
-                    break;
-                case "email":
-                    pattern = emailPattern;
-                    message = emailErrorMessage;
-                    break;
-                case "username":
-                    pattern = usernamePattern;
-                    message = usernameErrorMessage;
-                    break;
-                case "password":
-                    pattern = passwordPattern;
-                    message = passwordErrorMessage;
-                    break;
-                case "confirm_password":
-                    if (input.value !== document.getElementById("regForm").password.value) {
-                        span.innerHTML = confirmPasswordErrorMessage;
-                        span.style.color = "red";
-                        input.classList.add("error");
-                        return;
-                    } else {
-                        span.innerHTML = "";
-                        input.classList.remove("error");
-                        return;
-                    }
-                default:
-                    pattern = /.*/;
-                    message = "";
-            }
-            validateFormElem(input, pattern, span, message);
-        });
+    // Ascoltatore sugli input per validare in tempo reale
+    form.addEventListener("input", function (event) {
+        const input = event.target;
+
+        // Se l'elemento non ha un 'name', esci
+        if (!input.name) return;
+
+        const spanId = "error" + capitalize(input.name);
+        const span = document.getElementById(spanId);
+
+        switch (input.name) {
+            case "username":
+                validateFormElem(input, usernamePattern, messages.username);
+                break;
+            case "email":
+                validateFormElem(input, emailPattern, messages.email);
+                break;
+            case "password":
+                validateFormElem(input, passwordPattern, messages.password);
+                // Se cambiamo la password, ricontrolliamo anche la conferma
+                const confirmPassword = form.confirm_password;
+                const confirmSpan = document.getElementById("errorConfirmPassword");
+                if (confirmPassword.value !== input.value) {
+                    setError(confirmPassword, confirmSpan, messages.confirmPassword);
+                } else {
+                    clearError(confirmPassword, confirmSpan);
+                }
+                break;
+            case "confirm_password":
+                if (input.value !== form.password.value) {
+                    setError(input, span, messages.confirmPassword);
+                } else {
+                    clearError(input, span);
+                }
+                break;
+            case "bio":
+                if (!input.value.trim()) {
+                    setError(input, span, messages.bio);
+                } else {
+                    clearError(input, span);
+                }
+                break;
+        }
+    });
+
+    // Ascoltatore specifico per il campo 'profile_icon'
+    const profileIcon = form.profile_icon;
+    profileIcon.addEventListener("change", function () {
+        const span = document.getElementById("errorProfileIcon");
+        if (!profileIcon.files[0] || !profileIcon.files[0].type.startsWith("image/")) {
+            setError(profileIcon, span, messages.profileIcon);
+        } else {
+            clearError(profileIcon, span);
+        }
     });
 });

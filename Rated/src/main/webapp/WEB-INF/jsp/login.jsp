@@ -10,7 +10,7 @@
     <script src="static/scripts/loginValidation.js"></script>
 </head>
 <body>
-    <jsp:include page="header.jsp" />
+    <jsp:include page="header.jsp"/>
     
     <main>
         <div class="login-container">
