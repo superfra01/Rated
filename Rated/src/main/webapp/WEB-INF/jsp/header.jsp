@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*" import="model.Entity.*"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,9 +24,16 @@
             </a>
         </div>
         <div class="user-icon">
-            <a href="<%= request.getContextPath() %>/login">
-                <i class="fas fa-user-circle"></i>
-            </a>
+        	<% UtenteBean user = (UtenteBean) request.getSession().getAttribute("utente");
+            if (user != null) { %>
+                <a href="<%= request.getContextPath() %>/profile">
+                	<i class="fas fa-user-circle"></i> 
+                </a>
+            <% } else { %>
+                <a href="<%= request.getContextPath() %>/login">
+                	<i class="fas fa-user-circle"></i>
+            	</a>
+            <% } %>
         </div>
     </header>
 </body>
