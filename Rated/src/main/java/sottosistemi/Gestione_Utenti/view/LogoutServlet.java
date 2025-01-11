@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
-    private AutenticationService authService;
+    
+	private static final long serialVersionUID = 1L;
+	private AutenticationService authService;
     @Override
     public void init() throws ServletException {
         authService = new AutenticationService();

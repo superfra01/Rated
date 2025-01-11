@@ -12,6 +12,7 @@ public class UtenteBean implements Serializable {
     private String password;
     private String tipoUtente;
     private int nWarning;
+    private String biografia;
 
     public UtenteBean() {
         email = "";
@@ -20,15 +21,17 @@ public class UtenteBean implements Serializable {
         password = "";
         tipoUtente = "";
         nWarning = 0;
+        biografia = "";
     }
 
-    public UtenteBean(String email, byte[] icona, String username, String password, String tipoUtente, int nWarning) {
+    public UtenteBean(String email, byte[] icona, String username, String password, String tipoUtente, int nWarning, String biografia) {
         this.email = email;
         this.icona = icona;
         this.username = username;
         this.password = password;
         this.tipoUtente = tipoUtente;
         this.nWarning = nWarning;
+        this.biografia = biografia;
     }
 
     public String getEmail() {
@@ -77,5 +80,13 @@ public class UtenteBean implements Serializable {
 
     public void setNWarning(int nWarning) {
         this.nWarning = nWarning;
+    }
+    
+    public String getBiografia() {
+        return biografia;
+    }
+
+    public void setBiografia(String biografia) {
+        this.biografia = biografia;
     }
 }

@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
-    private AutenticationService authService;
+	private static final long serialVersionUID = 1L;
+	private AutenticationService authService;
 
     @Override
     public void init() {
@@ -39,6 +40,7 @@ public class RegisterServlet extends HttpServlet {
             FieldValidator.validateEmail(email) &&
             FieldValidator.validatePassword(password) &&
             password.equals(confirmPassword)) {
+        		
 
             UtenteBean utente = authService.register(username, email, password, biography, icon);
 
@@ -46,7 +48,7 @@ public class RegisterServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/login"); // Redirect to login after successful registration
             } else {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                response.getWriter().write("Registration failed. User/email may already exist.");
+                response.getWriter().write("Registration failed. User may already exist.");
             }
 
         } else {

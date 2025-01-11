@@ -15,7 +15,8 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    private AutenticationService authService;
+	private static final long serialVersionUID = 1L;
+	private AutenticationService authService;
 
     @Override
     public void init() {
