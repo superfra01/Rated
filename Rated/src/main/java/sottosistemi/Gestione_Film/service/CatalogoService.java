@@ -3,8 +3,9 @@ package sottosistemi.Gestione_Film.service;
 import model.DAO.FilmDAO;
 
 import model.Entity.FilmBean;
+import model.Entity.RecensioneBean;
 
-
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -45,4 +46,17 @@ public class CatalogoService {
     public FilmBean getFilm(int idFilm) {
         return FilmDAO.findById(idFilm);
     }
+    
+    public HashMap<Integer, FilmBean> getFilms(List<RecensioneBean> recensioni) {
+    	
+    	HashMap<Integer, FilmBean> FilmMap = new HashMap<>();
+    	for(RecensioneBean Recensione:recensioni) {
+    		CatalogoService CatalogoService = new CatalogoService();
+    		int key = Recensione.getIdFilm();
+    		FilmBean Film = CatalogoService.getFilm(key);
+    		FilmMap.put(key, Film);
+    	}
+        return FilmMap;
+    }
+    
 }

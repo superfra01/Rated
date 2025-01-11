@@ -41,13 +41,8 @@ public class ProfileServlet extends HttpServlet {
         	RecensioniService RecensioniService = new RecensioniService();
         	List<RecensioneBean> recensioni = RecensioniService.FindRecensioni(user.getEmail());
         	session.setAttribute("recensioni", recensioni);
-        	HashMap<Integer, FilmBean> FilmMap = new HashMap<>();
-        	for(RecensioneBean Recensione:recensioni) {
-        		CatalogoService CatalogoService = new CatalogoService();
-        		int key = Recensione.getIdFilm();
-        		FilmBean Film = CatalogoService.getFilm(key);
-        		FilmMap.put(key, Film);
-        	}
+        	CatalogoService CatalogoService = new CatalogoService();
+        	HashMap<Integer, FilmBean> FilmMap = CatalogoService.getFilms(recensioni);
         	session.setAttribute("films", FilmMap);
         	request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(request, response);	
         }else {
