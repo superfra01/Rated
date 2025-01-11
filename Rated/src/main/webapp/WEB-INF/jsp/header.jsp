@@ -23,7 +23,7 @@
             </a>
         </div>
         <div class="user-icon">
-            <a href="/profile">
+            <a href="<%= request.getContextPath() %>/src/main/webapp/WEB-INF/jsp/login.jsp">
                 <i class="fas fa-user-circle"></i>
             </a>
         </div>
