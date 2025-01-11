@@ -1,4 +1,4 @@
-package sottosistemi.Gestione_Recensioni.view;
+package sottosistemi.Gestione_Film.view;
 
 
 import model.Entity.FilmBean;
