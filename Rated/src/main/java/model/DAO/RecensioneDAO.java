@@ -134,13 +134,15 @@ public class RecensioneDAO {
         }
     }
 
-    public void delete(String email, int idFilm) throws SQLException {
+    public void delete(String email, int idFilm) {
         String query = "DELETE FROM Recensione WHERE email = ? AND idFilm = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, email);
             ps.setInt(2, idFilm);
             ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -80,6 +80,13 @@ public class ProfileServlet extends HttpServlet {
             	
             	response.sendRedirect(request.getContextPath() + "/profile.jsp");
             }
+    	}else if(request.getParameter("operationType").equals("ReviewDelete")) {
+    		
+    		HttpSession session = request.getSession(true);
+    		String email = ((UtenteBean)session.getAttribute("user")).getEmail();
+    		int ID_Film = (int) session.getAttribute("DeleteFilmID");
+    		
+    		response.sendRedirect(request.getContextPath() + "/profile");
     	}
         
     }

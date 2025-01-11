@@ -25,5 +25,9 @@ public class RecensioniService {
     	return recensioni;
     }
     
+    public void deleteRecensione(String email, int ID_Film) {
+    	RecensioneDAO.delete(email, ID_Film);
+    }
+    
     
 }
