@@ -16,7 +16,7 @@
         <div class="login-container">
             <h3>Una ricca community ti aspetta</h3>
             <h4>Register</h4>
-            <form id="regForm" action="<%= request.getContextPath() %>" method="post" enctype="multipart/form-data">
+            <form id="regForm" action="<%= request.getContextPath() %>/register" method="post" enctype="multipart/form-data">
                 
                 <!-- Username -->
                 <input type="text" id="username" name="username" placeholder="Username" required>
