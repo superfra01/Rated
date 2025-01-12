@@ -1,0 +1,101 @@
+.film-container {
+    display: flex;
+    align-items: flex-start;
+    margin: 20px;
+}
+
+.film-poster img {
+    width: 200px;
+    height: auto;
+    border-radius: 4px;
+    margin-right: 20px;
+}
+
+.film-info {
+    max-width: 600px;
+}
+
+.film-info h2 {
+    margin-top: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.film-info p {
+    margin: 5px 0;
+}
+
+/* Sezione dedicata alle recensioni */
+.reviews-section {
+    margin: 20px;
+}
+
+.reviews-section h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.review {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+}
+
+.review-text {
+    margin-bottom: 10px;
+}
+
+.review-author {
+    font-weight: bold;
+}
+
+.review-stars {
+    color: #666;
+}
+
+.review-body {
+    margin-top: 8px;
+}
+
+/* Sezione like/dislike */
+.review-likes-dislikes {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-like,
+.btn-dislike,
+.btn-rate {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 7px 12px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-like:hover,
+.btn-dislike:hover,
+.btn-rate:hover {
+    background-color: #0056b3;
+}
+
+.user-vote {
+    font-style: italic;
+}
+
+.likes-count,
+.dislikes-count {
+    margin: 0;
+}
+
+/* Pulsante “Rate it” fuori dall’elenco recensioni */
+.rate-film {
+    margin: 20px;
+}
