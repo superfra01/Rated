@@ -2,10 +2,15 @@ package sottosistemi.Gestione_Film.view;
 
 
 import model.Entity.FilmBean;
+import model.Entity.RecensioneBean;
+import model.Entity.UtenteBean;
+import model.Entity.ValutazioneBean;
 import sottosistemi.Gestione_Film.service.CatalogoService;
+import sottosistemi.Gestione_Recensioni.service.RecensioniService;
 
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -19,19 +24,28 @@ import javax.servlet.http.HttpSession;
 public class VisualizzaFilmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CatalogoService CatalogoService;
+	private RecensioniService RecensioniService;
 
     @Override
     public void init() {
         CatalogoService = new CatalogoService();
+        RecensioniService = new RecensioniService();
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	HttpSession session = request.getSession(true);
-    	String filmName = request.getParameter("idFilm");
+    	int idFilm= Integer.parseInt(request.getParameter("idFilm"));
     	
-    	FilmBean films = CatalogoService.getFilm();
-    	session.setAttribute("films", films);
+    	FilmBean film = CatalogoService.getFilm(idFilm);
+    	session.setAttribute("film", film);
+    	
+    	List<RecensioneBean> recensioni = RecensioniService.GetRecensioni(idFilm);
+    	session.setAttribute("recensioni", recensioni);
+    	
+    	String email = ((UtenteBean) session.getAttribute("user")).getEmail();
+    	HashMap<String, ValutazioneBean> valutazioni = RecensioniService.GetValutazioni(idFilm, email);
+    	session.setAttribute("valutazioni", valutazioni);
     	
         
         request.getRequestDispatcher("/WEB-INF/jsp/catalogo.jsp").forward(request, response);

@@ -69,8 +69,34 @@ public class RecensioneDAO {
         }
         return null;
     }
+    
+    public List<RecensioneBean> findByIdFilm(int idFilm) {
+        String query = "SELECT * FROM Recensione WHERE idFilm = ?";
+        List<RecensioneBean> recensioni = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, idFilm);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    RecensioneBean recensione = new RecensioneBean();
+                    recensione.setTitolo(rs.getString("titolo"));
+                    recensione.setContenuto(rs.getString("contenuto"));
+                    recensione.setValutazione(rs.getInt("valutazione"));
+                    recensione.setNLike(rs.getInt("nLike"));
+                    recensione.setNDislike(rs.getInt("nDislike"));
+                    recensione.setNReports(rs.getInt("nReports"));
+                    recensione.setEmail(rs.getString("email"));
+                    recensione.setIdFilm(rs.getInt("idFilm"));
+                    recensioni.add(recensione);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return recensioni;
+    }
 
-    public List<RecensioneBean> findAll() throws SQLException {
+    public List<RecensioneBean> findAll() {
         String query = "SELECT * FROM Recensione";
         List<RecensioneBean> recensioni = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
@@ -88,6 +114,8 @@ public class RecensioneDAO {
                 recensione.setIdFilm(rs.getInt("idFilm"));
                 recensioni.add(recensione);
             }
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
         return recensioni;
     }
@@ -118,7 +146,7 @@ public class RecensioneDAO {
         return recensioni;
     }
     
-    public void update(RecensioneBean recensione) throws SQLException {
+    public void update(RecensioneBean recensione) {
         String query = "UPDATE Recensione SET titolo = ?, contenuto = ?, valutazione = ?, nLike = ?, nDislike = ?, nReports = ? WHERE email = ? AND idFilm = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -131,6 +159,8 @@ public class RecensioneDAO {
             ps.setString(7, recensione.getEmail());
             ps.setInt(8, recensione.getIdFilm());
             ps.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

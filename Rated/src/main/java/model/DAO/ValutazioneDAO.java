@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -61,6 +62,29 @@ public class ValutazioneDAO {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    public HashMap<String, ValutazioneBean> findByIdFilmAndEmail(int idFilm, String email) {
+        String query = "SELECT * FROM Valutazione WHERE idFilm = ? AND email = ?";
+        HashMap<String, ValutazioneBean> valutazioni = new HashMap<>();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, idFilm);
+            ps.setString(2, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ValutazioneBean valutazione = new ValutazioneBean();
+                    valutazione.setLikeDislike(rs.getBoolean("likeDislike"));
+                    valutazione.setEmail(rs.getString("email"));
+                    valutazione.setEmailRecensore(rs.getString("emailRecensore"));
+                    valutazione.setIdFilm(rs.getInt("idFilm"));
+                    valutazioni.put(rs.getString("emailRecensore"), valutazione);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return valutazioni;
     }
 
     public void delete(String email, String emailRecensore, int idFilm) {
