@@ -27,7 +27,7 @@ public class UtenteDAO {
     }
 
     public void save(UtenteBean utente) {
-        String query = "INSERT INTO Utente (email, icona, username, password, tipoUtente, nWarning) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Utente_Registrato (email, icona, username, password, Tipo_Utente, N_Warning) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, utente.getEmail());
@@ -43,7 +43,7 @@ public class UtenteDAO {
     }
 
     public UtenteBean findByEmail(String email) {
-        String query = "SELECT * FROM Utente WHERE email = ?";
+        String query = "SELECT * FROM Utente_Registrato  WHERE email = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, email);
@@ -65,7 +65,7 @@ public class UtenteDAO {
         return null;
     }
     public UtenteBean findByUsername(String username) {
-        String query = "SELECT * FROM Utente WHERE username = ?";
+        String query = "SELECT * FROM Utente_Registrato  WHERE username = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, username);
@@ -88,7 +88,7 @@ public class UtenteDAO {
     }
 
     public List<UtenteBean> findAll() {
-        String query = "SELECT * FROM Utente";
+        String query = "SELECT * FROM Utente_Registrato ";
         List<UtenteBean> utenti = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query);
@@ -110,7 +110,7 @@ public class UtenteDAO {
     }
 
     public void update(UtenteBean utente) {
-        String query = "UPDATE Utente SET icona = ?, username = ?, password = ?, tipoUtente = ?, nWarning = ? WHERE email = ?";
+        String query = "UPDATE Utente_Registrato  SET icona = ?, username = ?, password = ?, tipoUtente = ?, nWarning = ? WHERE email = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setBytes(1, utente.getIcona());
@@ -126,7 +126,7 @@ public class UtenteDAO {
     }
 
     public void delete(String email) {
-        String query = "DELETE FROM Utente WHERE email = ?";
+        String query = "DELETE FROM Utente_Registrato  WHERE email = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, email);

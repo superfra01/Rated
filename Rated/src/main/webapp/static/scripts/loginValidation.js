@@ -1,8 +1,10 @@
-const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const passwordPattern = /^[A-Za-z\d]*$/;
+
+
+const emailPattern = /^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,64}$/;
 
 const emailErrorMessage = "Inserisci una email valida";
-const passwordErrorMessage = "La password può contenere solo lettere e numeri";
+const passwordErrorMessage = "Inserisci una password valida";
 
 function validate() {
     let valid = true;
