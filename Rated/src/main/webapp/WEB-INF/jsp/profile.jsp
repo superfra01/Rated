@@ -135,7 +135,7 @@
     <div class="modal">
         <button class="close-modal" onclick="closeOverlay('changeProfileOverlay')">&times;</button>
         <h2>Modifica Profilo</h2>
-        <form method="post" action="<%= request.getContextPath() %>/profile" enctype="multipart/form-data">
+        <form method="post" action="<%= request.getContextPath() %>/profile">
             <input type="hidden" name="operationType" value="ProfileModify" />
 
             <label for="username">Username</label>

@@ -107,7 +107,7 @@
     <div class="overlay-content">
         <span class="close-btn" onclick="closeAddFilmForm()">&times;</span>
         <h2>Aggiungi un nuovo film</h2>
-        <form action="<%= request.getContextPath() %>/addFilm" method="post" enctype="multipart/form-data">
+        <form action="<%= request.getContextPath() %>/addFilm" method="post">
             <label for="nomeFilm">Nome:</label>
             <input type="text" name="nomeFilm" id="nomeFilm" required />
 
