@@ -70,4 +70,21 @@ public class CatalogoService {
     	film.setRegista(Regista);
     	FilmDAO.save(film);
     }
+    
+    public void modifyFilm(int idFilm, int anno, String Attori, int durata, String Generi, byte[] Locandina, String Nome, String Regista){
+    	FilmBean film = new FilmBean();
+    	film.setIdFilm(idFilm);
+    	film.setAnno(anno);
+    	film.setAttori(Attori);
+    	film.setDurata(durata);
+    	film.setGeneri(Generi);
+    	film.setLocandina(Locandina);
+    	film.setNome(Nome);
+    	film.setRegista(Regista);
+    	FilmDAO.update(film);
+    }
+    
+    public void removeFilm(int idFilm) {
+    	FilmDAO.delete(idFilm);
+    }
 }

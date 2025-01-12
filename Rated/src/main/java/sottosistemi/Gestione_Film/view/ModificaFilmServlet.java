@@ -1,6 +1,5 @@
 package sottosistemi.Gestione_Film.view;
 
-
 import model.Entity.UtenteBean;
 import sottosistemi.Gestione_Film.service.CatalogoService;
 
@@ -15,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/addFilm")
-public class AggiungiFilmServlet extends HttpServlet {
+@WebServlet("/filmModify")
+public class ModificaFilmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CatalogoService CatalogoService;
 
@@ -37,6 +36,7 @@ public class AggiungiFilmServlet extends HttpServlet {
     	UtenteBean user = (UtenteBean) session.getAttribute("user");
     	if(user.getTipoUtente().equals("GestoreCatalogo")) {
     		
+    		int idFilm = Integer.parseInt(request.getParameter("idFilm"));
     		int anno = Integer.parseInt(request.getParameter("annoFilm"));
     		String Attori = request.getParameter("attoriFilm");
     		int durata = Integer.parseInt(request.getParameter("durataFilm"));
@@ -45,7 +45,7 @@ public class AggiungiFilmServlet extends HttpServlet {
     		String Nome = request.getParameter("nomeFilm");
     		String Regista = request.getParameter("registaFilm");
     		
-    		CatalogoService.addFilm(anno, Attori, durata, Generi, Locandina, Nome, Regista);
+    		CatalogoService.modifyFilm(idFilm, anno, Attori, durata, Generi, Locandina, Nome, Regista);
     		request.getRequestDispatcher("/WEB-INF/jsp/catalogo").forward(request, response);
     	}else {
     		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -53,3 +53,4 @@ public class AggiungiFilmServlet extends HttpServlet {
     	}
     }
 }
+
