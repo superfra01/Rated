@@ -29,12 +29,18 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String confirmPassword = request.getParameter("confirmPassword");
-        String biography = request.getParameter("biography");
-        byte[] icon = request.getParameter("icon").getBytes();
+    	String username = request.getParameter("username");
+    	String email = request.getParameter("email");
+    	String password = request.getParameter("password");
+    	String confirmPassword = request.getParameter("confirmPassword");
+    	String biography = request.getParameter("biography");
+    	String iconParam = request.getParameter("icon"); // Icon come stringa
+    	byte[] icon = null;
+
+    	if (iconParam != null) {
+    	    icon = iconParam.getBytes(); // Convertire in byte solo se non è null
+    	}
+
 
         if (FieldValidator.validateUsername(username) &&
             FieldValidator.validateEmail(email) &&
