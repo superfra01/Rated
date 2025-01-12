@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
 	        if (utente != null) {
 	            HttpSession session = request.getSession(true);
 	            session.setAttribute("user", utente);
-	            response.sendRedirect(request.getContextPath() + "/Home");
+	            response.sendRedirect(request.getContextPath());
 	        } else {
 	        	response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.getWriter().write("Invalid email or password");

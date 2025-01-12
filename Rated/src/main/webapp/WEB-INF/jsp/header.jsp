@@ -19,12 +19,12 @@
             <div class="search-bar">
                 <input type="text" placeholder="Cerca Film su RATED">
             </div>
-            <a href="catalogo.jsp">
+            <a href="<%= request.getContextPath() %>/catalogo">
                 <button class="catalogue-button">Catalogo</button>
             </a>
         </div>
         <div class="user-icon">
-        	<% UtenteBean user = (UtenteBean) request.getSession().getAttribute("utente");
+        	<% UtenteBean user = (UtenteBean) request.getSession().getAttribute("user");
             if (user != null) { %>
                 <a href="<%= request.getContextPath() %>/profile">
                 	<i class="fas fa-user-circle"></i> 

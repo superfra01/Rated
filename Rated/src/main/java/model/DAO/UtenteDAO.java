@@ -54,8 +54,8 @@ public class UtenteDAO {
                     utente.setIcona(rs.getBytes("icona"));
                     utente.setUsername(rs.getString("username"));
                     utente.setPassword(rs.getString("password"));
-                    utente.setTipoUtente(rs.getString("tipoUtente"));
-                    utente.setNWarning(rs.getInt("nWarning"));
+                    utente.setTipoUtente(rs.getString("Tipo_Utente"));
+                    utente.setNWarning(rs.getInt("N_Warning"));
                     return utente;
                 }
             }
@@ -75,9 +75,9 @@ public class UtenteDAO {
                     user.setUsername(rs.getString("username"));
                     user.setEmail(rs.getString("email"));
                     user.setPassword(rs.getString("password"));
-                    user.setTipoUtente(rs.getString("tipoUtente"));
+                    user.setTipoUtente(rs.getString("Tipo_Utente"));
                     user.setIcona(rs.getBytes("icona"));
-                    user.setNWarning(rs.getInt("nWarning"));
+                    user.setNWarning(rs.getInt("N_Warning"));
                     return user;
                 }
             }
@@ -99,8 +99,8 @@ public class UtenteDAO {
                 utente.setIcona(rs.getBytes("icona"));
                 utente.setUsername(rs.getString("username"));
                 utente.setPassword(rs.getString("password"));
-                utente.setTipoUtente(rs.getString("tipoUtente"));
-                utente.setNWarning(rs.getInt("nWarning"));
+                utente.setTipoUtente(rs.getString("Tipo_Utente"));
+                utente.setNWarning(rs.getInt("N_Warning"));
                 utenti.add(utente);
             }
         }catch (SQLException e) {
@@ -110,7 +110,7 @@ public class UtenteDAO {
     }
 
     public void update(UtenteBean utente) {
-        String query = "UPDATE Utente_Registrato  SET icona = ?, username = ?, password = ?, tipoUtente = ?, nWarning = ? WHERE email = ?";
+        String query = "UPDATE Utente_Registrato  SET icona = ?, username = ?, password = ?, Tipo_Utente = ?, N_Warning = ? WHERE email = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setBytes(1, utente.getIcona());

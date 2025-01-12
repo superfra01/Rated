@@ -24,7 +24,7 @@ public class AutenticationService {
     public UtenteBean login(String email, String password) {
     	
         UtenteBean user = UtenteDAO.findByEmail(email);
-        if (user != null && PasswordUtility.hashPassword(user.getPassword()).equals(password)) {
+        if (user != null && PasswordUtility.hashPassword(password).equals(user.getPassword())) {
             return user; // Authentication successful
         }
         
