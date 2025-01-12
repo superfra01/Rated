@@ -1,7 +1,7 @@
-DROP DATABASE SistemaRecensioni;
+DROP DATABASE RatedDB;
 -- Creazione del database e delle tabelle
-CREATE DATABASE SistemaRecensioni;
-USE SistemaRecensioni;
+CREATE DATABASE RatedDB;
+USE RatedDB;
 
 -- Tabella Utente_Registrato
 CREATE TABLE Utente_Registrato (
