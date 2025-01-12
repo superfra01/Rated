@@ -1,6 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="model.Entity.FilmBean" %>
 <%@ page import="model.Entity.UtenteBean" %>
+<%@ page import="java.util.Base64" %>
+
 
 <%
     // Recupero i film dalla sessione
