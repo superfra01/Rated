@@ -1,11 +1,11 @@
 const emailPattern = /^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const usernamePattern = /^[a-zA-Z0-9.]{3,30}$/;
-const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,64}$/;
+const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&.])[A-Za-z\d@$!%?&.]{8,64}$/;
 
 const messages = {
     email: "Inserire un indirizzo email valido nella forma: name@domain.ext",
     username: "Lo username può contenere solo lettere, numeri o punti ed essere lungo tra 3 e 30 caratteri",
-    password: "La password deve contenere tra 8 e 64 caratteri, almeno una lettera minuscola, una maiuscola, un numero e un carattere speciale (@, $, !, %, ?, &)",
+    password: "La password deve contenere tra 8 e 64 caratteri, almeno una lettera minuscola, una maiuscola, un numero e un carattere speciale (@, $, !, %, ?, &, .)",
     confirmPassword: "Le password non corrispondono",
     profileIcon: "Seleziona un'icona valida (formato immagine, non un altro tipo di file)",
     bio: "La biografia non può essere vuota"
