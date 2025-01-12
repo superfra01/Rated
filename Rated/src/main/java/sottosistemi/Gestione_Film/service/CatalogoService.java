@@ -23,7 +23,7 @@ public class CatalogoService {
     	return films;
     }
 
-    public void aggiungiFilm(String nome, int anno, int durata, String generi, String regista, String attori, byte[] locandina) {
+    public void aggiungiFilm(String nome, int anno, int durata, String generi, String regista, String attori, byte[] locandina, String trama) {
         FilmBean film = new FilmBean();
         film.setNome(nome);
         film.setAnno(anno);
@@ -32,6 +32,7 @@ public class CatalogoService {
         film.setRegista(regista);
         film.setAttori(attori);
         film.setLocandina(locandina);
+        film.setTrama(trama);
         FilmDAO.save(film);
     }
 
@@ -59,7 +60,7 @@ public class CatalogoService {
         return FilmMap;
     }
     
-    public void addFilm(int anno, String Attori, int durata, String Generi, byte[] Locandina, String Nome, String Regista){
+    public void addFilm(int anno, String Attori, int durata, String Generi, byte[] Locandina, String Nome, String Regista, String Trama){
     	FilmBean film = new FilmBean();
     	film.setAnno(anno);
     	film.setAttori(Attori);
@@ -68,10 +69,11 @@ public class CatalogoService {
     	film.setLocandina(Locandina);
     	film.setNome(Nome);
     	film.setRegista(Regista);
+    	film.setTrama(Trama);
     	FilmDAO.save(film);
     }
     
-    public void modifyFilm(int idFilm, int anno, String Attori, int durata, String Generi, byte[] Locandina, String Nome, String Regista){
+    public void modifyFilm(int idFilm, int anno, String Attori, int durata, String Generi, byte[] Locandina, String Nome, String Regista, String Trama){
     	FilmBean film = new FilmBean();
     	film.setIdFilm(idFilm);
     	film.setAnno(anno);
@@ -81,6 +83,7 @@ public class CatalogoService {
     	film.setLocandina(Locandina);
     	film.setNome(Nome);
     	film.setRegista(Regista);
+    	film.setTrama(Trama);
     	FilmDAO.update(film);
     }
     

@@ -44,8 +44,9 @@ public class AggiungiFilmServlet extends HttpServlet {
     		byte[] Locandina = request.getParameter("locandinaFilm").getBytes();
     		String Nome = request.getParameter("nomeFilm");
     		String Regista = request.getParameter("registaFilm");
+    		String Trama = request.getParameter("tramaFilm");
     		
-    		CatalogoService.addFilm(anno, Attori, durata, Generi, Locandina, Nome, Regista);
+    		CatalogoService.addFilm(anno, Attori, durata, Generi, Locandina, Nome, Regista, Trama);
     		request.getRequestDispatcher("/WEB-INF/jsp/catalogo").forward(request, response);
     	}else {
     		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
