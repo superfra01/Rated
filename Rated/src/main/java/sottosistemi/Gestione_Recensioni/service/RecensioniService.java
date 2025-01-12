@@ -21,7 +21,18 @@ public class RecensioniService {
         this.ValutazioneDAO = new ValutazioneDAO();
         
     }
-    
+    public void addValutazione(String email, int idFilm, String email_recensore, boolean valutazione) {
+    	
+    	ValutazioneBean ValutazioneBean = new ValutazioneBean();
+    	ValutazioneBean.setEmail(email);
+    	ValutazioneBean.setEmailRecensore(email_recensore);
+    	ValutazioneBean.setIdFilm(idFilm);
+    	ValutazioneBean.setLikeDislike(valutazione);
+    	
+    	ValutazioneDAO.save(ValutazioneBean);
+    	
+    	
+    }
     public List<RecensioneBean> FindRecensioni(String email) {
     	
     	List<RecensioneBean> recensioni = RecensioneDAO.findByUser(email);

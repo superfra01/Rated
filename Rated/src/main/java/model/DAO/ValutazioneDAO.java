@@ -28,15 +28,51 @@ public class ValutazioneDAO {
     }
 
     public void save(ValutazioneBean valutazione) {
-        String query = "INSERT INTO Valutazione (likeDislike, email, emailRecensore, idFilm) VALUES (?, ?, ?, ?)";
+        String selectQuery = "SELECT * FROM Valutazione WHERE email = ? AND emailRecensore = ? AND idFilm = ?";
+        String insertQuery = "INSERT INTO Valutazione (likeDislike, email, emailRecensore, idFilm) VALUES (?, ?, ?, ?)";
+        String updateQuery = "UPDATE Valutazione SET likeDislike = ? WHERE email = ? AND emailRecensore = ? AND idFilm = ?";
+        String deleteQuery = "DELETE FROM Valutazione WHERE email = ? AND emailRecensore = ? AND idFilm = ?";
+
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setBoolean(1, valutazione.isLikeDislike());
-            ps.setString(2, valutazione.getEmail());
-            ps.setString(3, valutazione.getEmailRecensore());
-            ps.setInt(4, valutazione.getIdFilm());
-            ps.executeUpdate();
-        }catch (SQLException e) {
+             PreparedStatement selectPs = connection.prepareStatement(selectQuery);
+             PreparedStatement insertPs = connection.prepareStatement(insertQuery);
+             PreparedStatement updatePs = connection.prepareStatement(updateQuery);
+             PreparedStatement deletePs = connection.prepareStatement(deleteQuery)) {
+
+            // Check if the record exists
+            selectPs.setString(1, valutazione.getEmail());
+            selectPs.setString(2, valutazione.getEmailRecensore());
+            selectPs.setInt(3, valutazione.getIdFilm());
+
+            try (ResultSet rs = selectPs.executeQuery()) {
+                if (rs.next()) {
+                    // Record exists, check if the value is the same
+                    boolean existingLikeDislike = rs.getBoolean("likeDislike");
+                    if (existingLikeDislike == valutazione.isLikeDislike()) {
+                        // If the same, delete the record
+                        deletePs.setString(1, valutazione.getEmail());
+                        deletePs.setString(2, valutazione.getEmailRecensore());
+                        deletePs.setInt(3, valutazione.getIdFilm());
+                        deletePs.executeUpdate();
+                    } else {
+                        // If different, update the record
+                        updatePs.setBoolean(1, valutazione.isLikeDislike());
+                        updatePs.setString(2, valutazione.getEmail());
+                        updatePs.setString(3, valutazione.getEmailRecensore());
+                        updatePs.setInt(4, valutazione.getIdFilm());
+                        updatePs.executeUpdate();
+                    }
+                } else {
+                    // Record does not exist, insert it
+                    insertPs.setBoolean(1, valutazione.isLikeDislike());
+                    insertPs.setString(2, valutazione.getEmail());
+                    insertPs.setString(3, valutazione.getEmailRecensore());
+                    insertPs.setInt(4, valutazione.getIdFilm());
+                    insertPs.executeUpdate();
+                }
+            }
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
