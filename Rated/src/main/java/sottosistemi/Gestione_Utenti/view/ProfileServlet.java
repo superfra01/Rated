@@ -50,7 +50,6 @@ public class ProfileServlet extends HttpServlet {
             response.getWriter().write("You can't access the profile page if you are not autenticated");
         }
         
-        
     }
 
     @Override

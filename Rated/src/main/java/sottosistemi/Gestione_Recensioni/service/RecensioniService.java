@@ -2,6 +2,7 @@ package sottosistemi.Gestione_Recensioni.service;
 
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,6 +46,18 @@ public class RecensioniService {
     	
     }
     
+    public List<RecensioneBean> GetAllRecensioniSegnalate(){
+    	List<RecensioneBean> recensioni = RecensioneDAO.findAll();
+    	List<RecensioneBean> recensioniFiltered = new ArrayList<RecensioneBean>();
+    	for(RecensioneBean recensione : recensioni)
+    		if(recensione.getNReports()!=0)
+    			recensioniFiltered.add(recensione);
+    	
+    		
+    	
+    	return recensioniFiltered;
+    	
+    }
     
     
 }

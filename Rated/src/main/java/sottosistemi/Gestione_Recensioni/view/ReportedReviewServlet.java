@@ -1,4 +1,4 @@
-package sottosistemi.Gestione_Utenti.view;
+package sottosistemi.Gestione_Recensioni.view;
 
 
 import model.Entity.UtenteBean;
@@ -22,36 +22,41 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/passwordModify")
-public class PasswordModifyServlet extends HttpServlet {
+@WebServlet("/reportedReview")
+public class ReportedReviewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ProfileService ProfileService;
+	
 
     @Override
     public void init() {
-        ProfileService = new ProfileService();
+        
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	
+    	HttpSession session = request.getSession(true);
+    	UtenteBean user = (UtenteBean) session.getAttribute("User");
+        if(user!=null&& user.getTipoUtente().equals("Moderatore")) {
+        	
+        	RecensioniService RecensioniService = new RecensioniService();
+        	List<RecensioneBean> recensioni = RecensioniService.GetAllRecensioniSegnalate();
+        	session.setAttribute("recensioni", recensioni);
+        	
+        	
+        	CatalogoService CatalogoService = new CatalogoService();
+        	HashMap<Integer, FilmBean> FilmMap = CatalogoService.getFilms(recensioni);
+        	session.setAttribute("films", FilmMap);
+        	request.getRequestDispatcher("/WEB-INF/jsp/moderator.jsp").forward(request, response);	
+        }else {
+        	response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("You can't access the profile page unless you are an authenticated moderator.");
+        }
         
     }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        if(FieldValidator.validatePassword(password)) {
-        	UtenteBean utente = ProfileService.PasswordUpdate(email, password);
-        	
-        	HttpSession session = request.getSession(true);
-        	session.setAttribute("user", utente);
-        	
-        	response.sendRedirect(request.getContextPath() + "/profile.jsp");
-        }
     	
         
     }
 }
-
