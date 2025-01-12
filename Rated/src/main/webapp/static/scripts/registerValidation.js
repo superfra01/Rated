@@ -5,7 +5,7 @@ const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 const messages = {
     email: "Inserire un indirizzo email valido nella forma: name@domain.ext",
     username: "Lo username può contenere solo lettere e numeri",
-    password: "La password deve contenere almeno 8 caratteri, inclusa una cifra",
+    password: "La password deve contenere almeno 8 caratteri, una lettera e un numero",
     confirmPassword: "Le password non corrispondono",
     profileIcon: "Seleziona un'icona valida (formato immagine, non un altro tipo di file)",
     bio: "La biografia non può essere vuota"
