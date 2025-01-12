@@ -23,39 +23,35 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebServlet("/profile")
-public class ProfileServlet extends HttpServlet {
+public class PasswordModifyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	private ProfileService ProfileService;
 
     @Override
     public void init() {
-        
+        ProfileService = new ProfileService();
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	HttpSession session = request.getSession(true);
-    	UtenteBean user = (UtenteBean) session.getAttribute("visitedUser");
-        if(user!=null) {
-        	
-        	RecensioniService RecensioniService = new RecensioniService();
-        	List<RecensioneBean> recensioni = RecensioniService.FindRecensioni(user.getEmail());
-        	session.setAttribute("recensioni", recensioni);
-        	CatalogoService CatalogoService = new CatalogoService();
-        	HashMap<Integer, FilmBean> FilmMap = CatalogoService.getFilms(recensioni);
-        	session.setAttribute("films", FilmMap);
-        	request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(request, response);	
-        }else {
-        	response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().write("You can't access the profile page if you are not autenticated");
-        }
-        
+    	
         
     }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        if(FieldValidator.validatePassword(password)) {
+        	UtenteBean utente = ProfileService.PasswordUpdate(email, password);
+        	
+        	HttpSession session = request.getSession(true);
+        	session.setAttribute("user", utente);
+        	
+        	response.sendRedirect(request.getContextPath() + "/profile.jsp");
+        }
     	
         
     }
 }
+
