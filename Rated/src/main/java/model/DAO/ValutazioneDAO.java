@@ -136,4 +136,17 @@ public class ValutazioneDAO {
             e.printStackTrace();
         }
     }
+    //cancella le valutazioni di un recensione
+    public void deleteValutazioni(String emailRecensore, int idFilm) {
+        String query = "DELETE FROM Valutazione WHERE emailRecensore = ? AND idFilm = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, emailRecensore);
+            ps.setInt(2, idFilm);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

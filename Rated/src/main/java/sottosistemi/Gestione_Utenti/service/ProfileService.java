@@ -39,4 +39,12 @@ public class ProfileService {
     	return user;
     }
     
+    public void warn(String email) {
+    	UtenteBean user = UtenteDAO.findByEmail(email);
+    	user.setNWarning(user.getNWarning()+1);
+    	UtenteDAO.update(user);
+    	
+    	
+    }
+    
 }

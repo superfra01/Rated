@@ -22,14 +22,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-@WebServlet("/reportedReview")
+@WebServlet("/reportedReviewAndWarn")
 public class RimuoviReviewAndWarnServlet extends HttpServlet{
 		private static final long serialVersionUID = 1L;
 		private RecensioniService RecensioniService;
+		private ProfileService ProfileService;
 
 	    @Override
 	    public void init() {
 	    	RecensioniService = new RecensioniService();
+	    	ProfileService = new ProfileService();
 	    }
 
 	    @Override
@@ -41,16 +43,24 @@ public class RimuoviReviewAndWarnServlet extends HttpServlet{
 	    @Override
 	    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    	
-	    	
+	    	HttpSession session = request.getSession(true);
+	    	UtenteBean user = (UtenteBean) session.getAttribute("user");
+	    	if(user.getTipoUtente().equals("GestoreCatalogo")) {
+	    		String userEmail = request.getParameter("ReviewUserEmail");
+				int idFilm = Integer.parseInt(request.getParameter("idFilm"));
+				RecensioniService RecensioniService = new RecensioniService();
+				RecensioniService.deleteRecensione(userEmail, idFilm);
+				ProfileService.warn(userEmail);
+				
 			
-			HttpSession session = request.getSession(true);
-			String email = ((UtenteBean)session.getAttribute("user")).getEmail();
-			int ID_Film = (int) session.getAttribute("DeleteFilmID");
+				
+				response.sendRedirect(request.getContextPath() + "/reportedview");
+	    	}else {
+	    		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	            response.getWriter().write("Non hai i permessi per effettuare la seguente operazione");
+	    	}
 			
-			RecensioniService RecensioniService = new RecensioniService();
-			RecensioniService.deleteRecensione(email, ID_Film);
 			
-			response.sendRedirect(request.getContextPath() + "/profile");
 		
 	    
 	    }

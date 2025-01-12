@@ -73,4 +73,17 @@ public class ReportDAO {
             e.printStackTrace();
         }
     }
+    
+    public void deleteReports(String emailRecensore, int idFilm) {
+        String query = "DELETE FROM Report WHERE emailRecensore = ? AND idFilm = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, emailRecensore);
+            ps.setInt(2, idFilm);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
