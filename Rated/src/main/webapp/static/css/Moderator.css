@@ -1,0 +1,80 @@
+/* Stile generale del container della pagina del moderatore */
+.moderator-container {
+    margin: 2rem auto;
+    width: 80%;
+    max-width: 1200px;
+    font-family: Arial, sans-serif;
+}
+
+/* Titolo principale */
+.moderator-container h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Sezione scorrevole delle recensioni */
+.scrollable-reviews {
+    max-height: 400px; /* imposta l'altezza massima desiderata */
+    overflow-y: auto;  /* abilita la barra di scorrimento verticale */
+    border: 1px solid #ccc;
+    padding: 1rem;
+    background-color: #fdfdfd;
+}
+
+/* Tabella delle recensioni */
+.reviews-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.reviews-table thead tr {
+    background-color: #f1f1f1;
+}
+
+.reviews-table th, 
+.reviews-table td {
+    text-align: left;
+    padding: 0.8rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.reviews-table th {
+    font-weight: bold;
+}
+
+/* Nessuna recensione segnalata */
+.no-reviews {
+    text-align: center;
+    font-style: italic;
+}
+
+/* Pulsanti */
+.approve-btn,
+.remove-btn {
+    cursor: pointer;
+    margin: 0.2rem 0;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    font-size: 0.9rem;
+    border-radius: 4px;
+}
+
+.approve-btn {
+    background-color: #28a745; /* verde */
+    color: #fff;
+}
+
+.remove-btn {
+    background-color: #dc3545; /* rosso */
+    color: #fff;
+}
+
+/* Hover sui pulsanti */
+.approve-btn:hover {
+    background-color: #218838;
+}
+
+.remove-btn:hover {
+    background-color: #c82333;
+}
