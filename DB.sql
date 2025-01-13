@@ -43,7 +43,7 @@ CREATE TABLE Recensione (
 );
 
 -- Tabella Valuta
-CREATE TABLE Valuta (
+CREATE TABLE Valutazione (
     Like_Dislike BOOLEAN NOT NULL,
     email VARCHAR(255) NOT NULL,
     email_Recensore VARCHAR(255) NOT NULL,
@@ -185,7 +185,7 @@ INSERT INTO Recensione (Titolo, Contenuto, Valutazione, N_Like, N_DisLike, N_Rep
 ('Un esempio di cinema', 'Ogni elemento è al posto giusto.', 5, 230, 0, 0, 'alice.rossi@example.com', 9);
 
 /*
-INSERT INTO Valuta (Like_Dislike, email, email_Recensore, ID_Film) VALUES
+INSERT INTO Valutazione (Like_Dislike, email, email_Recensore, ID_Film) VALUES
 (TRUE, 'alice.rossi@example.com', 'marco.bianchi@example.com', 1),
 (FALSE, 'marco.bianchi@example.com', 'alice.rossi@example.com', 2),
 (TRUE, 'luca.verdi@example.com', 'giulia.ferri@example.com', 3),

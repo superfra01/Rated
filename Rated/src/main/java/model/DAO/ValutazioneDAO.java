@@ -28,10 +28,10 @@ public class ValutazioneDAO {
     }
 
     public void save(ValutazioneBean valutazione) {
-        String selectQuery = "SELECT * FROM Valutazione WHERE email = ? AND emailRecensore = ? AND idFilm = ?";
-        String insertQuery = "INSERT INTO Valutazione (likeDislike, email, emailRecensore, idFilm) VALUES (?, ?, ?, ?)";
-        String updateQuery = "UPDATE Valutazione SET likeDislike = ? WHERE email = ? AND emailRecensore = ? AND idFilm = ?";
-        String deleteQuery = "DELETE FROM Valutazione WHERE email = ? AND emailRecensore = ? AND idFilm = ?";
+        String selectQuery = "SELECT * FROM Valutazione WHERE email = ? AND email_Recensore = ? AND ID_Film = ?";
+        String insertQuery = "INSERT INTO Valutazione (Like_Dislike, email, email_Recensore, ID_Film) VALUES (?, ?, ?, ?)";
+        String updateQuery = "UPDATE Valutazione SET Like_Dislike = ? WHERE email = ? AND email_Recensore = ? AND ID_Film = ?";
+        String deleteQuery = "DELETE FROM Valutazione WHERE email = ? AND email_Recensore = ? AND ID_Film = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement selectPs = connection.prepareStatement(selectQuery);
@@ -47,7 +47,7 @@ public class ValutazioneDAO {
             try (ResultSet rs = selectPs.executeQuery()) {
                 if (rs.next()) {
                     // Record exists, check if the value is the same
-                    boolean existingLikeDislike = rs.getBoolean("likeDislike");
+                    boolean existingLikeDislike = rs.getBoolean("Like_Dislike");
                     if (existingLikeDislike == valutazione.isLikeDislike()) {
                         // If the same, delete the record
                         deletePs.setString(1, valutazione.getEmail());
@@ -78,7 +78,7 @@ public class ValutazioneDAO {
     }
 
     public ValutazioneBean findById(String email, String emailRecensore, int idFilm) {
-        String query = "SELECT * FROM Valutazione WHERE email = ? AND emailRecensore = ? AND idFilm = ?";
+        String query = "SELECT * FROM Valutazione WHERE email = ? AND email_Recensore = ? AND ID_Film = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, email);
@@ -87,10 +87,10 @@ public class ValutazioneDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     ValutazioneBean valutazione = new ValutazioneBean();
-                    valutazione.setLikeDislike(rs.getBoolean("likeDislike"));
+                    valutazione.setLikeDislike(rs.getBoolean("Like_Dislike"));
                     valutazione.setEmail(rs.getString("email"));
-                    valutazione.setEmailRecensore(rs.getString("emailRecensore"));
-                    valutazione.setIdFilm(rs.getInt("idFilm"));
+                    valutazione.setEmailRecensore(rs.getString("email_Recensore"));
+                    valutazione.setIdFilm(rs.getInt("ID_Film"));
                     return valutazione;
                 }
             }
@@ -101,7 +101,7 @@ public class ValutazioneDAO {
     }
     
     public HashMap<String, ValutazioneBean> findByIdFilmAndEmail(int idFilm, String email) {
-        String query = "SELECT * FROM Valutazione WHERE idFilm = ? AND email = ?";
+        String query = "SELECT * FROM Valutazione WHERE ID_Film = ? AND email = ?";
         HashMap<String, ValutazioneBean> valutazioni = new HashMap<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -110,11 +110,11 @@ public class ValutazioneDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     ValutazioneBean valutazione = new ValutazioneBean();
-                    valutazione.setLikeDislike(rs.getBoolean("likeDislike"));
+                    valutazione.setLikeDislike(rs.getBoolean("Like_Dislike"));
                     valutazione.setEmail(rs.getString("email"));
-                    valutazione.setEmailRecensore(rs.getString("emailRecensore"));
-                    valutazione.setIdFilm(rs.getInt("idFilm"));
-                    valutazioni.put(rs.getString("emailRecensore"), valutazione);
+                    valutazione.setEmailRecensore(rs.getString("email_Recensore"));
+                    valutazione.setIdFilm(rs.getInt("ID_Film"));
+                    valutazioni.put(rs.getString("email_Recensore"), valutazione);
                 }
             }
         } catch (SQLException e) {
@@ -125,7 +125,7 @@ public class ValutazioneDAO {
     
 
     public void delete(String email, String emailRecensore, int idFilm) {
-        String query = "DELETE FROM Valutazione WHERE email = ? AND emailRecensore = ? AND idFilm = ?";
+        String query = "DELETE FROM Valutazione WHERE email = ? AND email_Recensore = ? AND ID_Film = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, email);
@@ -138,7 +138,7 @@ public class ValutazioneDAO {
     }
     //cancella le valutazioni di un recensione
     public void deleteValutazioni(String emailRecensore, int idFilm) {
-        String query = "DELETE FROM Valutazione WHERE emailRecensore = ? AND idFilm = ?";
+        String query = "DELETE FROM Valutazione WHERE email_Recensore = ? AND ID_Film = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, emailRecensore);
