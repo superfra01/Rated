@@ -27,7 +27,7 @@ public class FilmDAO {
     }
 
     public void save(FilmBean film) {
-        String query = "INSERT INTO Film (idFilm, locandina, nome, anno, durata, generi, regista, attori, valutazione, trama) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Film (ID_Film, locandina, nome, anno, durata, generi, regista, attori, valutazione, trama) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, film.getIdFilm());
@@ -47,14 +47,14 @@ public class FilmDAO {
     }
 
     public FilmBean findById(int idFilm) {
-        String query = "SELECT * FROM Film WHERE idFilm = ?";
+        String query = "SELECT * FROM Film WHERE ID_Film = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, idFilm);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     FilmBean film = new FilmBean();
-                    film.setIdFilm(rs.getInt("idFilm"));
+                    film.setIdFilm(rs.getInt("ID_Film"));
                     film.setLocandina(rs.getBytes("locandina"));
                     film.setNome(rs.getString("nome"));
                     film.setAnno(rs.getInt("anno"));
@@ -82,7 +82,7 @@ public class FilmDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     FilmBean film = new FilmBean();
-                    film.setIdFilm(rs.getInt("idFilm"));
+                    film.setIdFilm(rs.getInt("ID_Film"));
                     film.setLocandina(rs.getBytes("locandina"));
                     film.setNome(rs.getString("nome"));
                     film.setAnno(rs.getInt("anno"));
@@ -109,7 +109,7 @@ public class FilmDAO {
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 FilmBean film = new FilmBean();
-                film.setIdFilm(rs.getInt("idFilm"));
+                film.setIdFilm(rs.getInt("ID_Film"));
                 film.setLocandina(rs.getBytes("locandina"));
                 film.setNome(rs.getString("nome"));
                 film.setAnno(rs.getInt("anno"));
@@ -128,7 +128,7 @@ public class FilmDAO {
     }
 
     public void update(FilmBean film) {
-        String query = "UPDATE Film SET locandina = ?, nome = ?, anno = ?, durata = ?, generi = ?, regista = ?, attori = ?, valutazione = ?, trama = ? WHERE idFilm = ?";
+        String query = "UPDATE Film SET locandina = ?, nome = ?, anno = ?, durata = ?, generi = ?, regista = ?, attori = ?, valutazione = ?, trama = ? WHERE ID_Film = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setBytes(1, film.getLocandina());
@@ -148,7 +148,7 @@ public class FilmDAO {
     }
 
     public void delete(int idFilm) {
-        String query = "DELETE FROM Film WHERE idFilm = ?";
+        String query = "DELETE FROM Film WHERE ID_Film = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, idFilm);
