@@ -27,7 +27,7 @@ public class ReportDAO {
     }
 
     public void save(ReportBean report) {
-        String query = "INSERT INTO Report (email, emailRecensore, idFilm) VALUES (?, ?, ?)";
+        String query = "INSERT INTO Report (email, email_Recensore, ID_Film) VALUES (?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, report.getEmail());
@@ -40,7 +40,7 @@ public class ReportDAO {
     }
 
     public ReportBean findById(String email, String emailRecensore, int idFilm) {
-        String query = "SELECT * FROM Report WHERE email = ? AND emailRecensore = ? AND idFilm = ?";
+        String query = "SELECT * FROM Report WHERE email = ? AND email_Recensore = ? AND ID_Film = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, email);
@@ -50,8 +50,8 @@ public class ReportDAO {
                 if (rs.next()) {
                     ReportBean report = new ReportBean();
                     report.setEmail(rs.getString("email"));
-                    report.setEmailRecensore(rs.getString("emailRecensore"));
-                    report.setIdFilm(rs.getInt("idFilm"));
+                    report.setEmailRecensore(rs.getString("email_Recensore"));
+                    report.setIdFilm(rs.getInt("ID_Film"));
                     return report;
                 }
             }
@@ -62,7 +62,7 @@ public class ReportDAO {
     }
 
     public void delete(String email, String emailRecensore, int idFilm) {
-        String query = "DELETE FROM Report WHERE email = ? AND emailRecensore = ? AND idFilm = ?";
+        String query = "DELETE FROM Report WHERE email = ? AND email_Recensore = ? AND ID_Film = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, email);
@@ -75,7 +75,7 @@ public class ReportDAO {
     }
     
     public void deleteReports(String emailRecensore, int idFilm) {
-        String query = "DELETE FROM Report WHERE emailRecensore = ? AND idFilm = ?";
+        String query = "DELETE FROM Report WHERE email_Recensore = ? AND ID_Film = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, emailRecensore);

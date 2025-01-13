@@ -9,6 +9,7 @@ import java.util.List;
 import model.DAO.RecensioneDAO;
 import model.DAO.ReportDAO;
 import model.Entity.RecensioneBean;
+import model.Entity.ReportBean;
 import model.Entity.ValutazioneBean;
 import model.DAO.ValutazioneDAO;
 
@@ -80,6 +81,17 @@ public class RecensioniService {
     		
     	
     	return recensioniFiltered;
+    	
+    }
+    
+    public void report(String email, String emailRecensore,int idFilm) {
+    	
+    	ReportBean report = new ReportBean();
+    	report.setEmailRecensore(emailRecensore);
+    	report.setEmail(email);
+    	report.setIdFilm(idFilm);
+    	if(ReportDAO.findById(email, emailRecensore, idFilm)==null)
+    		ReportDAO.save(report);
     	
     }
     
