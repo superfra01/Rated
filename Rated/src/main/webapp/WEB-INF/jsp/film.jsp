@@ -12,6 +12,8 @@
     <title>Film</title>
     <!-- Inclusione del file CSS dedicato a questa pagina -->
     <link rel="stylesheet" href="static/css/Film.css" />
+    <!-- Inclusione di Font Awesome per le icone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 <body>
 
@@ -29,11 +31,6 @@
 
     <!-- Contenitore principale della pagina -->
     <div class="page-container">
-        <!-- Barra superiore (titolo "RATED" e barra di ricerca) -->
-        <div class="top-bar">
-            <h1>RATED</h1>
-            <input type="text" class="search-bar" placeholder="Search on RATED" />
-        </div>
 
         <!-- Sezione centrale che contiene le recensioni a sinistra e i dettagli film a destra -->
         <div class="content-section">
@@ -66,52 +63,67 @@
                         <div class="review-text">
                             "<%= testoRecensione %>"
                         </div>
-                        <!-- Stelline di valutazione (o numero stelle) -->
+                        <!-- Stelline di valutazione -->
                         <div class="review-stars">
-                            <!-- Qui puoi sostituire con vere icone stella se vuoi -->
-                            Voto: <%= stelle %>/5
-                        </div>
-                        <!-- Sezione like/dislike, contatori, ecc. -->
-                        <div class="review-actions">
-                            <div class="likes-dislikes-count">
-                                <span><%= r.getNLike() %></span> 
-                                <span class="separator">|</span> 
-                                <span><%= r.getNDislike() %></span>
-                            </div>
-
-                            <!-- Se l'utente è recensore, può esprimere like/dislike -->
                             <%
-                                if (user != null && "Recensore".equals(user.getTipoUtente())) {
+                                for (int i = 1; i <= 5; i++) {
+                                    if (i <= stelle) {
                             %>
-                            <div class="vote-buttons">
-                                <!-- Pulsante Like -->
-                                <form action="<%= request.getContextPath() %>/aggiungiValutazione" method="post">
-                                    <input type="hidden" name="idFilm" value="<%= film.getIdFilm() %>" />
-                                    <input type="hidden" name="emailRecensore" value="<%= emailRecensore %>" />
-                                    <input type="hidden" name="valutazione" value="true" />
-                                    <button type="submit" class="btn-like">Like</button>
-                                </form>
-
-                                <!-- Pulsante Dislike -->
-                                <form action="<%= request.getContextPath() %>/aggiungiValutazione" method="post">
-                                    <input type="hidden" name="idFilm" value="<%= film.getIdFilm() %>" />
-                                    <input type="hidden" name="emailRecensore" value="<%= emailRecensore %>" />
-                                    <input type="hidden" name="valutazione" value="false" />
-                                    <button type="submit" class="btn-dislike">Dislike</button>
-                                </form>
-                            </div>
+                                        <i class="fas fa-star"></i>
                             <%
-                                    if (val != null) {
+                                    } else {
                             %>
-                                <div class="user-vote">
-                                    Hai espresso: 
-                                    <strong><%= val.isLikeDislike() ? "Like" : "Dislike" %></strong>
-                                </div>
+                                        <i class="far fa-star"></i>
                             <%
                                     }
                                 }
                             %>
-                        </div> <!-- fine .review-actions -->
+                        </div>
+                        <!-- Sezione like/dislike, contatori, ecc. -->
+						<div class="review-actions">
+						    <div class="likes-dislikes-count">
+						        <i class="fas fa-thumbs-up"></i> <span><%= r.getNLike() %></span> 
+						        <span class="separator">|</span> 
+						        <i class="fas fa-thumbs-down"></i> <span><%= r.getNDislike() %></span>
+						    </div>
+						
+						    <!-- Se l'utente è recensore, può esprimere like/dislike -->
+						    <%
+						        if (user != null && "Recensore".equals(user.getTipoUtente())) {
+						    %>
+						    <div class="vote-buttons">
+						        <!-- Pulsante Like -->
+						        <form action="<%= request.getContextPath() %>/aggiungiValutazione" method="post" style="display: inline;">
+						            <input type="hidden" name="idFilm" value="<%= film.getIdFilm() %>" />
+						            <input type="hidden" name="emailRecensore" value="<%= emailRecensore %>" />
+						            <input type="hidden" name="valutazione" value="true" />
+						            <button type="submit" class="btn-like" style="background: none; border: none; cursor: pointer;">
+						                <i class="fas fa-thumbs-up"></i>
+						            </button>
+						        </form>
+						
+						        <!-- Pulsante Dislike -->
+						        <form action="<%= request.getContextPath() %>/aggiungiValutazione" method="post" style="display: inline;">
+						            <input type="hidden" name="idFilm" value="<%= film.getIdFilm() %>" />
+						            <input type="hidden" name="emailRecensore" value="<%= emailRecensore %>" />
+						            <input type="hidden" name="valutazione" value="false" />
+						            <button type="submit" class="btn-dislike" style="background: none; border: none; cursor: pointer;">
+						                <i class="fas fa-thumbs-down"></i>
+						            </button>
+						        </form>
+						    </div>
+						    <%
+						            if (val != null) {
+						    %>
+						        <div class="user-vote">
+						            Hai espresso: 
+						            <strong><%= val.isLikeDislike() ? "Like" : "Dislike" %></strong>
+						        </div>
+						    <%
+						            }
+						        }
+						    %>
+						</div> <!-- fine .review-actions -->
                     </div> <!-- fine .review-card -->
                 <%
                         } // fine for

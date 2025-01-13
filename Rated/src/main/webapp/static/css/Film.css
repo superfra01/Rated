@@ -14,21 +14,6 @@ body {
     flex-direction: column;
 }
 
-/* Barra superiore: titolo e barra di ricerca */
-.top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #1f1f1f;
-    padding: 10px 20px;
-}
-
-.top-bar h1 {
-    margin: 0;
-    font-size: 24px;
-    font-weight: bold;
-}
-
 .search-bar {
     width: 200px;
     padding: 6px;
