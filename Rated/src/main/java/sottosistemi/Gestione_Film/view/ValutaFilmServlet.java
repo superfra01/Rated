@@ -44,6 +44,8 @@ public class ValutaFilmServlet extends HttpServlet {
     	
     	RecensioniService.addRecensione(user.getEmail(), idFilm, recensione, titolo, valutazione);
     	
+    	request.getRequestDispatcher("/WEB-INF/jsp/film?idFilm="+idFilm).forward(request, response);
+        
     	
     }
 }
