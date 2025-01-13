@@ -59,7 +59,7 @@
     <div class="film-grid">
         <%
             for (FilmBean film : films) {
-                String dettaglioUrl = "film.jsp?idFilm=" + film.getIdFilm();
+                String dettaglioUrl = "film?idFilm=" + film.getIdFilm();
         %>
             <div class="film-card" onclick="window.location.href='<%=dettaglioUrl%>'">
                 <div class="film-poster">
