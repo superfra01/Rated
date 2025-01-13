@@ -38,8 +38,16 @@ public class RecensioniService {
     	ValutazioneBean.setLikeDislike(valutazione);
     	
     	ValutazioneDAO.save(ValutazioneBean);
+    	ValutazioneBean ValutazioneOnDB = ValutazioneDAO.findById(email, email_recensore, idFilm);
     	
     	RecensioneBean recensione = RecensioneDAO.findById(email_recensore, idFilm);
+    	
+    	if(ValutazioneDAO!=null && ValutazioneOnDB.isLikeDislike()==valutazione)
+    		if(valutazione==true)
+    			recensione.setNLike(recensione.getNLike()-1);
+    		else
+    			recensione.setNDislike(recensione.getNDislike()-1);
+    	else
     	if(valutazione)
     		recensione.setNLike(recensione.getNLike()+1);
     	else
