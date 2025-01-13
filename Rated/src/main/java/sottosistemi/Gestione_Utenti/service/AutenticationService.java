@@ -55,6 +55,7 @@ public class AutenticationService {
         User.setTipoUtente("RECENSORE");
         User.setIcona(icon);
         User.setNWarning(0);
+        User.setBiografia(biografia);
         
         
         UtenteDAO.save(User);
