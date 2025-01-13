@@ -29,31 +29,59 @@ public class RecensioniService {
         this.FilmDAO = new FilmDAO();
         
     }
-    public synchronized void addValutazione(String email, int idFilm, String email_recensore, boolean valutazione) {
-    	
-    	ValutazioneBean ValutazioneBean = new ValutazioneBean();
-    	ValutazioneBean.setEmail(email);
-    	ValutazioneBean.setEmailRecensore(email_recensore);
-    	ValutazioneBean.setIdFilm(idFilm);
-    	ValutazioneBean.setLikeDislike(valutazione);
-    	
-    	ValutazioneDAO.save(ValutazioneBean);
-    	ValutazioneBean ValutazioneOnDB = ValutazioneDAO.findById(email, email_recensore, idFilm);
-    	
-    	RecensioneBean recensione = RecensioneDAO.findById(email_recensore, idFilm);
-    	
-    	if(ValutazioneDAO!=null && ValutazioneOnDB.isLikeDislike()==valutazione)
-    		if(valutazione==true)
-    			recensione.setNLike(recensione.getNLike()-1);
-    		else
-    			recensione.setNDislike(recensione.getNDislike()-1);
-    	else
-    	if(valutazione)
-    		recensione.setNLike(recensione.getNLike()+1);
-    	else
-    		recensione.setNDislike(recensione.getNDislike()+1);
-    	RecensioneDAO.update(recensione);
-    	
+    public synchronized void addValutazione(String email, int idFilm, String email_recensore, boolean nuovaValutazione) {
+        // Recupero la valutazione esistente, se presente
+        ValutazioneBean valutazioneEsistente = ValutazioneDAO.findById(email, email_recensore, idFilm);
+        RecensioneBean recensione = RecensioneDAO.findById(email_recensore, idFilm);
+
+        if (recensione == null) {
+            throw new IllegalArgumentException("Recensione non trovata.");
+        }
+
+        // Gestione dei contatori in base alla valutazione corrente
+        if (valutazioneEsistente != null) {
+            boolean valutazioneCorrente = valutazioneEsistente.isLikeDislike();
+
+            // Caso 1: L'utente ha cambiato la valutazione
+            if (valutazioneCorrente != nuovaValutazione) {
+                if (nuovaValutazione) {
+                    recensione.setNLike(recensione.getNLike() + 1);
+                    recensione.setNDislike(recensione.getNDislike() - 1);
+                } else {
+                    recensione.setNLike(recensione.getNLike() - 1);
+                    recensione.setNDislike(recensione.getNDislike() + 1);
+                }
+                valutazioneEsistente.setLikeDislike(nuovaValutazione);
+                ValutazioneDAO.save(valutazioneEsistente);
+            }
+            // Caso 2: L'utente rimuove la valutazione
+            else {
+                if (valutazioneCorrente) {
+                    recensione.setNLike(recensione.getNLike() - 1);
+                } else {
+                    recensione.setNDislike(recensione.getNDislike() - 1);
+                }
+                ValutazioneDAO.delete(email, email_recensore, idFilm);
+            }
+        }
+        // Caso 3: Nuova valutazione
+        else {
+            ValutazioneBean nuovaValutazioneBean = new ValutazioneBean();
+            nuovaValutazioneBean.setEmail(email);
+            nuovaValutazioneBean.setEmailRecensore(email_recensore);
+            nuovaValutazioneBean.setIdFilm(idFilm);
+            nuovaValutazioneBean.setLikeDislike(nuovaValutazione);
+            ValutazioneDAO.save(nuovaValutazioneBean);
+
+            if (nuovaValutazione) {
+                recensione.setNLike(recensione.getNLike() + 1);
+            } else {
+                recensione.setNDislike(recensione.getNDislike() + 1);
+            }
+        }
+
+        // Aggiornamento della recensione nel database
+        RecensioneDAO.update(recensione);
     }
     
     public synchronized void addRecensione(String email, int idFilm, String recensione, String Titolo, int valutazione) {
