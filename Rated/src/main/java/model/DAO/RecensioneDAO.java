@@ -27,7 +27,7 @@ public class RecensioneDAO {
     }
 
     public void save(RecensioneBean recensione) {
-        String query = "INSERT INTO Recensione (titolo, contenuto, valutazione, nLike, nDislike, nReports, email, idFilm) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Recensione (titolo, contenuto, valutazione, N_Like, N_DisLike, N_Reports, email, ID_Film) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, recensione.getTitolo());
@@ -45,7 +45,7 @@ public class RecensioneDAO {
     }
 
     public RecensioneBean findById(String email, int idFilm)  {
-        String query = "SELECT * FROM Recensione WHERE email = ? AND idFilm = ?";
+        String query = "SELECT * FROM Recensione WHERE email = ? AND ID_Film = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, email);
@@ -56,11 +56,11 @@ public class RecensioneDAO {
                     recensione.setTitolo(rs.getString("titolo"));
                     recensione.setContenuto(rs.getString("contenuto"));
                     recensione.setValutazione(rs.getInt("valutazione"));
-                    recensione.setNLike(rs.getInt("nLike"));
-                    recensione.setNDislike(rs.getInt("nDislike"));
-                    recensione.setNReports(rs.getInt("nReports"));
+                    recensione.setNLike(rs.getInt("N_Like"));
+                    recensione.setNDislike(rs.getInt("N_DisLike"));
+                    recensione.setNReports(rs.getInt("N_Reports"));
                     recensione.setEmail(rs.getString("email"));
-                    recensione.setIdFilm(rs.getInt("idFilm"));
+                    recensione.setIdFilm(rs.getInt("ID_Film"));
                     return recensione;
                 }
             }
@@ -71,7 +71,7 @@ public class RecensioneDAO {
     }
     
     public List<RecensioneBean> findByIdFilm(int idFilm) {
-        String query = "SELECT * FROM Recensione WHERE idFilm = ?";
+        String query = "SELECT * FROM Recensione WHERE ID_Film = ?";
         List<RecensioneBean> recensioni = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -82,11 +82,11 @@ public class RecensioneDAO {
                     recensione.setTitolo(rs.getString("titolo"));
                     recensione.setContenuto(rs.getString("contenuto"));
                     recensione.setValutazione(rs.getInt("valutazione"));
-                    recensione.setNLike(rs.getInt("nLike"));
-                    recensione.setNDislike(rs.getInt("nDislike"));
-                    recensione.setNReports(rs.getInt("nReports"));
+                    recensione.setNLike(rs.getInt("N_Like"));
+                    recensione.setNDislike(rs.getInt("N_DisLike"));
+                    recensione.setNReports(rs.getInt("N_Reports"));
                     recensione.setEmail(rs.getString("email"));
-                    recensione.setIdFilm(rs.getInt("idFilm"));
+                    recensione.setIdFilm(rs.getInt("ID_Film"));
                     recensioni.add(recensione);
                 }
             }
@@ -107,11 +107,11 @@ public class RecensioneDAO {
                 recensione.setTitolo(rs.getString("titolo"));
                 recensione.setContenuto(rs.getString("contenuto"));
                 recensione.setValutazione(rs.getInt("valutazione"));
-                recensione.setNLike(rs.getInt("nLike"));
-                recensione.setNDislike(rs.getInt("nDislike"));
-                recensione.setNReports(rs.getInt("nReports"));
+                recensione.setNLike(rs.getInt("N_Like"));
+                recensione.setNDislike(rs.getInt("N_DisLike"));
+                recensione.setNReports(rs.getInt("N_Reports"));
                 recensione.setEmail(rs.getString("email"));
-                recensione.setIdFilm(rs.getInt("idFilm"));
+                recensione.setIdFilm(rs.getInt("ID_Film"));
                 recensioni.add(recensione);
             }
         }catch (SQLException e) {
@@ -132,11 +132,11 @@ public class RecensioneDAO {
                     recensione.setTitolo(rs.getString("titolo"));
                     recensione.setContenuto(rs.getString("contenuto"));
                     recensione.setValutazione(rs.getInt("valutazione"));
-                    recensione.setNLike(rs.getInt("nLike"));
-                    recensione.setNDislike(rs.getInt("nDislike"));
-                    recensione.setNReports(rs.getInt("nReports"));
+                    recensione.setNLike(rs.getInt("N_Like"));
+                    recensione.setNDislike(rs.getInt("N_DisLike"));
+                    recensione.setNReports(rs.getInt("N_Reports"));
                     recensione.setEmail(rs.getString("email"));
-                    recensione.setIdFilm(rs.getInt("idFilm"));
+                    recensione.setIdFilm(rs.getInt("ID_Film"));
                     recensioni.add(recensione);
                 }
             }
@@ -147,7 +147,7 @@ public class RecensioneDAO {
     }
     
     public void update(RecensioneBean recensione) {
-        String query = "UPDATE Recensione SET titolo = ?, contenuto = ?, valutazione = ?, nLike = ?, nDislike = ?, nReports = ? WHERE email = ? AND idFilm = ?";
+        String query = "UPDATE Recensione SET titolo = ?, contenuto = ?, valutazione = ?, N_Like = ?, N_DisLike = ?, N_Reports = ? WHERE email = ? AND ID_Film = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, recensione.getTitolo());
@@ -165,7 +165,7 @@ public class RecensioneDAO {
     }
 
     public void delete(String email, int idFilm) {
-        String query = "DELETE FROM Recensione WHERE email = ? AND idFilm = ?";
+        String query = "DELETE FROM Recensione WHERE email = ? AND ID_Film = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, email);
