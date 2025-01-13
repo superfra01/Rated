@@ -10,11 +10,6 @@
     List<RecensioneBean> recensioni = (List<RecensioneBean>) session.getAttribute("recensioni");
     HashMap<Integer, FilmBean> filmMap = (HashMap<Integer, FilmBean>) session.getAttribute("films");
 
-    if (visitedUser == null) {
-        response.sendRedirect(request.getContextPath() + "/home"); 
-        return;
-    }
-
     int reputationScore = 0;
     if (recensioni != null) {
         for (RecensioneBean rec : recensioni) {
@@ -58,12 +53,16 @@
         </div>
     </div>
 
-    <% if (isProfileOwner) { %>
-    <div class="buttons-container">
-        <button onclick="openOverlay('changePasswordOverlay')">Cambia Password</button>
-        <button onclick="openOverlay('changeProfileOverlay')">Modifica Profilo</button>
-    </div>
-    <% } %>
+	<% if (isProfileOwner) { %>
+	<div class="buttons-container">
+	    <button onclick="openOverlay('changePasswordOverlay')">Cambia Password</button>
+	    <button onclick="openOverlay('changeProfileOverlay')">Modifica Profilo</button>
+	    <!-- Pulsante di Logout -->
+	    <form method="get" action="<%= request.getContextPath() %>/logout" style="display: inline;">
+	        <button type="submit">Logout</button>
+	    </form>
+	</div>
+	<% } %>
 
     <div class="reviews-container">
         <h3>Recensioni pubblicate:</h3>
