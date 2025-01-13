@@ -70,6 +70,7 @@ public class RecensioneDAO {
         return null;
     }
     
+    
     public List<RecensioneBean> findByIdFilm(int idFilm) {
         String query = "SELECT * FROM Recensione WHERE ID_Film = ?";
         List<RecensioneBean> recensioni = new ArrayList<>();

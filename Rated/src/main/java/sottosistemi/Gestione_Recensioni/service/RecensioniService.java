@@ -8,24 +8,28 @@ import java.util.List;
 
 import model.DAO.RecensioneDAO;
 import model.DAO.ReportDAO;
+import model.DAO.FilmDAO;
 import model.Entity.RecensioneBean;
 import model.Entity.ReportBean;
 import model.Entity.ValutazioneBean;
+import model.Entity.FilmBean;
 import model.DAO.ValutazioneDAO;
 
 public class RecensioniService {
     private RecensioneDAO RecensioneDAO;
     private ValutazioneDAO ValutazioneDAO;
     private ReportDAO ReportDAO;
+    private FilmDAO FilmDAO;
     
 
     public RecensioniService() {
         this.RecensioneDAO = new RecensioneDAO();
         this.ValutazioneDAO = new ValutazioneDAO();
         this.ReportDAO = new ReportDAO();
+        this.FilmDAO = new FilmDAO();
         
     }
-    public void addValutazione(String email, int idFilm, String email_recensore, boolean valutazione) {
+    public synchronized void addValutazione(String email, int idFilm, String email_recensore, boolean valutazione) {
     	
     	ValutazioneBean ValutazioneBean = new ValutazioneBean();
     	ValutazioneBean.setEmail(email);
@@ -35,10 +39,16 @@ public class RecensioniService {
     	
     	ValutazioneDAO.save(ValutazioneBean);
     	
+    	RecensioneBean recensione = RecensioneDAO.findById(email_recensore, idFilm);
+    	if(valutazione)
+    		recensione.setNLike(recensione.getNLike()+1);
+    	else
+    		recensione.setNDislike(recensione.getNDislike()+1);
+    	RecensioneDAO.update(recensione);
     	
     }
     
-    public void addRecesione(String email, int idFilm, String recensione, String Titolo, int valutazione) {
+    public synchronized void addRecensione(String email, int idFilm, String recensione, String Titolo, int valutazione) {
     	
     	RecensioneBean RecensioneBean = new RecensioneBean();
     	RecensioneBean.setEmail(email);
@@ -47,6 +57,15 @@ public class RecensioniService {
     	RecensioneBean.setContenuto(recensione);
     	RecensioneBean.setTitolo(Titolo);
     	RecensioneDAO.save(RecensioneBean);
+    	
+    	FilmBean film = FilmDAO.findById(idFilm);
+    	List<RecensioneBean> recensioni = RecensioneDAO.findByIdFilm(idFilm);
+    	int somma=0;
+    	for(RecensioneBean recensionefilm: recensioni)
+    		somma+=recensionefilm.getValutazione();
+    	int media= somma/recensioni.size();
+    	film.setValutazione(media);
+    	FilmDAO.update(film);
     	
     	
     }
@@ -58,10 +77,19 @@ public class RecensioniService {
     	return recensioni;
     }
     
-    public void deleteRecensione(String email, int ID_Film) {
+    public synchronized void deleteRecensione(String email, int ID_Film) {
     	RecensioneDAO.delete(email, ID_Film);
     	ValutazioneDAO.deleteValutazioni( email, ID_Film);
     	ReportDAO.deleteReports(email, ID_Film);
+    	
+    	FilmBean film = FilmDAO.findById(ID_Film);
+    	List<RecensioneBean> recensioni = RecensioneDAO.findByIdFilm(ID_Film);
+    	int somma=0;
+    	for(RecensioneBean recensionefilm: recensioni)
+    		somma+=recensionefilm.getValutazione();
+    	int media= somma/recensioni.size();
+    	film.setValutazione(media);
+    	FilmDAO.update(film);
     }
     
     public void deleteReports(String email, int ID_Film) {
@@ -97,7 +125,7 @@ public class RecensioniService {
     	
     }
     
-    public void report(String email, String emailRecensore,int idFilm) {
+    public synchronized void report(String email, String emailRecensore,int idFilm) {
     	
     	ReportBean report = new ReportBean();
     	report.setEmailRecensore(emailRecensore);

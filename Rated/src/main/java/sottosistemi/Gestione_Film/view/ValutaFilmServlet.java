@@ -42,7 +42,7 @@ public class ValutaFilmServlet extends HttpServlet {
     	int valutazione = Integer.parseInt(request.getParameter("valutzione"));
 
     	
-    	RecensioniService.addRecesione(user.getEmail(), idFilm, recensione, titolo, valutazione);
+    	RecensioniService.addRecensione(user.getEmail(), idFilm, recensione, titolo, valutazione);
     	
     	
     }
