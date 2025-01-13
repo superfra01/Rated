@@ -10,8 +10,10 @@ CREATE TABLE Utente_Registrato (
     username VARCHAR(50) NOT NULL UNIQUE,
     Password VARCHAR(255) NOT NULL,
     Tipo_Utente VARCHAR(50),
-    N_Warning INT
+    N_Warning INT,
+    Biografia TEXT
 );
+
 
 -- Tabella Film
 CREATE TABLE Film (
@@ -64,60 +66,60 @@ CREATE TABLE Report (
 );
 
 -- Inserimento utenti speciali
-INSERT INTO Utente_Registrato (email, Icona, username, Password, Tipo_Utente, N_Warning) VALUES
-('gestore@catalogo.it', NULL, 'GestoreCatalogo', 'password123', 'GESTORE', 0),
-('moderatore@forum.it', NULL, 'Moderatore', 'password123', 'MODERATORE', 0);
+INSERT INTO Utente_Registrato (email, Icona, username, Password, Tipo_Utente, N_Warning, Biografia) VALUES
+('gestore@catalogo.it', NULL, 'GestoreCatalogo', 'password123', 'GESTORE', 0, 'Gestore Del Catalogo'),
+('moderatore@forum.it', NULL, 'Moderatore', 'password123', 'MODERATORE', 0, 'Moderatore');
 
 -- Inserimento dati nella tabella Utente_Registrato
-INSERT INTO Utente_Registrato (email, Icona, username, Password, Tipo_Utente, N_Warning) VALUES
-('alice.rossi@example.com', NULL, 'AliceRossi', 'c2FsYXRpbm/v0M/Qc9CQs6fNwqPF+h3/Aqgz0Y0EFZLsEzZFxIwHpA==', 'RECENSORE', 0),
-('marco.bianchi@example.com', NULL, 'MarcoBianchi', 'marco123', 'RECENSORE', 1),
-('luca.verdi@example.com', NULL, 'LucaVerdi', 'luca123', 'RECENSORE', 2),
-('chiara.neri@example.com', NULL, 'ChiaraNeri', 'chiara123', 'RECENSORE', 0),
-('giulia.ferri@example.com', NULL, 'GiuliaFerri', 'giulia123', 'RECENSORE', 1),
-('andrea.fontana@example.com', NULL, 'AndreaFontana', 'andrea123', 'RECENSORE', 0),
-('elena.marchi@example.com', NULL, 'ElenaMarchi', 'elena123', 'RECENSORE', 3),
-('federico.ruggeri@example.com', NULL, 'FedericoRuggeri', 'federico123', 'RECENSORE', 1),
-('simona.costa@example.com', NULL, 'SimonaCosta', 'simona123', 'RECENSORE', 0),
-('antonio.gallo@example.com', NULL, 'AntonioGallo', 'antonio123', 'RECENSORE', 2),
-('sara.moretti@example.com', NULL, 'SaraMoretti', 'sara123', 'RECENSORE', 0),
-('paolo.esposito@example.com', NULL, 'PaoloEsposito', 'paolo123', 'RECENSORE', 1),
-('francesca.barbieri@example.com', NULL, 'FrancescaBarbieri', 'francesca123', 'RECENSORE', 0),
-('alessio.martini@example.com', NULL, 'AlessioMartini', 'alessio123', 'RECENSORE', 1),
-('marta.romani@example.com', NULL, 'MartaRomani', 'marta123', 'RECENSORE', 2),
-('giovanni.borelli@example.com', NULL, 'GiovanniBorelli', 'giovanni123', 'RECENSORE', 0),
-('valentina.grassi@example.com', NULL, 'ValentinaGrassi', 'valentina123', 'RECENSORE', 0),
-('carlo.bassi@example.com', NULL, 'CarloBassi', 'carlo123', 'RECENSORE', 3),
-('laura.rizzi@example.com', NULL, 'LauraRizzi', 'laura123', 'RECENSORE', 1),
-('roberto.mariani@example.com', NULL, 'RobertoMariani', 'roberto123', 'RECENSORE', 2),
-('alessandra.milani@example.com', NULL, 'AlessandraMilani', 'alessandra123', 'RECENSORE', 0),
-('giacomo.giorgi@example.com', NULL, 'GiacomoGiorgi', 'giacomo123', 'RECENSORE', 0),
-('livia.trevisan@example.com', NULL, 'LiviaTrevisan', 'livia123', 'RECENSORE', 3),
-('stefano.pini@example.com', NULL, 'StefanoPini', 'stefano123', 'RECENSORE', 1),
-('arianna.betti@example.com', NULL, 'AriannaBetti', 'arianna123', 'RECENSORE', 0),
-('claudio.vitali@example.com', NULL, 'ClaudioVitali', 'claudio123', 'RECENSORE', 2),
-('irene.marconi@example.com', NULL, 'IreneMarconi', 'irene123', 'RECENSORE', 1),
-('lorenzo.gentili@example.com', NULL, 'LorenzoGentili', 'lorenzo123', 'RECENSORE', 0),
-('cecilia.mazzoni@example.com', NULL, 'CeciliaMazzoni', 'cecilia123', 'RECENSORE', 1),
-('davide.ferri@example.com', NULL, 'DavideFerri', 'davide123', 'RECENSORE', 0),
-('beatrice.carrara@example.com', NULL, 'BeatriceCarrara', 'beatrice123', 'RECENSORE', 2),
-('filippo.rinaldi@example.com', NULL, 'FilippoRinaldi', 'filippo123', 'RECENSORE', 3),
-('matteo.russo@example.com', NULL, 'MatteoRusso', 'matteo123', 'RECENSORE', 0),
-('veronica.monti@example.com', NULL, 'VeronicaMonti', 'veronica123', 'RECENSORE', 1),
-('franco.mancini@example.com', NULL, 'FrancoMancini', 'franco123', 'RECENSORE', 2),
-('michela.zanetti@example.com', NULL, 'MichelaZanetti', 'michela123', 'RECENSORE', 0),
-('fabio.riva@example.com', NULL, 'FabioRiva', 'fabio123', 'RECENSORE', 1),
-('anna.giacomini@example.com', NULL, 'AnnaGiacomini', 'anna123', 'RECENSORE', 0),
-('margherita.fontana@example.com', NULL, 'MargheritaFontana', 'margherita123', 'RECENSORE', 1),
-('emanuele.lombardi@example.com', NULL, 'EmanueleLombardi', 'emanuele123', 'RECENSORE', 0),
-('serena.valli@example.com', NULL, 'SerenaValli', 'serena123', 'RECENSORE', 2),
-('alberto.villa@example.com', NULL, 'AlbertoVilla', 'alberto123', 'RECENSORE', 3),
-('lucia.cortesi@example.com', NULL, 'LuciaCortesi', 'lucia123', 'RECENSORE', 1),
-('nicola.marchetti@example.com', NULL, 'NicolaMarchetti', 'nicola123', 'RECENSORE', 2),
-('gabriele.conti@example.com', NULL, 'GabrieleConti', 'gabriele123', 'RECENSORE', 0),
-('arianna.lombardo@example.com', NULL, 'AriannaLombardo', 'arianna123', 'RECENSORE', 0),
-('carla.tosi@example.com', NULL, 'CarlaTosi', 'carla123', 'RECENSORE', 1),
-('ludovico.romani@example.com', NULL, 'LudovicoRomani', 'ludovico123', 'RECENSORE', 2);
+INSERT INTO Utente_Registrato (email, Icona, username, Password, Tipo_Utente, N_Warning, Biografia) VALUES
+('alice.rossi@example.com', NULL, 'AliceRossi', 'c2FsYXRpbm/v0M/Qc9CQs6fNwqPF+h3/Aqgz0Y0EFZLsEzZFxIwHpA==', 'RECENSORE', 0, 'Recensore appassionato di libri e film.'),
+('marco.bianchi@example.com', NULL, 'MarcoBianchi', 'marco123', 'RECENSORE', 1, 'Recensore esperto di tecnologia e innovazione.'),
+('luca.verdi@example.com', NULL, 'LucaVerdi', 'luca123', 'RECENSORE', 2, 'Critico di prodotti multimediali con anni di esperienza.'),
+('chiara.neri@example.com', NULL, 'ChiaraNeri', 'chiara123', 'RECENSORE', 0, 'Specializzata in recensioni di narrativa contemporanea.'),
+('giulia.ferri@example.com', NULL, 'GiuliaFerri', 'giulia123', 'RECENSORE', 1, 'Recensore attivo nel settore della moda e del design.'),
+('andrea.fontana@example.com', NULL, 'AndreaFontana', 'andrea123', 'RECENSORE', 0, 'Appassionato di viaggi e cultura, recensisce guide e itinerari.'),
+('elena.marchi@example.com', NULL, 'ElenaMarchi', 'elena123', 'RECENSORE', 3, 'Recensore con particolare interesse per la cucina e la gastronomia.'),
+('federico.ruggeri@example.com', NULL, 'FedericoRuggeri', 'federico123', 'RECENSORE', 1, 'Esperto di recensioni nel settore dell’elettronica di consumo.'),
+('simona.costa@example.com', NULL, 'SimonaCosta', 'simona123', 'RECENSORE', 0, 'Recensore di letteratura per ragazzi e fantasy.'),
+('antonio.gallo@example.com', NULL, 'AntonioGallo', 'antonio123', 'RECENSORE', 2, 'Critico di cinema indipendente e film d’autore.'),
+('sara.moretti@example.com', NULL, 'SaraMoretti', 'sara123', 'RECENSORE', 0, 'Appassionata di arte e mostre, recensisce eventi culturali.'),
+('paolo.esposito@example.com', NULL, 'PaoloEsposito', 'paolo123', 'RECENSORE', 1, 'Recensore nel settore sportivo e tempo libero.'),
+('francesca.barbieri@example.com', NULL, 'FrancescaBarbieri', 'francesca123', 'RECENSORE', 0, 'Specializzata in recensioni di narrativa storica.'),
+('alessio.martini@example.com', NULL, 'AlessioMartini', 'alessio123', 'RECENSORE', 1, 'Esperto di videogiochi e recensioni nel mondo gaming.'),
+('marta.romani@example.com', NULL, 'MartaRomani', 'marta123', 'RECENSORE', 2, 'Recensore di libri di psicologia e crescita personale.'),
+('giovanni.borelli@example.com', NULL, 'GiovanniBorelli', 'giovanni123', 'RECENSORE', 0, 'Critico di musica classica e jazz.'),
+('valentina.grassi@example.com', NULL, 'ValentinaGrassi', 'valentina123', 'RECENSORE', 0, 'Recensore appassionata di moda e tendenze.'),
+('carlo.bassi@example.com', NULL, 'CarloBassi', 'carlo123', 'RECENSORE', 3, 'Recensore esperto di fumetti e graphic novel.'),
+('laura.rizzi@example.com', NULL, 'LauraRizzi', 'laura123', 'RECENSORE', 1, 'Specializzata in recensioni di prodotti di bellezza e skincare.'),
+('roberto.mariani@example.com', NULL, 'RobertoMariani', 'roberto123', 'RECENSORE', 2, 'Critico teatrale e cinematografico.'),
+('alessandra.milani@example.com', NULL, 'AlessandraMilani', 'alessandra123', 'RECENSORE', 0, 'Recensore di libri per bambini e letteratura educativa.'),
+('giacomo.giorgi@example.com', NULL, 'GiacomoGiorgi', 'giacomo123', 'RECENSORE', 0, 'Appassionato di recensioni di scienza e tecnologia.'),
+('livia.trevisan@example.com', NULL, 'LiviaTrevisan', 'livia123', 'RECENSORE', 3, 'Recensore di documentari e reportage giornalistici.'),
+('stefano.pini@example.com', NULL, 'StefanoPini', 'stefano123', 'RECENSORE', 1, 'Esperto di recensioni nel mondo del fitness e salute.'),
+('arianna.betti@example.com', NULL, 'AriannaBetti', 'arianna123', 'RECENSORE', 0, 'Recensore di narrativa rosa e commedie romantiche.'),
+('claudio.vitali@example.com', NULL, 'ClaudioVitali', 'claudio123', 'RECENSORE', 2, 'Recensore di libri fantasy e di fantascienza.'),
+('irene.marconi@example.com', NULL, 'IreneMarconi', 'irene123', 'RECENSORE', 1, 'Critico esperto di cinema d’animazione.'),
+('lorenzo.gentili@example.com', NULL, 'LorenzoGentili', 'lorenzo123', 'RECENSORE', 0, 'Appassionato di musica pop e recensioni di concerti.'),
+('cecilia.mazzoni@example.com', NULL, 'CeciliaMazzoni', 'cecilia123', 'RECENSORE', 1, 'Specializzata in recensioni di poesia e opere letterarie.'),
+('davide.ferri@example.com', NULL, 'DavideFerri', 'davide123', 'RECENSORE', 0, 'Recensore di sport e competizioni atletiche.'),
+('beatrice.carrara@example.com', NULL, 'BeatriceCarrara', 'beatrice123', 'RECENSORE', 2, 'Appassionata di recensioni di serie TV e fiction.'),
+('filippo.rinaldi@example.com', NULL, 'FilippoRinaldi', 'filippo123', 'RECENSORE', 3, 'Critico di letteratura contemporanea e saggi.'),
+('matteo.russo@example.com', NULL, 'MatteoRusso', 'matteo123', 'RECENSORE', 0, 'Recensore di avventure grafiche e storie interattive.'),
+('veronica.monti@example.com', NULL, 'VeronicaMonti', 'veronica123', 'RECENSORE', 1, 'Recensore nel settore del benessere e del lifestyle.'),
+('franco.mancini@example.com', NULL, 'FrancoMancini', 'franco123', 'RECENSORE', 2, 'Critico di film di genere thriller e poliziesco.'),
+('michela.zanetti@example.com', NULL, 'MichelaZanetti', 'michela123', 'RECENSORE', 0, 'Recensore di narrativa contemporanea e gialli.'),
+('fabio.riva@example.com', NULL, 'FabioRiva', 'fabio123', 'RECENSORE', 1, 'Appassionato di recensioni di cucina e tradizioni culinarie.'),
+('anna.giacomini@example.com', NULL, 'AnnaGiacomini', 'anna123', 'RECENSORE', 0, 'Specializzata in recensioni di saggistica e biografie.'),
+('margherita.fontana@example.com', NULL, 'MargheritaFontana', 'margherita123', 'RECENSORE', 1, 'Recensore di viaggi e mete turistiche.'),
+('emanuele.lombardi@example.com', NULL, 'EmanueleLombardi', 'emanuele123', 'RECENSORE', 0, 'Critico di musica indie e alternative.'),
+('serena.valli@example.com', NULL, 'SerenaValli', 'serena123', 'RECENSORE', 2, 'Recensore di saggi scientifici e accademici.'),
+('alberto.villa@example.com', NULL, 'AlbertoVilla', 'alberto123', 'RECENSORE', 3, 'Critico cinematografico specializzato in festival internazionali.'),
+('lucia.cortesi@example.com', NULL, 'LuciaCortesi', 'lucia123', 'RECENSORE', 1, 'Recensore di letteratura contemporanea e narrativa breve.'),
+('nicola.marchetti@example.com', NULL, 'NicolaMarchetti', 'nicola123', 'RECENSORE', 2, 'Specializzato in recensioni di romanzi storici e saghe.'),
+('gabriele.conti@example.com', NULL, 'GabrieleConti', 'gabriele123', 'RECENSORE', 0, 'Appassionato di recensioni di fumetti e manga.'),
+('arianna.lombardo@example.com', NULL, 'AriannaLombardo', 'arianna123', 'RECENSORE', 0, 'Recensore esperta di narrativa per giovani adulti.'),
+('carla.tosi@example.com', NULL, 'CarlaTosi', 'carla123', 'RECENSORE', 1, 'Specializzata in recensioni di opere teatrali e performance dal vivo.'),
+('ludovico.romani@example.com', NULL, 'LudovicoRomani', 'ludovico123', 'RECENSORE', 2, 'Critico letterario appassionato di fantasy e mitologia.');
 
 -- Inserimento dati nella tabella Film
 INSERT INTO Film (Locandina, Nome, Anno, Durata, Generi, Regista, Trama, Valutazione, Attori) VALUES
