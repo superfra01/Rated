@@ -37,11 +37,12 @@ public class ValutaFilmServlet extends HttpServlet {
     	HttpSession session = request.getSession(true);
     	UtenteBean user = (UtenteBean) session.getAttribute("user");
     	int idFilm = Integer.parseInt(request.getParameter("idFilm"));
-    	String email_recensore = request.getParameter("emailRecensore");
-    	boolean valutazione = Boolean.parseBoolean(request.getParameter("valutazione"));
+    	String titolo = request.getParameter("titolo");
+    	String recensione = request.getParameter("recensione");
+    	int valutazione = Integer.parseInt(request.getParameter("valutzione"));
 
     	
-    	RecensioniService.addValutazione(user.getEmail(), idFilm, email_recensore, valutazione);
+    	RecensioniService.addRecesione(user.getEmail(), idFilm, recensione, titolo, valutazione);
     	
     	
     }

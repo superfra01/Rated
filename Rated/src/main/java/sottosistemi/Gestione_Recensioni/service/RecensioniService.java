@@ -37,6 +37,19 @@ public class RecensioniService {
     	
     	
     }
+    
+    public void addRecesione(String email, int idFilm, String recensione, String Titolo, int valutazione) {
+    	
+    	RecensioneBean RecensioneBean = new RecensioneBean();
+    	RecensioneBean.setEmail(email);
+    	RecensioneBean.setTitolo(Titolo);
+    	RecensioneBean.setIdFilm(idFilm);
+    	RecensioneBean.setContenuto(recensione);
+    	RecensioneBean.setTitolo(Titolo);
+    	RecensioneDAO.save(RecensioneBean);
+    	
+    	
+    }
     public List<RecensioneBean> FindRecensioni(String email) {
     	
     	List<RecensioneBean> recensioni = RecensioneDAO.findByUser(email);
