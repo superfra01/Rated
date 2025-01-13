@@ -1,4 +1,4 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.3 Chrome/130.0.6723.137 Electron/33.2.1 Safari/537.36" version="26.0.3">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.4 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="26.0.4">
   <diagram name="Page-1" id="zOEEpCLVx3BSE4MT3N1Z">
     <mxGraphModel dx="1020" dy="496" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -43,17 +43,11 @@
         <mxCell id="_eB5BenDUcCew26t4jTj-259" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="_eB5BenDUcCew26t4jTj-258" vertex="1">
           <mxGeometry x="55" y="100" width="10" height="180" as="geometry" />
         </mxCell>
-        <mxCell id="_eB5BenDUcCew26t4jTj-260" value="approvaRecensione()" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;entryX=-0.267;entryY=0.238;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="_eB5BenDUcCew26t4jTj-259" target="_eB5BenDUcCew26t4jTj-262" edge="1">
+        <mxCell id="_eB5BenDUcCew26t4jTj-260" value="approvaRecensione(recensione)" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="1" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
-            <mxPoint x="420" y="339.5799999999999" as="sourcePoint" />
-            <mxPoint x="570" y="340" as="targetPoint" />
+            <mxPoint x="414" y="350" as="sourcePoint" />
+            <mxPoint x="729" y="350" as="targetPoint" />
           </mxGeometry>
-        </mxCell>
-        <mxCell id="_eB5BenDUcCew26t4jTj-261" value="recensione:Recensione" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};size=40;" parent="1" vertex="1">
-          <mxGeometry x="520" y="190" width="140" height="300" as="geometry" />
-        </mxCell>
-        <mxCell id="_eB5BenDUcCew26t4jTj-262" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="_eB5BenDUcCew26t4jTj-261" vertex="1">
-          <mxGeometry x="65" y="130" width="10" height="25" as="geometry" />
         </mxCell>
         <mxCell id="_eB5BenDUcCew26t4jTj-263" value="getAllRecensioniSegnalate()" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="1" target="_eB5BenDUcCew26t4jTj-265" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
