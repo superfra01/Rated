@@ -90,9 +90,11 @@
                 %>
 
                 <div class="review-card">
-                    <div class="review-username">
-                        <%= emailRecensore %>
-                    </div>
+					<div class="review-username">
+					    <a href="<%= request.getContextPath() %>/profile?email=<%= emailRecensore %>" class="profile-link">
+					        <%= emailRecensore %>
+					    </a>
+					</div>
                     <div class="review-title">
                         <%= titoloRecensione %>
                     </div>

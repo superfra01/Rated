@@ -48,7 +48,7 @@
         </div>
 
         <%
-            if (user != null && "GestoreCatalogo".equals(user.getTipoUtente())) {
+            if (user != null && "GESTORE".equals(user.getTipoUtente())) {
         %>
             <button class="add-film-btn" onclick="openAddFilmForm()">Aggiungi film al catalogo</button>
         <%
@@ -94,7 +94,7 @@
 </div>
 
 <%
-    if (user != null && "GestoreCatalogo".equals(user.getTipoUtente())) {
+    if (user != null && "GESTORE".equals(user.getTipoUtente())) {
 %>
 <div id="addFilmOverlay" class="overlay">
     <div class="overlay-content">
