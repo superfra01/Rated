@@ -93,11 +93,11 @@
 						
 						    <!-- Se l'utente è recensore, può esprimere like/dislike -->
 						    <%
-						        if (user != null && "Recensore".equals(user.getTipoUtente())) {
+						        if (user != null && "RECENSORE".equals(user.getTipoUtente())) {
 						    %>
 						    <div class="vote-buttons">
 						        <!-- Pulsante Like -->
-						        <form action="<%= request.getContextPath() %>/aggiungiValutazione" method="post" style="display: inline;">
+						        <form action="<%= request.getContextPath() %>/VoteReview" method="post" style="display: inline;">
 						            <input type="hidden" name="idFilm" value="<%= film.getIdFilm() %>" />
 						            <input type="hidden" name="emailRecensore" value="<%= emailRecensore %>" />
 						            <input type="hidden" name="valutazione" value="true" />
@@ -107,7 +107,7 @@
 						        </form>
 						
 						        <!-- Pulsante Dislike -->
-						        <form action="<%= request.getContextPath() %>/aggiungiValutazione" method="post" style="display: inline;">
+						        <form action="<%= request.getContextPath() %>/VoteReview" method="post" style="display: inline;">
 						            <input type="hidden" name="idFilm" value="<%= film.getIdFilm() %>" />
 						            <input type="hidden" name="emailRecensore" value="<%= emailRecensore %>" />
 						            <input type="hidden" name="valutazione" value="false" />
@@ -154,10 +154,10 @@
 
                     <!-- Pulsante "Rate it" visibile solo agli utenti con ruolo Recensore -->
                     <%
-                        if (user != null && "Recensore".equals(user.getTipoUtente())) {
+                        if (user != null && "RECENSORE".equals(user.getTipoUtente())) {
                     %>
                     <div class="rate-film">
-                        <form action="<%= request.getContextPath() %>/aggiungiRecensione" method="get">
+                        <form action="<%= request.getContextPath() %>/ValutaFilm" method="get">
                             <input type="hidden" name="idFilm" value="<%= film.getIdFilm() %>"/>
                             <button type="submit" class="btn-rate">RATE IT</button>
                         </form>
