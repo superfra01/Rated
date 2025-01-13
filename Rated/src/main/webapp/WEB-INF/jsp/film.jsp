@@ -52,9 +52,9 @@
         function validateReviewForm() {
             const titolo = document.getElementById('titolo').value.trim();
             const recensione = document.getElementById('recensione').value.trim();
-            const valutazione = document.getElementById('valutazione').value;
+            const valutazione = document.querySelector('input[name="valutazione"]:checked');
 
-            if (titolo === "" || recensione === "" || valutazione === "") {
+            if (titolo === "" || recensione === "" || !valutazione) {
                 alert("Per favore, completa tutti i campi.");
                 return false;
             }
@@ -164,13 +164,18 @@
                 <label for="recensione">Recensione:</label>
                 <textarea id="recensione" name="recensione" rows="5" required></textarea>
 
-                <label for="valutazione">Valutazione:</label>
+                <label>Valutazione:</label>
                 <div class="star-rating">
-                    <input type="radio" id="star5" name="valutzione" value="5" /><label for="star5" title="5 stelle"></label>
-                    <input type="radio" id="star4" name="valutzione" value="4" /><label for="star4" title="4 stelle"></label>
-                    <input type="radio" id="star3" name="valutzione" value="3" /><label for="star3" title="3 stelle"></label>
-                    <input type="radio" id="star2" name="valutzione" value="2" /><label for="star2" title="2 stelle"></label>
-                    <input type="radio" id="star1" name="valutzione" value="1" /><label for="star1" title="1 stella"></label>
+                    <input type="radio" id="star5" name="valutazione" value="5" />
+                    <label for="star5" title="5 stelle"><i class="fas fa-star"></i></label>
+                    <input type="radio" id="star4" name="valutazione" value="4" />
+                    <label for="star4" title="4 stelle"><i class="fas fa-star"></i></label>
+                    <input type="radio" id="star3" name="valutazione" value="3" />
+                    <label for="star3" title="3 stelle"><i class="fas fa-star"></i></label>
+                    <input type="radio" id="star2" name="valutazione" value="2" />
+                    <label for="star2" title="2 stelle"><i class="fas fa-star"></i></label>
+                    <input type="radio" id="star1" name="valutazione" value="1" />
+                    <label for="star1" title="1 stella"><i class="fas fa-star"></i></label>
                 </div>
 
                 <button type="submit" class="btn-submit">Pubblica</button>
