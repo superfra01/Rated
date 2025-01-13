@@ -70,11 +70,20 @@
                     <p class="film-genres"><%= film.getGeneri() %></p>
                     <div class="film-rating">
                         <%
-                            int stars = film.getValutazione();
-                            for (int i = 0; i < stars; i++) {
-                                out.print("* ");
-                            }
-                        %>
+						    int stars = film.getValutazione();
+						    int maxStars = 5; // Numero massimo di stelle
+						
+						    // Stelle piene
+						    for (int i = 0; i < stars; i++) {
+						        out.print("&#9733; "); // Stella piena
+						    }
+						
+						    // Stelle vuote
+						    for (int i = stars; i < maxStars; i++) {
+						        out.print("&#9734; "); // Stella vuota
+						    }
+						%>
+
                     </div>
                 </div>
             </div>
