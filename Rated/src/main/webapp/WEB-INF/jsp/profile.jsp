@@ -2,23 +2,19 @@
 <%@ page import="java.util.List" %>
 <%@ page import="model.Entity.UtenteBean" %>
 <%@ page import="model.Entity.RecensioneBean" %>
-<!-- Includi l’header comune -->
 <%@ include file="header.jsp" %>
 
 <%
-    // Recupero i bean dalla sessione
     UtenteBean visitedUser = (UtenteBean) session.getAttribute("visitedUser");
     UtenteBean currentUser = (UtenteBean) session.getAttribute("user");
     List<RecensioneBean> recensioni = (List<RecensioneBean>) session.getAttribute("recensioni");
-    HashMap<Integer, FilmBean> filmMap = (HashMap<Integer, FilmBean>) session.getAttribute("films"); // Recupero la HashMap
+    HashMap<Integer, FilmBean> filmMap = (HashMap<Integer, FilmBean>) session.getAttribute("films");
 
     if (visitedUser == null) {
-        // Se visitedUser non è settato, puoi gestire l'errore o reindirizzare
         response.sendRedirect(request.getContextPath() + "/home"); 
-        return; // esci subito
+        return;
     }
 
-    // Calcolo del reputation score = somma (upvote - downvote) di tutte le recensioni
     int reputationScore = 0;
     if (recensioni != null) {
         for (RecensioneBean rec : recensioni) {
@@ -26,7 +22,6 @@
         }
     }
 
-    // Controllo se l'utente che visualizza è proprietario del profilo
     boolean isProfileOwner = false;
     if (currentUser != null && visitedUser.getUsername().equals(currentUser.getUsername())) {
         isProfileOwner = true;
@@ -38,14 +33,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Profilo di <%= visitedUser.getUsername() %></title>
-    <!-- FontAwesome per le icone (ad es. cestino) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="static/css/Profile.css">
 </head>
 <body>
 
 <div class="profile-container">
-    <!-- Informazioni utente: icona, username, biografia, reputation -->
     <div class="user-info">
         <%
             String iconaBase64 = "";
@@ -60,45 +53,45 @@
 
         <div>
             <div class="username"><%= visitedUser.getUsername() %></div>
-            <div class="biografia"><%= visitedUser.getBiografia() == null ? "" : visitedUser.getBiografia() %></div>
+            <div class="biografia"><%= visitedUser.getBiografia() %></div>
             <div class="reputation">Reputation Score: <%= reputationScore %></div>
         </div>
     </div>
 
-    <%
-        if (isProfileOwner) {
-    %>
+    <% if (isProfileOwner) { %>
     <div class="buttons-container">
         <button onclick="openOverlay('changePasswordOverlay')">Cambia Password</button>
         <button onclick="openOverlay('changeProfileOverlay')">Modifica Profilo</button>
     </div>
-    <% 
-        }
-    %>
+    <% } %>
 
     <div class="reviews-container">
         <h3>Recensioni pubblicate:</h3>
         <%
             if (recensioni != null && !recensioni.isEmpty() && filmMap != null) {
-                for (RecensioneBean review : recensioni) {
-                    FilmBean film = filmMap.get(review.getIdFilm());
+                for (RecensioneBean recensione : recensioni) {
+                    FilmBean film = filmMap.get(recensione.getIdFilm());
                     String nomeFilm = (film != null) ? film.getNome() : "Film non trovato";
+                    String testoRecensione = recensione.getContenuto();
         %>
         <div class="review-item">
-            <span class="film-name"><%= nomeFilm %></span>
+            <div>
+                <span class="film-name"><%= nomeFilm %></span>
+                <p class="review-text"><%= testoRecensione %></p>
+            </div>
             <% if (isProfileOwner) { %>
                 <a href="#"
                    onclick="if(confirm('Sei sicuro di voler eliminare questa recensione?')) { 
-                                document.getElementById('deleteReviewForm_<%= review.getIdFilm() %>').submit();
+                                document.getElementById('deleteReviewForm_<%= recensione.getIdFilm() %>').submit();
                             }"
                 >
                     <i class="fas fa-trash-alt delete-icon"></i>
                 </a>
-                <form id="deleteReviewForm_<%= review.getIdFilm() %>" 
+                <form id="deleteReviewForm_<%= recensione.getIdFilm() %>" 
                       method="post" 
-                      action="<%= request.getContextPath() %>/profile">
+                      action="<%= request.getContextPath() %>/DeleteReview">
                     <input type="hidden" name="operationType" value="ReviewDelete"/>
-                    <input type="hidden" name="filmId" value="<%= review.getIdFilm() %>" />
+                    <input type="hidden" name="DeleteFilmID" value="<%= recensione.getIdFilm() %>" />
                 </form>
             <% } %>
         </div>
@@ -119,12 +112,17 @@
     <div class="modal">
         <button class="close-modal" onclick="closeOverlay('changePasswordOverlay')">&times;</button>
         <h2>Cambia Password</h2>
-        <form method="post" action="<%= request.getContextPath() %>/profile">
+        <form method="post" action="<%= request.getContextPath() %>/passwordModify">
             <input type="hidden" name="operationType" value="PasswordModify" />
             <input type="hidden" name="email" value="<%= visitedUser.getEmail() %>" />
 
             <label for="newPassword">Nuova Password</label>
             <input type="password" id="newPassword" name="password" required />
+
+            <label for="confirmPassword">Conferma Password</label>
+            <input type="password" id="confirmPassword" required />
+
+            <p id="passwordError" style="color: red; display: none;">Le password non coincidono.</p>
 
             <button type="submit">Conferma</button>
         </form>
@@ -135,7 +133,7 @@
     <div class="modal">
         <button class="close-modal" onclick="closeOverlay('changeProfileOverlay')">&times;</button>
         <h2>Modifica Profilo</h2>
-        <form method="post" action="<%= request.getContextPath() %>/profile">
+        <form method="post" action="<%= request.getContextPath() %>/profileModify">
             <input type="hidden" name="operationType" value="ProfileModify" />
 
             <label for="username">Username</label>
@@ -146,6 +144,11 @@
 
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Nuova password..." required />
+
+            <label for="confirmProfilePassword">Conferma Password</label>
+            <input type="password" id="confirmProfilePassword" required />
+
+            <p id="profilePasswordError" style="color: red; display: none;">Le password non coincidono.</p>
 
             <label for="biography">Biografia</label>
             <textarea id="biography" name="biography" rows="3"><%= visitedUser.getBiografia() %></textarea>
@@ -166,6 +169,32 @@
     }
     function closeOverlay(overlayId) {
         document.getElementById(overlayId).style.display = 'none';
+    }
+
+    function validatePasswordChangeForm() {
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (newPassword !== confirmPassword) {
+            document.getElementById('passwordError').style.display = 'block';
+            return false;
+        }
+
+        document.getElementById('passwordError').style.display = 'none';
+        return true;
+    }
+
+    function validateProfileForm() {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmProfilePassword').value;
+
+        if (password !== confirmPassword) {
+            document.getElementById('profilePasswordError').style.display = 'block';
+            return false;
+        }
+
+        document.getElementById('profilePasswordError').style.display = 'none';
+        return true;
     }
 </script>
 

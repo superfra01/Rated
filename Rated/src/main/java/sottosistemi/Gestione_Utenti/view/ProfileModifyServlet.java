@@ -56,8 +56,7 @@ public class ProfileModifyServlet extends HttpServlet {
             	HttpSession session = request.getSession(true);
             	session.setAttribute("user", utente);
             	
-                response.sendRedirect(request.getContextPath() + "/profile.jsp");
+                response.sendRedirect(request.getContextPath() + "/profile?visitedUser=" + ((UtenteBean)session.getAttribute("user")).getUsername());
             }
-        
     }
 }

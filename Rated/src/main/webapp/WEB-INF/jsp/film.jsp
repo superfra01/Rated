@@ -131,6 +131,16 @@
                          src="<%= film.getLocandina() != null ? film.getLocandina() : "img/default.jpg" %>"
                          alt="Locandina di <%= film.getNome() %>" />
                     <h2 class="film-title"><%= film.getNome() %></h2>
+                    <div class="review-stars">
+                        <%
+                        int stelleFilm = film.getValutazione();
+                        for (int i = 1; i <= 5; i++) {
+                            if (i <= stelleFilm) { %>
+                                <i class="fas fa-star"></i>
+                        <% } else { %>
+                                <i class="far fa-star"></i>
+                        <% }} %>
+                    </div>
                     <p class="film-year-genre">
                         <%= film.getAnno() %> - <%= film.getGeneri() %>
                     </p>

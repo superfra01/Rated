@@ -46,13 +46,11 @@ public class DeleteReviewServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession(true);
 		String email = ((UtenteBean)session.getAttribute("user")).getEmail();
-		int ID_Film = (int) session.getAttribute("DeleteFilmID");
+		int ID_Film = Integer.parseInt(request.getParameter("DeleteFilmID"));
 		
 		RecensioniService RecensioniService = new RecensioniService();
 		RecensioniService.deleteRecensione(email, ID_Film);
 		
-		response.sendRedirect(request.getContextPath() + "/profile");
-	
-    
+		response.sendRedirect(request.getContextPath() + "/profile?visitedUser=" + ((UtenteBean)session.getAttribute("user")).getUsername());
     }
 }
