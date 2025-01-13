@@ -27,7 +27,7 @@ public class UtenteDAO {
     }
 
     public void save(UtenteBean utente) {
-        String query = "INSERT INTO Utente_Registrato (email, icona, username, password, Tipo_Utente, N_Warning) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Utente_Registrato (email, icona, username, password, Tipo_Utente, N_Warning, Biografia) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, utente.getEmail());
@@ -36,14 +36,15 @@ public class UtenteDAO {
             ps.setString(4, utente.getPassword());
             ps.setString(5, utente.getTipoUtente());
             ps.setInt(6, utente.getNWarning());
+            ps.setString(7, utente.getBiografia());
             ps.executeUpdate();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public UtenteBean findByEmail(String email) {
-        String query = "SELECT * FROM Utente_Registrato  WHERE email = ?";
+        String query = "SELECT * FROM Utente_Registrato WHERE email = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, email);
@@ -56,16 +57,18 @@ public class UtenteDAO {
                     utente.setPassword(rs.getString("password"));
                     utente.setTipoUtente(rs.getString("Tipo_Utente"));
                     utente.setNWarning(rs.getInt("N_Warning"));
+                    utente.setBiografia(rs.getString("Biografia"));
                     return utente;
                 }
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
+
     public UtenteBean findByUsername(String username) {
-        String query = "SELECT * FROM Utente_Registrato  WHERE username = ?";
+        String query = "SELECT * FROM Utente_Registrato WHERE username = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, username);
@@ -78,6 +81,7 @@ public class UtenteDAO {
                     user.setTipoUtente(rs.getString("Tipo_Utente"));
                     user.setIcona(rs.getBytes("icona"));
                     user.setNWarning(rs.getInt("N_Warning"));
+                    user.setBiografia(rs.getString("Biografia"));
                     return user;
                 }
             }
@@ -88,7 +92,7 @@ public class UtenteDAO {
     }
 
     public List<UtenteBean> findAll() {
-        String query = "SELECT * FROM Utente_Registrato ";
+        String query = "SELECT * FROM Utente_Registrato";
         List<UtenteBean> utenti = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query);
@@ -101,16 +105,17 @@ public class UtenteDAO {
                 utente.setPassword(rs.getString("password"));
                 utente.setTipoUtente(rs.getString("Tipo_Utente"));
                 utente.setNWarning(rs.getInt("N_Warning"));
+                utente.setBiografia(rs.getString("Biografia"));
                 utenti.add(utente);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return utenti;
     }
 
     public void update(UtenteBean utente) {
-        String query = "UPDATE Utente_Registrato  SET icona = ?, username = ?, password = ?, Tipo_Utente = ?, N_Warning = ? WHERE email = ?";
+        String query = "UPDATE Utente_Registrato SET icona = ?, username = ?, password = ?, Tipo_Utente = ?, N_Warning = ?, Biografia = ? WHERE email = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setBytes(1, utente.getIcona());
@@ -118,20 +123,21 @@ public class UtenteDAO {
             ps.setString(3, utente.getPassword());
             ps.setString(4, utente.getTipoUtente());
             ps.setInt(5, utente.getNWarning());
-            ps.setString(6, utente.getEmail());
+            ps.setString(6, utente.getBiografia());
+            ps.setString(7, utente.getEmail());
             ps.executeUpdate();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void delete(String email) {
-        String query = "DELETE FROM Utente_Registrato  WHERE email = ?";
+        String query = "DELETE FROM Utente_Registrato WHERE email = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, email);
             ps.executeUpdate();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
