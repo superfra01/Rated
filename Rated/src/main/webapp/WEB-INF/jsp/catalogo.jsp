@@ -3,7 +3,6 @@
 <%@ page import="model.Entity.UtenteBean" %>
 <%@ page import="java.util.Base64" %>
 
-
 <%
     // Recupero i film dalla sessione
     List<FilmBean> films = (List<FilmBean>) session.getAttribute("films");
@@ -19,10 +18,10 @@
     String sort = request.getParameter("sort");
     if (sort != null && !sort.isEmpty()) {
         if (sort.equals("asc")) {
-            // ordinamento per valutazione crescente
+            // Ordinamento per valutazione crescente
             films.sort((f1, f2) -> Integer.compare(f1.getValutazione(), f2.getValutazione()));
         } else if (sort.equals("desc")) {
-            // ordinamento per valutazione decrescente
+            // Ordinamento per valutazione decrescente
             films.sort((f1, f2) -> Integer.compare(f2.getValutazione(), f1.getValutazione()));
         }
     }
@@ -36,22 +35,18 @@
 <head>
     <meta charset="UTF-8" />
     <title>Catalogo</title>
-    <!-- Link al file CSS dedicato -->
     <link rel="stylesheet" href="static/css/Catalogo.css" />
 </head>
 <body>
 
 <div class="catalog-container">
     <div class="catalog-header">
-        <!-- Selettore di ordinamento rating -->
         <div class="sorting">
-            <!-- Esempio di link per ordinare asc/desc: -->
             <span>Sorted by: Rating score</span>
             <a href="?sort=desc">decrescente</a>
             <a href="?sort=asc">crescente</a>
         </div>
 
-        <!-- Mostro il pulsante di aggiunta film solo se l'utente è un gestore del catalogo -->
         <%
             if (user != null && "GestoreCatalogo".equals(user.getTipoUtente())) {
         %>
@@ -61,34 +56,22 @@
         %>
     </div>
 
-    <!-- Griglia dei film -->
     <div class="film-grid">
         <%
             for (FilmBean film : films) {
-                // Costruiamo un url di dettaglio, ad esempio film.jsp?id=...
                 String dettaglioUrl = "film.jsp?idFilm=" + film.getIdFilm();
         %>
             <div class="film-card" onclick="window.location.href='<%=dettaglioUrl%>'">
-                <!-- Se volessi mostrare la locandina come immagine, potresti voler usare un
-                     Base64 encoding per i byte[] (o servire l'immagine da un'altra servlet).
-                     Qui, per semplicità, assumiamo non serva. 
-                     Se invece la stai già servendo via src, potresti fare:
-                     
-                     <img src="data:image/jpeg;base64,<%= Base64.getEncoder().encodeToString(film.getLocandina()) %>" alt="Locandina" />
-                -->
                 <div class="film-poster">
-                    <!-- Placeholder o eventuale immagine in base64 -->
-                    <img src="<%= request.getContextPath() %>/images/placeholder.jpg" alt="Locandina" />
+                    <img src="<%= film.getLocandina() != null ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(film.getLocandina()) : request.getContextPath() + "/images/RATED_icon.png" %>" alt="Locandina" />
                 </div>
                 <div class="film-info">
                     <h3><%= film.getNome() %></h3>
                     <p class="film-genres"><%= film.getGeneri() %></p>
                     <div class="film-rating">
                         <%
-                            // Visualizziamo un tot di stelline pari alla valutazione 
-                            // (oppure puoi usare una libreria di icone come FontAwesome)
                             int stars = film.getValutazione();
-                            for (int i=0; i<stars; i++) {
+                            for (int i = 0; i < stars; i++) {
                                 out.print("* ");
                             }
                         %>
@@ -101,7 +84,6 @@
     </div>
 </div>
 
-<!-- Se l'utente è un gestore, mostriamo l'overlay per aggiungere un film -->
 <%
     if (user != null && "GestoreCatalogo".equals(user.getTipoUtente())) {
 %>
