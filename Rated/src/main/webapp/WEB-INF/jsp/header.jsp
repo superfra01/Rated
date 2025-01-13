@@ -26,7 +26,7 @@
         <div class="user-icon">
         	<% UtenteBean user = (UtenteBean) request.getSession().getAttribute("user");
             if (user != null) { %>
-                <a href="<%= request.getContextPath() %>/profile">
+                <a href="<%= request.getContextPath() %>/profile?visitedUser=<%= user.getUsername() %>">
                 	<i class="fas fa-user-circle"></i> 
                 </a>
             <% } else { %>

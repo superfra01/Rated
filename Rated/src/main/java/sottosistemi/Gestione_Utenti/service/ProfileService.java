@@ -47,4 +47,8 @@ public class ProfileService {
     	
     }
     
+    public UtenteBean findByUsername(String username) {
+    	return UtenteDAO.findByUsername(username);
+    }
+    
 }

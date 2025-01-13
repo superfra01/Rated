@@ -26,20 +26,21 @@ import javax.servlet.http.HttpSession;
 public class ProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-
+	ProfileService ProfileService; 
     @Override
     public void init() {
-        
+    	ProfileService = new ProfileService();
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	HttpSession session = request.getSession(true);
     	String userName = request.getParameter("visitedUser");
-        if(user!=null) {
-        	
+    	UtenteBean visitedUser = ProfileService.findByUsername(userName);
+        if(visitedUser!=null) {
+        	session.setAttribute("visitedUser", visitedUser);
         	RecensioniService RecensioniService = new RecensioniService();
-        	List<RecensioneBean> recensioni = RecensioniService.FindRecensioni(user.getEmail());
+        	List<RecensioneBean> recensioni = RecensioniService.FindRecensioni(visitedUser.getEmail());
         	session.setAttribute("recensioni", recensioni);
         	CatalogoService CatalogoService = new CatalogoService();
         	HashMap<Integer, FilmBean> FilmMap = CatalogoService.getFilms(recensioni);
