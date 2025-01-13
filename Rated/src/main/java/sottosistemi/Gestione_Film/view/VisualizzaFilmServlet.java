@@ -43,12 +43,16 @@ public class VisualizzaFilmServlet extends HttpServlet {
     	List<RecensioneBean> recensioni = RecensioniService.GetRecensioni(idFilm);
     	session.setAttribute("recensioni", recensioni);
     	
-    	String email = ((UtenteBean) session.getAttribute("user")).getEmail();
-    	HashMap<String, ValutazioneBean> valutazioni = RecensioniService.GetValutazioni(idFilm, email);
-    	session.setAttribute("valutazioni", valutazioni);
+    	UtenteBean user = (UtenteBean) session.getAttribute("user");
+    	if(user!=null) {
+    		String email = user.getEmail();
+        	HashMap<String, ValutazioneBean> valutazioni = RecensioniService.GetValutazioni(idFilm, email);
+        	session.setAttribute("valutazioni", valutazioni);
+    	}
+    	
     	
         
-        request.getRequestDispatcher("/WEB-INF/jsp/catalogo.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/film.jsp").forward(request, response);
         
         
     }
