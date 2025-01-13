@@ -1,4 +1,4 @@
-DROP DATABASE RatedDB;
+
 -- Creazione del database e delle tabelle
 CREATE DATABASE RatedDB;
 USE RatedDB;
@@ -70,7 +70,7 @@ INSERT INTO Utente_Registrato (email, Icona, username, Password, Tipo_Utente, N_
 
 -- Inserimento dati nella tabella Utente_Registrato
 INSERT INTO Utente_Registrato (email, Icona, username, Password, Tipo_Utente, N_Warning) VALUES
-('alice.rossi@example.com', NULL, 'AliceRossi', 'alice123', 'RECENSORE', 0),
+('alice.rossi@example.com', NULL, 'AliceRossi', 'c2FsYXRpbm/v0M/Qc9CQs6fNwqPF+h3/Aqgz0Y0EFZLsEzZFxIwHpA==', 'RECENSORE', 0),
 ('marco.bianchi@example.com', NULL, 'MarcoBianchi', 'marco123', 'RECENSORE', 1),
 ('luca.verdi@example.com', NULL, 'LucaVerdi', 'luca123', 'RECENSORE', 2),
 ('chiara.neri@example.com', NULL, 'ChiaraNeri', 'chiara123', 'RECENSORE', 0),

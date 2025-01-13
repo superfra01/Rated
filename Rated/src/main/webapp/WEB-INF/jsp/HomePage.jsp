@@ -17,7 +17,7 @@
                 Il nostro obiettivo è promuovere discussioni di qualità e valorizzare i contenuti più apprezzati 
                 dalla community. Unisciti a noi, pubblica le tue recensioni e diventa parte della nostra famiglia di cinefili!
             </p>
-            <a href="catalogo.jsp">
+            <a href="catalogo">
                 <button class="catalogue-button">Scopri il catalogo di film</button>
             </a>
         </div>
