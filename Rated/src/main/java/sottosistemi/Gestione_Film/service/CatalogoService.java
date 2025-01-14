@@ -60,6 +60,7 @@ public class CatalogoService {
         return FilmMap;
     }
     
+    
     public void addFilm(int anno, String Attori, int durata, String Generi, byte[] Locandina, String Nome, String Regista, String Trama){
     	FilmBean film = new FilmBean();
     	film.setAnno(anno);
