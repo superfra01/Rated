@@ -24,6 +24,6 @@ public class LogoutServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         authService.logout(req.getSession());
-        req.getRequestDispatcher("/Rated").forward(req, resp);
+        resp.sendRedirect(req.getContextPath());
     }
 }

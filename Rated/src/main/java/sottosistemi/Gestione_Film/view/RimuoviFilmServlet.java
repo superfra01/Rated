@@ -36,12 +36,12 @@ public class RimuoviFilmServlet extends HttpServlet {
     	
     	HttpSession session = request.getSession(true);
     	UtenteBean user = (UtenteBean) session.getAttribute("user");
-    	if(user.getTipoUtente().equals("GestoreCatalogo")) {
+    	if(user.getTipoUtente().equals("GESTORE")) {
     		
     		int idFilm = Integer.parseInt(request.getParameter("idFilm"));
     		
     		CatalogoService.removeFilm(idFilm);
-    		request.getRequestDispatcher("/WEB-INF/jsp/catalogo").forward(request, response);
+    		response.sendRedirect(request.getContextPath() + "/catalogo");
     		
     	}else {
     		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

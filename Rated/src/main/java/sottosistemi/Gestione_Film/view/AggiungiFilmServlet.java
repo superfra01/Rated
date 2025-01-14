@@ -35,7 +35,7 @@ public class AggiungiFilmServlet extends HttpServlet {
     	
     	HttpSession session = request.getSession(true);
     	UtenteBean user = (UtenteBean) session.getAttribute("user");
-    	if(user.getTipoUtente().equals("GestoreCatalogo")) {
+    	if(user.getTipoUtente().equals("GESTORE")) {
     		
     		int anno = Integer.parseInt(request.getParameter("annoFilm"));
     		String Attori = request.getParameter("attoriFilm");
@@ -47,7 +47,7 @@ public class AggiungiFilmServlet extends HttpServlet {
     		String Trama = request.getParameter("tramaFilm");
     		
     		CatalogoService.addFilm(anno, Attori, durata, Generi, Locandina, Nome, Regista, Trama);
-    		request.getRequestDispatcher("/WEB-INF/jsp/catalogo").forward(request, response);
+    		response.sendRedirect(request.getContextPath() + "/catalogo");
     	}else {
     		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Non hai i permessi per effettuare la seguente operazione");

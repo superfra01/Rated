@@ -115,6 +115,9 @@
 
             <label for="registaFilm">Regista:</label>
             <input type="text" name="registaFilm" id="registaFilm" required />
+            
+            <label for="tramaFilm">Trama:</label>
+            <input type="text" name="tramaFilm" id="tramaFilm" required />
 
             <label for="attoriFilm">Attori:</label>
             <input type="text" name="attoriFilm" id="attoriFilm" required />
@@ -132,7 +135,7 @@
 
 <script>
     function openAddFilmForm() {
-        document.getElementById("addFilmOverlay").style.display = "block";
+        document.getElementById("addFilmOverlay").style.display = "flex";
     }
 
     function closeAddFilmForm() {

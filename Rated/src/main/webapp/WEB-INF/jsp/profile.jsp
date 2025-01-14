@@ -138,8 +138,7 @@
             <label for="username">Username</label>
             <input type="text" id="username" name="username" value="<%= visitedUser.getUsername() %>" required />
 
-            <label for="email">Email</label>
-            <input type="text" id="email" name="email" value="<%= visitedUser.getEmail() %>" required />
+            <input type="hidden" id="email" name="email" value="<%= visitedUser.getEmail() %>" />
 
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Nuova password..." required />

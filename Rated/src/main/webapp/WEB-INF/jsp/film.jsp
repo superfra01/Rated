@@ -48,7 +48,16 @@
             document.getElementById('reviewOverlay').style.display = 'none';
         }
 
-        // Funzione per validare il form prima dell'invio
+        // Funzioni per gestire l'overlay del form di modifica film
+        function showModifyForm() {
+            document.getElementById('modifyOverlay').style.display = 'flex';
+        }
+
+        function hideModifyForm() {
+            document.getElementById('modifyOverlay').style.display = 'none';
+        }
+
+        // Funzione per validare il form di recensione prima dell'invio
         function validateReviewForm() {
             const titolo = document.getElementById('titolo').value.trim();
             const recensione = document.getElementById('recensione').value.trim();
@@ -59,6 +68,55 @@
                 return false;
             }
             return true;
+        }
+
+        // Funzione per validare il form di modifica film prima dell'invio
+        function validateModifyForm() {
+            const nome = document.getElementById('nomeFilm').value.trim();
+            const regista = document.getElementById('registaFilm').value.trim();
+            const anno = document.getElementById('annoFilm').value.trim();
+            const generi = document.getElementById('generiFilm').value.trim();
+            const trama = document.getElementById('tramaFilm').value.trim();
+            const durata = document.getElementById('durataFilm').value.trim();
+            const attori = document.getElementById('attoriFilm').value.trim();
+            // La locandina è opzionale, quindi non è necessario verificarla
+
+            if (nome === "" || regista === "" || anno === "" || generi === "" || trama === "" || durata === "" || attori === "") {
+                alert("Per favore, completa tutti i campi obbligatori.");
+                return false;
+            }
+
+            if (isNaN(anno) || isNaN(durata)) {
+                alert("Anno e durata devono essere valori numerici.");
+                return false;
+            }
+
+            return true;
+        }
+
+        // Funzione per eliminare un film con conferma
+        function deleteFilm(idFilm) {
+            if (confirm("Sei sicuro di voler eliminare questo film? Questa azione non può essere annullata.")) {
+                const formData = new URLSearchParams();
+                formData.append("idFilm", idFilm);
+
+                fetch("deleteFilm", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: formData.toString()
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = "<%= request.getContextPath() %>/catalogo";
+                    } else {
+                        response.text().then(text => alert(text));
+                    }
+                })
+                .catch(error => {
+                    console.error("Errore nella richiesta:", error);
+                    alert("Errore durante l'eliminazione. Riprova più tardi.");
+                });
+            }
         }
     </script>
 </head>
@@ -90,11 +148,11 @@
                 %>
 
                 <div class="review-card">
-					<div class="review-username">
-					    <a href="<%= request.getContextPath() %>/profile?email=<%= emailRecensore %>" class="profile-link">
-					        <%= emailRecensore %>
-					    </a>
-					</div>
+                    <div class="review-username">
+                        <a href="<%= request.getContextPath() %>/profile?email=<%= emailRecensore %>" class="profile-link">
+                            <%= emailRecensore %>
+                        </a>
+                    </div>
                     <div class="review-title">
                         <%= titoloRecensione %>
                     </div>
@@ -148,14 +206,19 @@
                     </p>
                     <p class="film-description"><%= film.getTrama() %></p>
 
-                    <% if (user != null && "RECENSORE".equals(user.getTipoUtente())) { %>
                     <div class="rate-film">
-                        <button type="button" class="btn-rate" onclick="showReviewForm()">RATE IT</button>
+                        <% if (user != null && "RECENSORE".equals(user.getTipoUtente())) { %>
+                            <button type="button" class="btn-rate" onclick="showReviewForm()">RATE IT</button>
+                        <% } else { %>
+                            <button type="button" class="btn-rate" disabled>RATE IT</button>
+                        <% } %>
                     </div>
-                    <% } else { %>
-                    <div class="rate-film">
-                        <button type="button" class="btn-rate" disabled>RATE IT</button>
-                    </div>
+
+                    <% if (user != null && "GESTORE".equals(user.getTipoUtente())) { %>
+                        <div class="manage-film">
+                            <button type="button" class="btn-delete" onclick="deleteFilm('<%= film.getIdFilm() %>')">Elimina Film</button>
+                            <button type="button" class="btn-modify" onclick="showModifyForm()">Modifica Informazioni Film</button>
+                        </div>
                     <% } %>
                 </div>
             </div>
@@ -191,6 +254,43 @@
                 </div>
 
                 <button type="submit" class="btn-submit">Pubblica</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Overlay Form per la Modifica delle Informazioni del Film -->
+    <div id="modifyOverlay" class="overlay">
+        <div class="overlay-content">
+            <span class="close-btn" onclick="hideModifyForm()">&times;</span>
+            <h2>Modifica Informazioni Film</h2>
+            <form action="<%= request.getContextPath() %>/filmModify" method="post">
+                <input type="hidden" name="idFilm" value="<%= film.getIdFilm() %>" />
+
+                <label for="nomeFilm">Nome Film:</label>
+                <input type="text" id="nomeFilm" name="nomeFilm" value="<%= film.getNome() %>" required />
+
+                <label for="registaFilm">Regista:</label>
+                <input type="text" id="registaFilm" name="registaFilm" value="<%= film.getRegista() %>" required />
+
+                <label for="annoFilm">Anno:</label>
+                <input type="number" id="annoFilm" name="annoFilm" value="<%= film.getAnno() %>" required />
+
+                <label for="generiFilm">Generi:</label>
+                <input type="text" id="generiFilm" name="generiFilm" value="<%= film.getGeneri() %>" required />
+
+                <label for="tramaFilm">Trama:</label>
+                <textarea id="tramaFilm" name="tramaFilm" rows="4" required><%= film.getTrama() %></textarea>
+
+                <label for="durataFilm">Durata (minuti):</label>
+                <input type="number" id="durataFilm" name="durataFilm" value="<%= film.getDurata() %>" required />
+
+                <label for="attoriFilm">Attori:</label>
+                <input type="text" id="attoriFilm" name="attoriFilm" value="<%= film.getAttori() %>" required />
+
+                <label for="locandinaFilm">Nuova Locandina (opzionale):</label>
+                <input type="file" id="locandinaFilm" name="locandinaFilm" accept="image/*" />
+
+                <button type="submit" class="btn-submit">Salva Modifiche</button>
             </form>
         </div>
     </div>
