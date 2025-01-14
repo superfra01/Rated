@@ -5,19 +5,24 @@
 <%@ page session="true" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<!-- Includi eventualmente l'header comune se ce l'hai -->
-<!-- <jsp:include page="header.jsp" /> -->
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
     <title>Area Moderatore</title>
     <!-- Link al CSS dedicato (aggiorna il path in base alla tua struttura di progetto) -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/moderator.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/Moderator.css">
+    <script>
+        // Funzione per chiedere conferma prima di eseguire un'azione
+        function confermaAzione(messaggio, form) {
+            if (confirm(messaggio)) {
+                form.submit();
+            }
+        }
+    </script>
 </head>
 <body>
-
+<jsp:include page="header.jsp" />
 <%
     // Recupero dalla sessione la lista delle recensioni segnalate e la mappa dei film
     List<RecensioneBean> recensioni = (List<RecensioneBean>) session.getAttribute("recensioni");
@@ -59,14 +64,16 @@
                         </td>
                         <td class="actions">
                             <!-- Form per Approvare la recensione (rimuove segnalazioni) -->
-                            <form method="post" action="<%= request.getContextPath() %>/ApproveReview">
+                            <form method="post" action="<%= request.getContextPath() %>/ApproveReview" 
+                                  onsubmit="event.preventDefault(); confermaAzione('Sei sicuro di voler approvare questa recensione?', this);">
                                 <input type="hidden" name="ReviewUserEmail" value="<%= rec.getEmail() %>" />
                                 <input type="hidden" name="idFilm" value="<%= rec.getIdFilm() %>" />
                                 <button type="submit" class="btn approve-btn">Approva</button>
                             </form>
 
                             <!-- Form per Rimuovere la recensione e Avvisare l'utente -->
-                            <form method="post" action="<%= request.getContextPath() %>/reportedReviewAndWarn">
+                            <form method="post" action="<%= request.getContextPath() %>/reportedReviewAndWarn" 
+                                  onsubmit="event.preventDefault(); confermaAzione('Sei sicuro di voler rimuovere questa recensione e avvisare l\'utente?', this);">
                                 <input type="hidden" name="ReviewUserEmail" value="<%= rec.getEmail() %>" />
                                 <input type="hidden" name="idFilm" value="<%= rec.getIdFilm() %>" />
                                 <button type="submit" class="btn remove-btn">Rimuovi e avvisa</button>

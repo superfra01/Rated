@@ -46,7 +46,7 @@ public class ApproveReviewServlet extends HttpServlet{
 	    	
 	    	HttpSession session = request.getSession(true);
 	    	UtenteBean user = (UtenteBean) session.getAttribute("user");
-	    	if(user.getTipoUtente().equals("GestoreCatalogo")) {
+	    	if(user.getTipoUtente().equals("MODERATORE")) {
 	    		String userEmail = request.getParameter("ReviewUserEmail");
 				int idFilm = Integer.parseInt(request.getParameter("idFilm"));
 				RecensioniService RecensioniService = new RecensioniService();
@@ -55,7 +55,7 @@ public class ApproveReviewServlet extends HttpServlet{
 				
 			
 				
-				response.sendRedirect(request.getContextPath() + "/reportedview");
+				response.sendRedirect(request.getContextPath() + "/moderator");
 	    	}else {
 	    		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	            response.getWriter().write("Non hai i permessi per effettuare la seguente operazione");
