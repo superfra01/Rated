@@ -118,6 +118,31 @@
                 });
             }
         }
+        // Funzione per reportare una recensione
+        function reportReview(idFilm, emailRecensore) {
+            if (confirm("Sei sicuro di voler segnalare questa recensione?")) {
+                const formData = new URLSearchParams();
+                formData.append("idFilm", idFilm);
+                formData.append("reviewerEmail", emailRecensore);
+
+                fetch("ReportReview", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: formData.toString()
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Recensione segnalata con successo.");
+                    } else {
+                        alert("Errore durante la segnalazione. Riprova più tardi.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Errore nella richiesta:", error);
+                    alert("Errore durante la segnalazione. Riprova più tardi.");
+                });
+            }
+        }
     </script>
 </head>
 <body>
@@ -178,6 +203,12 @@
                                 <i class="fas fa-thumbs-down"></i> <span><%= r.getNDislike() %></span>
                             </button>
                         </div>
+                        <% if (user != null && "RECENSORE".equals(user.getTipoUtente())) { %>
+                            <button class="btn-report" 
+                                    onclick="reportReview('<%= film.getIdFilm() %>', '<%= emailRecensore %>')">
+                                <i class="fas fa-flag"></i> Segnala
+                            </button>
+                        <% } %>
                     </div>
                 </div>
                 <% } } else { %>

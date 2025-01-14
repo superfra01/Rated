@@ -41,7 +41,6 @@ public class ReportReviewServlet extends HttpServlet{
 			int idFilm = Integer.parseInt(request.getParameter("idFilm"));
 			RecensioniService RecensioniService = new RecensioniService();
 			RecensioniService.report(email, emailRecensore, idFilm);
-			
-
+			response.sendRedirect(request.getContextPath() + "/film?idFilm=" + idFilm);
 	    }
 	}
