@@ -235,9 +235,19 @@
 
             <div class="right-column">
                 <div class="film-details">
-                    <img class="film-poster" 
-                         src="<%= film.getLocandina() != null ? film.getLocandina() : "img/default.jpg" %>"
-                         alt="Locandina di <%= film.getNome() %>" />
+                    <%
+			            String LocandinaBase64 = "";
+			            if (film.getLocandina() != null) {
+			                byte[] iconaBytes = film.getLocandina() ;
+			                if (iconaBytes.length > 0) {
+			                	LocandinaBase64 = java.util.Base64.getEncoder().encodeToString(iconaBytes);
+			                }
+			            }
+			        %>
+					<img class="film-poster" 
+					     src="<%= LocandinaBase64 %>" 
+					   alt="Locandina di <%= film.getNome() %>" />
+
                     <h2 class="film-title"><%= film.getNome() %></h2>
                     <div class="review-stars">
                         <%
