@@ -5,15 +5,19 @@ import sottosistemi.Gestione_Utenti.service.AutenticationService;
 import utilities.FieldValidator;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Enumeration;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 @WebServlet("/register")
+@MultipartConfig(maxFileSize = 16177215)
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1879879L;
 	private AutenticationService authService;
@@ -36,14 +40,18 @@ public class RegisterServlet extends HttpServlet {
     	String password = request.getParameter("password");
     	String confirmPassword = request.getParameter("confirm_password");
     	String biography = request.getParameter("biography");
-    	String iconParam = request.getParameter("icon"); // Icon come stringa
+    	String iconParam = request.getParameter("profile_icon"); // Icon come stringa
     	byte[] icon = null;
     	
     	
 
-    	if (iconParam != null) {
-    	    icon = iconParam.getBytes(); // Convertire in byte solo se non è null
-    	}
+    	 Part filePart = request.getPart("profile_icon");
+         if (filePart != null && filePart.getSize() > 0) {
+             try (InputStream inputStream = filePart.getInputStream()) {
+                 icon = inputStream.readAllBytes();
+             }
+         }
+
 
 
         if (FieldValidator.validateUsername(username) &&
