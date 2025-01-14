@@ -47,7 +47,9 @@ public class VisualizzaFilmServlet extends HttpServlet {
     	
     	if(recensioni!= null) {
     		HashMap<String, String> utenti = ProfileService.getUsers(recensioni);
+    		session.setAttribute("users", utenti);
     	}
+    	
     	UtenteBean user = (UtenteBean) session.getAttribute("user");
     	if(user!=null) {
     		String email = user.getEmail();

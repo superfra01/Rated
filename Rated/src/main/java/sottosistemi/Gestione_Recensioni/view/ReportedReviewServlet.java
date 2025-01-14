@@ -25,11 +25,15 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/moderator")
 public class ReportedReviewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	private CatalogoService CatalogoService;
+	private RecensioniService RecensioniService;
+	private ProfileService ProfileService;
 
     @Override
     public void init() {
-        
+    	CatalogoService = new CatalogoService();
+        RecensioniService = new RecensioniService();
+        ProfileService = new ProfileService();
     }
 
     @Override
@@ -38,12 +42,13 @@ public class ReportedReviewServlet extends HttpServlet {
     	UtenteBean user = (UtenteBean) session.getAttribute("user");
         if(user != null && "MODERATORE".equals(user.getTipoUtente())) {
         	
-        	RecensioniService RecensioniService = new RecensioniService();
         	List<RecensioneBean> recensioni = RecensioniService.GetAllRecensioniSegnalate();
         	session.setAttribute("recensioni", recensioni);
         	
         	
-        	CatalogoService CatalogoService = new CatalogoService();
+    		HashMap<String, String> utenti = ProfileService.getUsers(recensioni);
+    		session.setAttribute("users", utenti);
+        	
         	HashMap<Integer, FilmBean> FilmMap = CatalogoService.getFilms(recensioni);
         	session.setAttribute("films", FilmMap);
         	request.getRequestDispatcher("/WEB-INF/jsp/moderator.jsp").forward(request, response);	
