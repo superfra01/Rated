@@ -67,7 +67,7 @@ CREATE TABLE Report (
 -- Inserimento utenti speciali
 INSERT INTO Utente_Registrato (email, Icona, username, Password, Tipo_Utente, N_Warning, Biografia) VALUES
 ('gestore@catalogo.it', NULL, 'GestoreCatalogo', 'c2FsYXRpbm/v0M/Qc9CQs6fNwqPF+h3/Aqgz0Y0EFZLsEzZFxIwHpA==', 'GESTORE', 0, 'Gestore Del Catalogo'),
-('moderatore@forum.it', NULL, 'Moderatore', 'password123', 'MODERATORE', 0, 'Moderatore');
+('moderatore@forum.it', NULL, 'Moderatore', 'c2FsYXRpbm/v0M/Qc9CQs6fNwqPF+h3/Aqgz0Y0EFZLsEzZFxIwHpA==', 'MODERATORE', 0, 'Moderatore');
 
 -- Inserimento dati nella tabella Utente_Registrato
 INSERT INTO Utente_Registrato (email, Icona, username, Password, Tipo_Utente, N_Warning, Biografia) VALUES

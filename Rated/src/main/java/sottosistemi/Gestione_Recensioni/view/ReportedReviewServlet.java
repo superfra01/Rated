@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/reportedReview")
+@WebServlet("/moderator")
 public class ReportedReviewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -35,8 +35,8 @@ public class ReportedReviewServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	HttpSession session = request.getSession(true);
-    	UtenteBean user = (UtenteBean) session.getAttribute("User");
-        if(user!=null&& user.getTipoUtente().equals("Moderatore")) {
+    	UtenteBean user = (UtenteBean) session.getAttribute("user");
+        if(user != null && "MODERATORE".equals(user.getTipoUtente())) {
         	
         	RecensioniService RecensioniService = new RecensioniService();
         	List<RecensioneBean> recensioni = RecensioniService.GetAllRecensioniSegnalate();

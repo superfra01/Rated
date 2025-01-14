@@ -22,9 +22,16 @@
             <a href="<%= request.getContextPath() %>/catalogo">
                 <button class="catalogue-button">Catalogo</button>
             </a>
+            <%
+            UtenteBean user = (UtenteBean) request.getSession().getAttribute("user");
+            if (user != null && "MODERATORE".equals(user.getTipoUtente())){%>
+            <a href="<%= request.getContextPath() %>/moderator">
+                <button class="catalogue-button">Moderazione</button>
+            </a>
+            <% } %>
         </div>
         <div class="user-icon">
-        	<% UtenteBean user = (UtenteBean) request.getSession().getAttribute("user");
+        	<%
             if (user != null) { %>
                 <a href="<%= request.getContextPath() %>/profile?visitedUser=<%= user.getUsername() %>">
                 	<i class="fas fa-user-circle"></i> 
