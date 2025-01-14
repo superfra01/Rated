@@ -245,7 +245,7 @@
 			            }
 			        %>
 					<img class="film-poster" 
-					     src="<%= LocandinaBase64 %>" 
+					     src="data:image/png;base64,<%= LocandinaBase64 %>" 
 					   alt="Locandina di <%= film.getNome() %>" />
 
                     <h2 class="film-title"><%= film.getNome() %></h2>
