@@ -86,12 +86,16 @@ public class RecensioniService {
     
     public synchronized void addRecensione(String email, int idFilm, String recensione, String Titolo, int valutazione) {
     	
+    	if(RecensioneDAO.findById(email, idFilm)!=null)
+    		return;
+    	
     	RecensioneBean RecensioneBean = new RecensioneBean();
     	RecensioneBean.setEmail(email);
     	RecensioneBean.setTitolo(Titolo);
     	RecensioneBean.setIdFilm(idFilm);
     	RecensioneBean.setContenuto(recensione);
     	RecensioneBean.setTitolo(Titolo);
+    	RecensioneBean.setValutazione(valutazione);
     	RecensioneDAO.save(RecensioneBean);
     	
     	FilmBean film = FilmDAO.findById(idFilm);
