@@ -40,7 +40,6 @@ public class RegisterServlet extends HttpServlet {
     	String password = request.getParameter("password");
     	String confirmPassword = request.getParameter("confirm_password");
     	String biography = request.getParameter("biography");
-    	String iconParam = request.getParameter("profile_icon"); // Icon come stringa
     	byte[] icon = null;
     	
     	
