@@ -5,21 +5,21 @@
 <%@ page session="true" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<!-- Includiamo l'header -->
-<jsp:include page="header.jsp" />
+<!-- Includi eventualmente l'header comune se ce l'hai -->
+<!-- <jsp:include page="header.jsp" /> -->
 
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
     <title>Area Moderatore</title>
-    <!-- Link al CSS dedicato -->
-    <link rel="stylesheet" href="static/css/Moderator.css">
+    <!-- Link al CSS dedicato (aggiorna il path in base alla tua struttura di progetto) -->
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/moderator.css">
 </head>
 <body>
 
 <%
-    // Recupero attributi di sessione
+    // Recupero dalla sessione la lista delle recensioni segnalate e la mappa dei film
     List<RecensioneBean> recensioni = (List<RecensioneBean>) session.getAttribute("recensioni");
     HashMap<Integer, FilmBean> films = (HashMap<Integer, FilmBean>) session.getAttribute("films");
 %>
@@ -38,47 +38,43 @@
                         <th>Film</th>
                         <th>Recensore</th>
                         <th>Testo recensione</th>
-                        <!-- Se lo desideri, puoi aggiungere altre info, come # di segnalazioni -->
                         <th>Azioni</th>
                     </tr>
                 </thead>
                 <tbody>
                 <%
-                    // Eseguiamo un ciclo per ogni RecensioneBean
-                    for(RecensioneBean rec : recensioni) {
-                        FilmBean film = films.get(rec.getIdFilm());
+                    // Ciclo per ogni RecensioneBean
+                    for (RecensioneBean rec : recensioni) {
+                        FilmBean film = films != null ? films.get(rec.getIdFilm()) : null;
                 %>
                     <tr>
                         <td>
-                            <%-- Stampa il titolo del film dal FilmBean --%>
                             <%= (film != null) ? film.getNome() : "Titolo non disponibile" %>
                         </td>
                         <td>
-                            <%-- Stampa email dell'utente che ha scritto la recensione --%>
                             <%= rec.getEmail() %>
                         </td>
                         <td>
-                            <%-- Esempio: stampa il testo della recensione (se presente) --%>
                             <%= rec.getContenuto() %>
                         </td>
-                        <td>
+                        <td class="actions">
                             <!-- Form per Approvare la recensione (rimuove segnalazioni) -->
-                            <form method="post" action="<%=request.getContextPath()%>/ApproveReview">
+                            <form method="post" action="<%= request.getContextPath() %>/ApproveReview">
                                 <input type="hidden" name="ReviewUserEmail" value="<%= rec.getEmail() %>" />
                                 <input type="hidden" name="idFilm" value="<%= rec.getIdFilm() %>" />
-                                <button type="submit" class="approve-btn">Approva</button>
+                                <button type="submit" class="btn approve-btn">Approva</button>
                             </form>
 
                             <!-- Form per Rimuovere la recensione e Avvisare l'utente -->
-                            <form method="post" action="<%=request.getContextPath()%>/reportedReviewAndWarn">
+                            <form method="post" action="<%= request.getContextPath() %>/reportedReviewAndWarn">
                                 <input type="hidden" name="ReviewUserEmail" value="<%= rec.getEmail() %>" />
                                 <input type="hidden" name="idFilm" value="<%= rec.getIdFilm() %>" />
-                                <button type="submit" class="remove-btn">Rimuovi e avvisa</button>
+                                <button type="submit" class="btn remove-btn">Rimuovi e avvisa</button>
                             </form>
                         </td>
                     </tr>
                 <%
-                    } // end for
+                    } // fine for
                 %>
                 </tbody>
             </table>
@@ -91,5 +87,6 @@
         %>
     </div>
 </div>
+
 </body>
 </html>

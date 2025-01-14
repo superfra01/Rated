@@ -1,63 +1,79 @@
-/* Stile generale del container della pagina del moderatore */
-.moderator-container {
-    margin: 2rem auto;
-    width: 80%;
-    max-width: 1200px;
+/* Resetta i margini e i padding di base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Stile di base per il body */
+body {
     font-family: Arial, sans-serif;
+    background: #f4f4f4;  /* Grigio chiaro di sfondo */
+    color: #333;         /* Testo di base */
+    line-height: 1.6;
 }
 
-/* Titolo principale */
+/* Container principale della pagina del moderatore */
+.moderator-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
 .moderator-container h1 {
+    margin-bottom: 20px;
     text-align: center;
-    margin-bottom: 1.5rem;
+    font-weight: 600;
 }
 
-/* Sezione scorrevole delle recensioni */
+/* Sezione scrollabile delle recensioni */
 .scrollable-reviews {
-    max-height: 400px; /* imposta l'altezza massima desiderata */
-    overflow-y: auto;  /* abilita la barra di scorrimento verticale */
-    border: 1px solid #ccc;
-    padding: 1rem;
-    background-color: #fdfdfd;
+    max-height: 600px; /* imposta un limite di altezza per la sezione */
+    overflow-y: auto;  /* aggiunge la scrollbar se necessario */
+    margin-top: 20px;
 }
 
 /* Tabella delle recensioni */
 .reviews-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 0 auto;
+    margin-bottom: 20px;
 }
 
-.reviews-table thead tr {
-    background-color: #f1f1f1;
+.reviews-table thead {
+    background: #f7f7f7;
 }
 
-.reviews-table th, 
-.reviews-table td {
+.reviews-table thead tr th {
+    font-weight: 600;
     text-align: left;
-    padding: 0.8rem;
+    padding: 10px;
+    border-bottom: 2px solid #ddd;
+}
+
+.reviews-table tbody tr td {
+    padding: 10px;
     border-bottom: 1px solid #ddd;
 }
 
-.reviews-table th {
-    font-weight: bold;
+/* Colonna delle azioni (Approvare/Eliminare) */
+.reviews-table .actions {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
 
-/* Nessuna recensione segnalata */
-.no-reviews {
-    text-align: center;
-    font-style: italic;
-}
-
-/* Pulsanti */
-.approve-btn,
-.remove-btn {
+/* Bottoni */
+.btn {
     cursor: pointer;
-    margin: 0.2rem 0;
-    padding: 0.4rem 0.8rem;
-    border: none;
     font-size: 0.9rem;
-    border-radius: 4px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    transition: background 0.2s ease;
 }
 
 .approve-btn {
@@ -65,16 +81,21 @@
     color: #fff;
 }
 
+.approve-btn:hover {
+    background-color: #218838;
+}
+
 .remove-btn {
     background-color: #dc3545; /* rosso */
     color: #fff;
 }
 
-/* Hover sui pulsanti */
-.approve-btn:hover {
-    background-color: #218838;
-}
-
 .remove-btn:hover {
     background-color: #c82333;
+}
+
+.no-reviews {
+    font-size: 1.1rem;
+    text-align: center;
+    margin: 20px 0;
 }

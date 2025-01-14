@@ -163,57 +163,74 @@
                     <!-- Eventuale barra di ordinamento -->
                 </div>
 
-                <% if (recensioni != null && !recensioni.isEmpty()) {
-                    for (RecensioneBean r : recensioni) {
-                        String emailRecensore = r.getEmail();
-                        String titoloRecensione = r.getTitolo();
-                        String testoRecensione = r.getContenuto();
-                        int stelle = r.getValutazione();
-                        ValutazioneBean val = (valutazioni != null) ? valutazioni.get(emailRecensore) : null;
-                %>
+				<% if (recensioni != null && !recensioni.isEmpty()) {
+				   HashMap<String, String> users = (HashMap<String, String>) session.getAttribute("users");
+				
+				   for (RecensioneBean r : recensioni) {
+				       String emailRecensore = r.getEmail();
+				       String titoloRecensione = r.getTitolo();
+				       String testoRecensione = r.getContenuto();
+				       int stelle = r.getValutazione();
+				       ValutazioneBean val = (valutazioni != null) ? valutazioni.get(emailRecensore) : null;
+				
+				       // Ricavo lo username da visualizzare
+				       String usernameRecensore = (users != null && users.containsKey(emailRecensore))
+				                                    ? users.get(emailRecensore)
+				                                    : emailRecensore; // fallback all'email se non trovato
+				%>
+				
+				<div class="review-card">
+				    <div class="review-username">
+				        <!-- Modificato: ora usa lo username invece della mail -->
+				        <a href="<%= request.getContextPath() %>/profile?visitedUser=<%= usernameRecensore %>" class="profile-link">
+				            <%= usernameRecensore %>
+				        </a>
+				    </div>
+				    <div class="review-title">
+				        <%= titoloRecensione %>
+				    </div>
+				    <div class="review-text">
+				        "<%= testoRecensione %>"
+				    </div>
+				    <div class="review-stars">
+				        <% for (int i = 1; i <= 5; i++) {
+				            if (i <= stelle) { %>
+				                <i class="fas fa-star"></i>
+				        <% } else { %>
+				                <i class="far fa-star"></i>
+				        <% } } %>
+				    </div>
+				    <div class="review-actions">
+				        <div class="likes-dislikes">
+				            <button class="btn-like <%= (val != null && val.isLikeDislike()) ? "active" : "" %>" 
+				                    <%= (user != null && "RECENSORE".equals(user.getTipoUtente())) 
+				                         ? "onclick=\"voteReview('" + film.getIdFilm() + "', '" + emailRecensore + "', true)\"" 
+				                         : "disabled" %>>
+				                <i class="fas fa-thumbs-up"></i> <span><%= r.getNLike() %></span>
+				            </button>
+				            <button class="btn-dislike <%= (val != null && !val.isLikeDislike()) ? "active" : "" %>" 
+				                    <%= (user != null && "RECENSORE".equals(user.getTipoUtente())) 
+				                         ? "onclick=\"voteReview('" + film.getIdFilm() + "', '" + emailRecensore + "', false)\"" 
+				                         : "disabled" %>>
+				                <i class="fas fa-thumbs-down"></i> <span><%= r.getNDislike() %></span>
+				            </button>
+				        </div>
+				        <% if (user != null && "RECENSORE".equals(user.getTipoUtente())) { %>
+				            <button class="btn-report" 
+				                    onclick="reportReview('<%= film.getIdFilm() %>', '<%= emailRecensore %>')">
+				                <i class="fas fa-flag"></i> Segnala
+				            </button>
+				        <% } %>
+				    </div>
+				</div>
+				
+				<% 
+				   } 
+				} else { 
+				%>
+				<p class="no-reviews-msg">Nessuna recensione presente per questo film.</p>
+				<% } %>
 
-                <div class="review-card">
-                    <div class="review-username">
-                        <a href="<%= request.getContextPath() %>/profile?email=<%= emailRecensore %>" class="profile-link">
-                            <%= emailRecensore %>
-                        </a>
-                    </div>
-                    <div class="review-title">
-                        <%= titoloRecensione %>
-                    </div>
-                    <div class="review-text">
-                        "<%= testoRecensione %>"
-                    </div>
-                    <div class="review-stars">
-                        <% for (int i = 1; i <= 5; i++) {
-                            if (i <= stelle) { %>
-                                <i class="fas fa-star"></i>
-                        <% } else { %>
-                                <i class="far fa-star"></i>
-                        <% }} %>
-                    </div>
-                    <div class="review-actions">
-                        <div class="likes-dislikes">
-                            <button class="btn-like <%= (val != null && val.isLikeDislike()) ? "active" : "" %>" 
-                                    <%= (user != null && "RECENSORE".equals(user.getTipoUtente())) ? "onclick=\"voteReview('" + film.getIdFilm() + "', '" + emailRecensore + "', true)\"" : "disabled" %>>
-                                <i class="fas fa-thumbs-up"></i> <span><%= r.getNLike() %></span>
-                            </button>
-                            <button class="btn-dislike <%= (val != null && !val.isLikeDislike()) ? "active" : "" %>" 
-                                    <%= (user != null && "RECENSORE".equals(user.getTipoUtente())) ? "onclick=\"voteReview('" + film.getIdFilm() + "', '" + emailRecensore + "', false)\"" : "disabled" %>>
-                                <i class="fas fa-thumbs-down"></i> <span><%= r.getNDislike() %></span>
-                            </button>
-                        </div>
-                        <% if (user != null && "RECENSORE".equals(user.getTipoUtente())) { %>
-                            <button class="btn-report" 
-                                    onclick="reportReview('<%= film.getIdFilm() %>', '<%= emailRecensore %>')">
-                                <i class="fas fa-flag"></i> Segnala
-                            </button>
-                        <% } %>
-                    </div>
-                </div>
-                <% } } else { %>
-                <p class="no-reviews-msg">Nessuna recensione presente per questo film.</p>
-                <% } %>
             </div>
 
             <div class="right-column">
