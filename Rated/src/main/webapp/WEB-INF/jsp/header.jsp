@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*" import="model.Entity.*"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="java.util.*" import="model.Entity.*" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,31 +16,40 @@
                 <span>RATED</span>
             </a>
         </div>
+        
         <div class="search-container">
-            <div class="search-bar">
-                <input type="text" placeholder="Cerca Film su RATED">
-            </div>
+            <form action="<%= request.getContextPath() %>/ricerca" method="get" style="display: flex; align-items: center;">
+                <div class="search-bar">
+                    <!-- L'input deve avere name="filmCercato" -->
+                    <input type="text" name="filmCercato" placeholder="Cerca Film su RATED">
+                </div>
+                <button type="submit" class="catalogue-button">Cerca</button>
+            </form>
+
             <a href="<%= request.getContextPath() %>/catalogo">
                 <button class="catalogue-button">Catalogo</button>
             </a>
+
             <%
-            UtenteBean user = (UtenteBean) request.getSession().getAttribute("user");
-            if (user != null && "MODERATORE".equals(user.getTipoUtente())){%>
+                UtenteBean user = (UtenteBean) request.getSession().getAttribute("user");
+                if (user != null && "MODERATORE".equals(user.getTipoUtente())) {
+            %>
             <a href="<%= request.getContextPath() %>/moderator">
                 <button class="catalogue-button">Moderazione</button>
             </a>
             <% } %>
         </div>
+        
         <div class="user-icon">
-        	<%
+            <%
             if (user != null) { %>
                 <a href="<%= request.getContextPath() %>/profile?visitedUser=<%= user.getUsername() %>">
-                	<i class="fas fa-user-circle"></i> 
+                    <i class="fas fa-user-circle"></i> 
                 </a>
             <% } else { %>
                 <a href="<%= request.getContextPath() %>/login">
-                	<i class="fas fa-user-circle"></i>
-            	</a>
+                    <i class="fas fa-user-circle"></i>
+                </a>
             <% } %>
         </div>
     </header>

@@ -7,27 +7,23 @@
     // Recupero i film dalla sessione
     List<FilmBean> films = (List<FilmBean>) session.getAttribute("films");
     if (films == null) {
-        // Evitiamo NullPointerException
         films = java.util.Collections.emptyList();
     }
 
-    // Recupero l'utente dalla sessione (per stabilire se è gestore)
+    // Recupero l'utente dalla sessione
     UtenteBean user = (UtenteBean) session.getAttribute("user");
 
     // Gestisco eventuali parametri di sorting passati via GET (sort=asc o sort=desc)
     String sort = request.getParameter("sort");
     if (sort != null && !sort.isEmpty()) {
         if (sort.equals("asc")) {
-            // Ordinamento per valutazione crescente
             films.sort((f1, f2) -> Integer.compare(f1.getValutazione(), f2.getValutazione()));
         } else if (sort.equals("desc")) {
-            // Ordinamento per valutazione decrescente
             films.sort((f1, f2) -> Integer.compare(f2.getValutazione(), f1.getValutazione()));
         }
     }
 %>
 
-<!-- Includo l'header -->
 <jsp:include page="header.jsp" />
 
 <!DOCTYPE html>
@@ -56,34 +52,49 @@
         %>
     </div>
 
+    <!-- Se la lista films è vuota o nulla, mostriamo il messaggio -->
+    <%
+        if (films == null || films.isEmpty()) {
+    %>
+        <p style="color: white; text-align: center; font-size: 1.2rem;">
+            Nessun film trovato.
+        </p>
+    <%
+        } else {
+    %>
+    
     <div class="film-grid">
         <%
             for (FilmBean film : films) {
                 String dettaglioUrl = "film?idFilm=" + film.getIdFilm();
         %>
-            <div class="film-card" onclick="window.location.href='<%=dettaglioUrl%>'">
+            <div class="film-card" onclick="window.location.href='<%= dettaglioUrl %>'">
                 <div class="film-poster">
-                    <img src="<%= film.getLocandina() != null ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(film.getLocandina()) : request.getContextPath() + "/images/RATED_icon.png" %>" alt="Locandina" />
+                    <img src="<%= film.getLocandina() != null
+                                    ? "data:image/jpeg;base64,"
+                                      + Base64.getEncoder().encodeToString(film.getLocandina())
+                                    : request.getContextPath() + "/images/RATED_icon.png"
+                              %>"
+                         alt="Locandina" />
                 </div>
                 <div class="film-info">
                     <h3><%= film.getNome() %></h3>
                     <p class="film-genres"><%= film.getGeneri() %></p>
                     <div class="film-rating">
                         <%
-						    int stars = film.getValutazione();
-						    int maxStars = 5; // Numero massimo di stelle
-						
-						    // Stelle piene
-						    for (int i = 0; i < stars; i++) {
-						        out.print("&#9733; "); // Stella piena
-						    }
-						
-						    // Stelle vuote
-						    for (int i = stars; i < maxStars; i++) {
-						        out.print("&#9734; "); // Stella vuota
-						    }
-						%>
-
+                            int stars = film.getValutazione();
+                            int maxStars = 5; // Numero massimo di stelle
+                        
+                            // Stelle piene
+                            for (int i = 0; i < stars; i++) {
+                                out.print("&#9733; "); // Stella piena
+                            }
+                        
+                            // Stelle vuote
+                            for (int i = stars; i < maxStars; i++) {
+                                out.print("&#9734; "); // Stella vuota
+                            }
+                        %>
                     </div>
                 </div>
             </div>
@@ -91,6 +102,9 @@
             }
         %>
     </div>
+    <%
+        } // fine else
+    %>
 </div>
 
 <%
