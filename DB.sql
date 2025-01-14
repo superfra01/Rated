@@ -5,7 +5,7 @@ USE RatedDB;
 -- Tabella Utente_Registrato
 CREATE TABLE Utente_Registrato (
     email VARCHAR(255) NOT NULL PRIMARY KEY,
-    Icona MEDIUMBLOB,
+    Icona LONGBLOB,
     username VARCHAR(50) NOT NULL UNIQUE,
     Password VARCHAR(255) NOT NULL,
     Tipo_Utente VARCHAR(50),
@@ -17,7 +17,7 @@ CREATE TABLE Utente_Registrato (
 -- Tabella Film
 CREATE TABLE Film (
     ID_Film INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    Locandina MEDIUMBLOB,
+    Locandina LONGBLOB,
     Nome VARCHAR(255) NOT NULL,
     Anno YEAR NOT NULL,
     Durata INT NOT NULL,
