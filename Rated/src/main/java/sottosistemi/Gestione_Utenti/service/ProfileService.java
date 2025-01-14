@@ -1,7 +1,11 @@
 package sottosistemi.Gestione_Utenti.service;
 
+import java.util.HashMap;
+import java.util.List;
+
 import model.DAO.UtenteDAO;
 import model.Entity.UtenteBean;
+import model.Entity.RecensioneBean;
 
 
 
@@ -44,4 +48,14 @@ public class ProfileService {
     	return UtenteDAO.findByUsername(username);
     }
     
+    public HashMap<String, String> getUsers(List<RecensioneBean> recensioni){
+    	HashMap<String, String> users = new HashMap<String, String>();
+    	for(RecensioneBean recensione: recensioni) {
+    		String email = recensione.getEmail();
+    		String username = UtenteDAO.findByEmail(email).getUsername();
+    		users.put(email, username);
+    		
+    	}
+    	return users;
+    }
 }

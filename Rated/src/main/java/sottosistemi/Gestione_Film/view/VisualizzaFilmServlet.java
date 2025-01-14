@@ -7,7 +7,7 @@ import model.Entity.UtenteBean;
 import model.Entity.ValutazioneBean;
 import sottosistemi.Gestione_Film.service.CatalogoService;
 import sottosistemi.Gestione_Recensioni.service.RecensioniService;
-
+import sottosistemi.Gestione_Utenti.service.ProfileService;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -25,11 +25,13 @@ public class VisualizzaFilmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CatalogoService CatalogoService;
 	private RecensioniService RecensioniService;
+	private ProfileService ProfileService;
 
     @Override
     public void init() {
         CatalogoService = new CatalogoService();
         RecensioniService = new RecensioniService();
+        ProfileService = new ProfileService();
     }
 
     @Override
@@ -43,6 +45,9 @@ public class VisualizzaFilmServlet extends HttpServlet {
     	List<RecensioneBean> recensioni = RecensioniService.GetRecensioni(idFilm);
     	session.setAttribute("recensioni", recensioni);
     	
+    	if(recensioni!= null) {
+    		HashMap<String, String> utenti = ProfileService.getUsers(recensioni);
+    	}
     	UtenteBean user = (UtenteBean) session.getAttribute("user");
     	if(user!=null) {
     		String email = user.getEmail();
