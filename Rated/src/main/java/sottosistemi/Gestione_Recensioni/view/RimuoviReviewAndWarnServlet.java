@@ -5,7 +5,7 @@ import model.Entity.ValutazioneBean;
 import model.Entity.FilmBean;
 import model.Entity.RecensioneBean;
 import sottosistemi.Gestione_Utenti.service.AutenticationService;
-import sottosistemi.Gestione_Utenti.service.ProfileService;
+import sottosistemi.Gestione_Utenti.service.ModerationService;
 import sottosistemi.Gestione_Film.service.CatalogoService;
 import sottosistemi.Gestione_Recensioni.service.RecensioniService;
 import utilities.FieldValidator;
@@ -26,12 +26,12 @@ import javax.servlet.http.HttpSession;
 public class RimuoviReviewAndWarnServlet extends HttpServlet{
 		private static final long serialVersionUID = 1L;
 		private RecensioniService RecensioniService;
-		private ProfileService ProfileService;
+		private ModerationService ModerationService;
 
 	    @Override
 	    public void init() {
 	    	RecensioniService = new RecensioniService();
-	    	ProfileService = new ProfileService();
+	    	ModerationService = new ModerationService();
 	    }
 
 	    @Override
@@ -48,9 +48,9 @@ public class RimuoviReviewAndWarnServlet extends HttpServlet{
 	    	if(user.getTipoUtente().equals("GestoreCatalogo")) {
 	    		String userEmail = request.getParameter("ReviewUserEmail");
 				int idFilm = Integer.parseInt(request.getParameter("idFilm"));
-				RecensioniService RecensioniService = new RecensioniService();
+				
 				RecensioniService.deleteRecensione(userEmail, idFilm);
-				ProfileService.warn(userEmail);
+				ModerationService.warn(userEmail);
 				
 			
 				
