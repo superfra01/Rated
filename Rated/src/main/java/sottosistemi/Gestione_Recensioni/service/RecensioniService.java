@@ -196,8 +196,16 @@ public class RecensioniService {
     	report.setEmailRecensore(emailRecensore);
     	report.setEmail(email);
     	report.setIdFilm(idFilm);
-    	if(ReportDAO.findById(email, emailRecensore, idFilm)==null)
+    	if(ReportDAO.findById(email, emailRecensore, idFilm)==null) {
+    		
+    		RecensioneBean recensione = RecensioneDAO.findById(emailRecensore, idFilm);
+    		recensione.setNReports(recensione.getNReports()+1);
+    		RecensioneDAO.update(recensione);
     		ReportDAO.save(report);
+    	}
+    		
+    	
+    	
     	
     }
     

@@ -159,8 +159,30 @@
         <span class="close-btn" onclick="hideReviewForm()">&times;</span>
         <h2>Pubblica una Recensione</h2>
         <form action="<%= request.getContextPath() %>/ValutaFilm" method="post" onsubmit="return validateReviewForm()">
-            <!-- Campi del form -->
-        </form>
+                <input type="hidden" name="idFilm" value="<%= film.getIdFilm() %>" />
+                
+                <label for="titolo">Titolo:</label>
+                <input type="text" id="titolo" name="titolo" required />
+
+                <label for="recensione">Recensione:</label>
+                <textarea id="recensione" name="recensione" rows="5" required></textarea>
+
+                <label>Valutazione:</label>
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="valutazione" value="5" />
+                    <label for="star5" title="5 stelle"><i class="fas fa-star"></i></label>
+                    <input type="radio" id="star4" name="valutazione" value="4" />
+                    <label for="star4" title="4 stelle"><i class="fas fa-star"></i></label>
+                    <input type="radio" id="star3" name="valutazione" value="3" />
+                    <label for="star3" title="3 stelle"><i class="fas fa-star"></i></label>
+                    <input type="radio" id="star2" name="valutazione" value="2" />
+                    <label for="star2" title="2 stelle"><i class="fas fa-star"></i></label>
+                    <input type="radio" id="star1" name="valutazione" value="1" />
+                    <label for="star1" title="1 stella"><i class="fas fa-star"></i></label>
+                </div>
+
+                <button type="submit" class="btn-submit">Pubblica</button>
+            </form>
     </div>
 </div>
 
@@ -170,8 +192,34 @@
         <span class="close-btn" onclick="hideModifyForm()">&times;</span>
         <h2>Modifica Informazioni Film</h2>
         <form action="<%= request.getContextPath() %>/filmModify" method="post">
-            <!-- Campi del form -->
-        </form>
+                <input type="hidden" name="idFilm" value="<%= film.getIdFilm() %>" />
+
+                <label for="nomeFilm">Nome Film:</label>
+                <input type="text" id="nomeFilm" name="nomeFilm" value="<%= film.getNome() %>" required />
+
+                <label for="registaFilm">Regista:</label>
+                <input type="text" id="registaFilm" name="registaFilm" value="<%= film.getRegista() %>" required />
+
+                <label for="annoFilm">Anno:</label>
+                <input type="number" id="annoFilm" name="annoFilm" value="<%= film.getAnno() %>" required />
+
+                <label for="generiFilm">Generi:</label>
+                <input type="text" id="generiFilm" name="generiFilm" value="<%= film.getGeneri() %>" required />
+
+                <label for="tramaFilm">Trama:</label>
+                <textarea id="tramaFilm" name="tramaFilm" rows="4" required><%= film.getTrama() %></textarea>
+
+                <label for="durataFilm">Durata (minuti):</label>
+                <input type="number" id="durataFilm" name="durataFilm" value="<%= film.getDurata() %>" required />
+
+                <label for="attoriFilm">Attori:</label>
+                <input type="text" id="attoriFilm" name="attoriFilm" value="<%= film.getAttori() %>" required />
+
+                <label for="locandinaFilm">Nuova Locandina (opzionale):</label>
+                <input type="file" id="locandinaFilm" name="locandinaFilm" accept="image/*" />
+
+                <button type="submit" class="btn-submit">Salva Modifiche</button>
+            </form>
     </div>
 </div>
 
