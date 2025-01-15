@@ -136,12 +136,12 @@ INSERT INTO Film (Locandina, Nome, Anno, Durata, Generi, Regista, Trama, Valutaz
 
 -- Inserimento dati nella tabella Recensione
 INSERT INTO Recensione (Titolo, Contenuto, Valutazione, N_Like, N_DisLike, N_Reports, email, ID_Film) VALUES
-('Capolavoro assoluto', 'Questo film è stato un’esperienza unica, dalla trama agli effetti speciali.', 5, 120, 3, 0, 'alice.rossi@example.com', 1),
+('Capolavoro assoluto', 'Questo film è stato un’esperienza unica, dalla trama agli effetti speciali.', 5, 120, 3, 2, 'alice.rossi@example.com', 1),
 ('Intrigante e visionario', 'Un film che ti fa riflettere sul concetto di realtà.', 5, 95, 5, 0, 'marco.bianchi@example.com', 2),
 ('Un classico intramontabile', 'Una pietra miliare del cinema che tutti dovrebbero vedere.', 5, 200, 2, 0, 'luca.verdi@example.com', 3),
-('Oscuro e coinvolgente', 'La performance del Joker è semplicemente perfetta.', 5, 150, 6, 2, 'chiara.neri@example.com', 4),
-('Divertente e originale', 'Un mix di storie che si intrecciano in modo geniale.', 5, 180, 4, 1, 'giulia.ferri@example.com', 5),
-('Profondo e provocatorio', 'Un film che lascia il segno e invita a riflettere.', 4, 100, 7, 3, 'andrea.fontana@example.com', 6),
+('Oscuro e coinvolgente', 'La performance del Joker è semplicemente perfetta.', 5, 150, 6, 0, 'chiara.neri@example.com', 4),
+('Divertente e originale', 'Un mix di storie che si intrecciano in modo geniale.', 5, 180, 4, 0, 'giulia.ferri@example.com', 5),
+('Profondo e provocatorio', 'Un film che lascia il segno e invita a riflettere.', 4, 100, 7, 0, 'andrea.fontana@example.com', 6),
 ('Emozionante', 'Un racconto che tocca il cuore e ispira.', 5, 250, 1, 0, 'elena.marchi@example.com', 7),
 ('Un viaggio emozionante', 'Fotografia e colonna sonora eccezionali.', 5, 140, 3, 0, 'federico.ruggeri@example.com', 8),
 ('Azione e adrenalina pura', 'Un cast incredibile per un film indimenticabile.', 4, 110, 8, 0, 'simona.costa@example.com', 9),
