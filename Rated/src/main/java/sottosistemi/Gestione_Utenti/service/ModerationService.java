@@ -4,12 +4,17 @@ import model.DAO.UtenteDAO;
 import model.Entity.UtenteBean;
 
 public class ModerationService {
-    private UtenteDAO UtenteDAO;
+    public UtenteDAO UtenteDAO;
     
 
     public ModerationService() {
         this.UtenteDAO = new UtenteDAO();
         
+    }
+    
+    // Costruttore per il test
+    public ModerationService(UtenteDAO utenteDAO) {
+        this.UtenteDAO = utenteDAO;
     }
     
     public void warn(String email) {

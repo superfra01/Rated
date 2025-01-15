@@ -18,6 +18,11 @@ public class CatalogoService {
         
     }
     
+    // Costruttore per il test o configurazioni personalizzate
+    public CatalogoService(FilmDAO filmDAO) {
+        this.FilmDAO = filmDAO;
+    }
+    
     public List<FilmBean> getFilms(){
     	List<FilmBean> films = FilmDAO.findAll();
     	return films;
