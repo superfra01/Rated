@@ -18,6 +18,10 @@ public class AutenticationService {
         
     }
     
+
+    public AutenticationService(UtenteDAO utenteDAO) {
+        this.UtenteDAO = utenteDAO;
+    }
     
 
 

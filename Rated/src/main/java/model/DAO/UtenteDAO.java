@@ -25,6 +25,17 @@ public class UtenteDAO {
             throw new RuntimeException("Error initializing DataSource: " + e.getMessage());
         }
     }
+    
+    // Costruttore per test (iniezione di DataSource mock)
+    public UtenteDAO(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    // Metodo setter per cambiare il DataSource
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
 
     public void save(UtenteBean utente) {
         String query = "INSERT INTO Utente_Registrato (email, icona, username, password, Tipo_Utente, N_Warning, Biografia) VALUES (?, ?, ?, ?, ?, ?, ?)";

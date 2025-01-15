@@ -3,6 +3,8 @@ package sottosistemi.Gestione_Utenti.service;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import model.DAO.UtenteDAO;
 import model.Entity.UtenteBean;
 import model.Entity.RecensioneBean;
@@ -10,12 +12,16 @@ import model.Entity.RecensioneBean;
 
 
 public class ProfileService {
-    private UtenteDAO UtenteDAO;
+    public UtenteDAO UtenteDAO;
     
 
     public ProfileService() {
         this.UtenteDAO = new UtenteDAO();
         
+    }
+    //test
+    public ProfileService(DataSource dataSource) {
+        this.UtenteDAO = new UtenteDAO(dataSource);
     }
     
     public UtenteBean ProfileUpdate(String username, String email, String password, String biografia, byte[] icon) {
