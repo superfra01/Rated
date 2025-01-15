@@ -32,6 +32,7 @@
     <meta charset="UTF-8" />
     <title>Catalogo</title>
     <link rel="stylesheet" href="static/css/Catalogo.css" />
+    <script src="static/scripts/catalogoFunctions.js" defer></script>
 </head>
 <body>
 
@@ -146,16 +147,6 @@
 <%
     }
 %>
-
-<script>
-    function openAddFilmForm() {
-        document.getElementById("addFilmOverlay").style.display = "flex";
-    }
-
-    function closeAddFilmForm() {
-        document.getElementById("addFilmOverlay").style.display = "none";
-    }
-</script>
 
 </body>
 </html>

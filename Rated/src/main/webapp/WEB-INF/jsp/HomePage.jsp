@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rated - About Us</title>
     <link rel="stylesheet" href="static/css/HomePage.css">
+    <script src="static/scripts/homePageWarn.js" defer></script>
 </head>
 <body>
     <%@ include file="header.jsp" %>
@@ -39,26 +40,11 @@
     </main>
 
     <script>
-        // Passiamo dal server a JavaScript i valori necessari:
-        const loginSuccess = <%= loginSuccess ? "true" : "false" %>;
-        const nWarning = <%= nWarning %>;
-
-        // Mostra l'alert solo se la pagina è stata aperta dopo un login (loginSuccess == true)
-        if (loginSuccess) {
-            if (nWarning > 0 && nWarning < 3) {
-                alert("Attenzione: Hai ricevuto un warning da un moderatore.\n" +
-                      "Ciò è avvenuto a causa della rimozione di una recensione inappropriata.\n" +
-                      "Ti invitiamo a essere rispettoso nelle recensioni ed evitare spoiler.\n\n" +
-                      "In totale hai ricevuto: " + nWarning + " warning.\n" +
-                      "Ricorda: al raggiungimento di 3 warning, il tuo account sarà limitato e non potrai più scrivere recensioni.");
-            } else if (nWarning >= 3) {
-                alert("Il tuo account è attualmente limitato a causa di 3 o più warning ricevuti.\n" +
-                      "Non puoi più scrivere recensioni.");
-            }
-
-            // Rimuove il parametro "loginSuccess" dalla URL, così non rispunta l'alert se l'utente ricarica la pagina
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
+        // Passaggio dei dati al file JavaScript
+        const data = {
+            loginSuccess: <%= loginSuccess ? "true" : "false" %>,
+            nWarning: <%= nWarning %>
+        };
     </script>
 </body>
 </html>

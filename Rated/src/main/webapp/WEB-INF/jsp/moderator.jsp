@@ -10,16 +10,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Area Moderatore</title>
-    <!-- Link al CSS dedicato (aggiorna il path in base alla tua struttura di progetto) -->
+    <!-- Link al CSS dedicato -->
     <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/Moderator.css">
-    <script>
-        // Funzione per chiedere conferma prima di eseguire un'azione
-        function confermaAzione(messaggio, form) {
-            if (confirm(messaggio)) {
-                form.submit();
-            }
-        }
-    </script>
+    <script src="static/scripts/moderatorScripts.js" defer></script>
 </head>
 <body>
 <jsp:include page="header.jsp" />

@@ -30,6 +30,7 @@
     <title>Profilo di <%= visitedUser.getUsername() %></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="static/css/Profile.css">
+    <script src="static/scripts/profileScripts.js" defer></script>
 </head>
 <body>
 
@@ -53,16 +54,16 @@
         </div>
     </div>
 
-	<% if (isProfileOwner) { %>
-	<div class="buttons-container">
-	    <button onclick="openOverlay('changePasswordOverlay')">Cambia Password</button>
-	    <button onclick="openOverlay('changeProfileOverlay')">Modifica Profilo</button>
-	    <!-- Pulsante di Logout -->
-	    <form method="get" action="<%= request.getContextPath() %>/logout" style="display: inline;">
-	        <button type="submit">Logout</button>
-	    </form>
-	</div>
-	<% } %>
+    <% if (isProfileOwner) { %>
+    <div class="buttons-container">
+        <button onclick="openOverlay('changePasswordOverlay')">Cambia Password</button>
+        <button onclick="openOverlay('changeProfileOverlay')">Modifica Profilo</button>
+        <!-- Pulsante di Logout -->
+        <form method="get" action="<%= request.getContextPath() %>/logout" style="display: inline;">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+    <% } %>
 
     <div class="reviews-container">
         <h3>Recensioni pubblicate:</h3>
@@ -106,7 +107,6 @@
 </div>
 
 <% if (isProfileOwner) { %>
-
 <div class="overlay" id="changePasswordOverlay">
     <div class="modal">
         <button class="close-modal" onclick="closeOverlay('changePasswordOverlay')">&times;</button>
@@ -158,43 +158,7 @@
         </form>
     </div>
 </div>
-
 <% } %>
-
-<script>
-    function openOverlay(overlayId) {
-        document.getElementById(overlayId).style.display = 'flex';
-    }
-    function closeOverlay(overlayId) {
-        document.getElementById(overlayId).style.display = 'none';
-    }
-
-    function validatePasswordChangeForm() {
-        const newPassword = document.getElementById('newPassword').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-
-        if (newPassword !== confirmPassword) {
-            document.getElementById('passwordError').style.display = 'block';
-            return false;
-        }
-
-        document.getElementById('passwordError').style.display = 'none';
-        return true;
-    }
-
-    function validateProfileForm() {
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmProfilePassword').value;
-
-        if (password !== confirmPassword) {
-            document.getElementById('profilePasswordError').style.display = 'block';
-            return false;
-        }
-
-        document.getElementById('profilePasswordError').style.display = 'none';
-        return true;
-    }
-</script>
 
 </body>
 </html>
