@@ -7,7 +7,7 @@ import model.Entity.FilmBean;
 import model.Entity.RecensioneBean;
 import sottosistemi.Gestione_Utenti.service.AutenticationService;
 import sottosistemi.Gestione_Utenti.service.ProfileService;
-import sottosistemi.Gestione_Film.service.CatalogoService;
+import sottosistemi.Gestione_Catalogo.service.CatalogoService;
 import sottosistemi.Gestione_Recensioni.service.RecensioniService;
 import utilities.FieldValidator;
 

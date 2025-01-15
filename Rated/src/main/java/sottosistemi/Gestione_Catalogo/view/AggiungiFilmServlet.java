@@ -1,7 +1,8 @@
-package sottosistemi.Gestione_Film.view;
+package sottosistemi.Gestione_Catalogo.view;
+
 
 import model.Entity.UtenteBean;
-import sottosistemi.Gestione_Film.service.CatalogoService;
+import sottosistemi.Gestione_Catalogo.service.CatalogoService;
 
 
 import java.io.IOException;
@@ -16,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-@WebServlet("/filmModify")
+@WebServlet("/addFilm")
 @MultipartConfig(maxFileSize = 16177215)
-public class ModificaFilmServlet extends HttpServlet {
+public class AggiungiFilmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CatalogoService CatalogoService;
 
@@ -39,31 +40,31 @@ public class ModificaFilmServlet extends HttpServlet {
     	UtenteBean user = (UtenteBean) session.getAttribute("user");
     	if(user.getTipoUtente().equals("GESTORE")) {
     		
-    		int idFilm = Integer.parseInt(request.getParameter("idFilm"));
     		int anno = Integer.parseInt(request.getParameter("annoFilm"));
     		String Attori = request.getParameter("attoriFilm");
     		int durata = Integer.parseInt(request.getParameter("durataFilm"));
     		String Generi = request.getParameter("generiFilm");
-    		
     		String Nome = request.getParameter("nomeFilm");
     		String Regista = request.getParameter("registaFilm");
     		String Trama = request.getParameter("tramaFilm");
     		
     		byte[] locandina = null;
-    		Part filePart = request.getPart("LocandinaFilm");
+        	
+        	
+
+       	 	Part filePart = request.getPart("locandinaFilm");
             if (filePart != null && filePart.getSize() > 0) {
                 try (InputStream inputStream = filePart.getInputStream()) {
                     locandina = inputStream.readAllBytes();
                 }
             }
-            
+
     		
-    		CatalogoService.modifyFilm(idFilm, anno, Attori, durata, Generi, locandina, Nome, Regista, Trama);
-    		response.sendRedirect(request.getContextPath() + "/film?idFilm=" + idFilm);
+    		CatalogoService.addFilm(anno, Attori, durata, Generi, locandina, Nome, Regista, Trama);
+    		response.sendRedirect(request.getContextPath() + "/catalogo");
     	}else {
     		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Non hai i permessi per effettuare la seguente operazione");
     	}
     }
 }
-

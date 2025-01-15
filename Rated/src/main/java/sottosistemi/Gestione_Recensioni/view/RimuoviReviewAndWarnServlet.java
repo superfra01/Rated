@@ -1,18 +1,14 @@
 package sottosistemi.Gestione_Recensioni.view;
 
 import model.Entity.UtenteBean;
-import model.Entity.ValutazioneBean;
-import model.Entity.FilmBean;
-import model.Entity.RecensioneBean;
-import sottosistemi.Gestione_Utenti.service.AutenticationService;
+
 import sottosistemi.Gestione_Utenti.service.ModerationService;
-import sottosistemi.Gestione_Film.service.CatalogoService;
+
 import sottosistemi.Gestione_Recensioni.service.RecensioniService;
-import utilities.FieldValidator;
+
 
 import java.io.IOException;
-import java.util.List;
-import java.util.HashMap;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

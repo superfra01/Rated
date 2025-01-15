@@ -1,4 +1,4 @@
-package sottosistemi.Gestione_Film.service;
+package sottosistemi.Gestione_Catalogo.service;
 
 import model.DAO.FilmDAO;
 

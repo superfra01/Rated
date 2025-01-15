@@ -1,9 +1,8 @@
-package sottosistemi.Gestione_Film.view;
-
+package sottosistemi.Gestione_Catalogo.view;
 
 
 import model.Entity.FilmBean;
-import sottosistemi.Gestione_Film.service.CatalogoService;
+import sottosistemi.Gestione_Catalogo.service.CatalogoService;
 
 
 import java.io.IOException;
@@ -16,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/ricerca")
-public class RicercaCatalogoServlet extends HttpServlet {
+@WebServlet("/catalogo")
+public class VisualizzaCatalogoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CatalogoService CatalogoService;
 
@@ -30,7 +29,7 @@ public class RicercaCatalogoServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	HttpSession session = request.getSession(true);
 
-    	List<FilmBean> films = CatalogoService.ricercaFilm(request.getParameter("filmCercato"));
+    	List<FilmBean> films = CatalogoService.getFilms();
     	session.setAttribute("films", films);
     	
         

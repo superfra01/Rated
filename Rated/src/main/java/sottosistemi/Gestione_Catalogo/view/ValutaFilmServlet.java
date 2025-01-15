@@ -1,4 +1,4 @@
-package sottosistemi.Gestione_Film.view;
+package sottosistemi.Gestione_Catalogo.view;
 
 
 

@@ -1,9 +1,9 @@
-package sottosistemi.Gestione_Film.view;
+package sottosistemi.Gestione_Catalogo.view;
 
 
 
 import model.Entity.UtenteBean;
-import sottosistemi.Gestione_Film.service.CatalogoService;
+import sottosistemi.Gestione_Catalogo.service.CatalogoService;
 
 
 import java.io.IOException;

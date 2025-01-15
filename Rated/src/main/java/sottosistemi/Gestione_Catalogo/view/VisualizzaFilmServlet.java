@@ -1,11 +1,11 @@
-package sottosistemi.Gestione_Film.view;
+package sottosistemi.Gestione_Catalogo.view;
 
 
 import model.Entity.FilmBean;
 import model.Entity.RecensioneBean;
 import model.Entity.UtenteBean;
 import model.Entity.ValutazioneBean;
-import sottosistemi.Gestione_Film.service.CatalogoService;
+import sottosistemi.Gestione_Catalogo.service.CatalogoService;
 import sottosistemi.Gestione_Recensioni.service.RecensioniService;
 import sottosistemi.Gestione_Utenti.service.ProfileService;
 
