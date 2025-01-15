@@ -26,8 +26,12 @@ public class ValutazioneDAO {
             throw new RuntimeException("Error initializing DataSource: " + e.getMessage());
         }
     }
+    //test
+    public ValutazioneDAO(DataSource testDataSource) {
+    	dataSource= testDataSource;
+	}
 
-    public void save(ValutazioneBean valutazione) {
+	public void save(ValutazioneBean valutazione) {
         String selectQuery = "SELECT * FROM Valutazione WHERE email = ? AND email_Recensore = ? AND ID_Film = ?";
         String insertQuery = "INSERT INTO Valutazione (Like_Dislike, email, email_Recensore, ID_Film) VALUES (?, ?, ?, ?)";
         String updateQuery = "UPDATE Valutazione SET Like_Dislike = ? WHERE email = ? AND email_Recensore = ? AND ID_Film = ?";

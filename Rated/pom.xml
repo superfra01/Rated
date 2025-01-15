@@ -12,6 +12,13 @@
   </properties>
 
   <dependencies>
+  	<dependency>
+    <groupId>org.apache.commons</groupId>
+	    <artifactId>commons-dbcp2</artifactId>
+	    <version>2.9.0</version>
+	    <scope>test</scope> 
+    <!-- se la usi anche a runtime, rimuovi <scope>test</scope> -->
+	</dependency>
     <!-- JUnit 5 -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>

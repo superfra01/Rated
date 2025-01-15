@@ -26,7 +26,11 @@ public class FilmDAO {
         }
     }
 
-    public void save(FilmBean film) {
+    public FilmDAO(DataSource testDataSource) {
+    	dataSource = testDataSource;
+	}
+
+	public void save(FilmBean film) {
         String query = "INSERT INTO Film (ID_Film, locandina, nome, anno, durata, generi, regista, attori, valutazione, trama) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
