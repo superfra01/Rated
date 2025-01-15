@@ -15,8 +15,8 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private AutenticationService authService;
+    private static final long serialVersionUID = 1L;
+    private AutenticationService authService;
 
     @Override
     public void init() {
@@ -33,19 +33,26 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         UtenteBean utente = authService.login(email, password);
-        if(FieldValidator.validateEmail(email)&&FieldValidator.validatePassword(password))
-        	
-	        if (utente != null) {
-	            HttpSession session = request.getSession(true);
-	            session.setAttribute("user", utente);
-	            response.sendRedirect(request.getContextPath() + "?loginSuccess=true");
-	        } else {
-	        	response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Invalid email or password");
-	        }
-        else {
-        	response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().write("Invalid input. Please check your email and password format.");
+
+        // Validazione dei campi
+        boolean isEmailValid = FieldValidator.validateEmail(email);
+        boolean isPasswordValid = FieldValidator.validatePassword(password);
+
+        if (isEmailValid && isPasswordValid) {
+            if (utente != null) {
+                HttpSession session = request.getSession(true);
+                session.setAttribute("user", utente);
+                response.sendRedirect(request.getContextPath() + "?loginSuccess=true");
+            } else {
+                // Imposta un attributo di errore e inoltra la richiesta alla JSP
+                request.setAttribute("loginError", "Email o password non valide.");
+                request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+            }
+        } else {
+            // Imposta un attributo di errore per input non validi
+            String errorMessage = "Errore di LogIn"; 
+            request.setAttribute("loginError", errorMessage);
+            request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
         }
     }
 }

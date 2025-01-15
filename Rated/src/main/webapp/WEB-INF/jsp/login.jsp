@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="shortcut icon" href="static/images/RATED_icon.png">
-    <link href="static/css/login_register.css" rel="stylesheet">
+    <link href="static/css/loginRegister.css" rel="stylesheet">
     <script src="static/scripts/loginValidation.js"></script>
 </head>
 <body>
     <jsp:include page="header.jsp"/>
-    
+
     <main>
         <div class="login-container">
             <h3>Una ricca community ti aspetta</h3>
@@ -26,6 +26,8 @@
             </form>
             
             <% 
+                // Rimuovi o commenta questa sezione se preferisci usare solo alert
+                /*
                 List<String> errors = (List<String>) request.getAttribute("errors");
                 if (errors != null && !errors.isEmpty()) {
             %>
@@ -36,10 +38,23 @@
                         <% } %>
                     </ul>
                 </div>
-            <% } %>
+            <% } 
+                */
+            %>
             
             <p>Non ti sei ancora registrato? <a href="<%= request.getContextPath() %>/register" class="register-now">Registrati ora!</a></p>
         </div>
     </main>
+
+    <% 
+        String loginError = (String) request.getAttribute("loginError");
+        if (loginError != null) {
+    %>
+        <script type="text/javascript">
+            // Escape delle virgolette per evitare errori JavaScript
+            var errorMessage = "<%= loginError.replace("\"", "\\\"") %>";
+            alert(errorMessage);
+        </script>
+    <% } %>
 </body>
 </html>
