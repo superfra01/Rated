@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="shortcut icon" href="static/images/RATED_icon.png">
-    <link rel="stylesheet" href="static/css/login_register.css">
+    <link rel="stylesheet" href="static/css/loginRegister.css">
     <script src="static/scripts/registerValidation.js" defer></script>
 </head>
 <body>
@@ -39,7 +39,7 @@
                 <span id="errorProfileIcon" aria-live="polite"></span>
                 
                 <!-- Biografia -->
-                <textarea id="bio" name="bio" placeholder="Biografia" rows="4" required></textarea>
+                <textarea id="bio" name="biography" placeholder="Biografia" rows="4" required></textarea>
                 <span id="errorBio" aria-live="polite"></span>
                 <br>
                 

@@ -131,18 +131,22 @@ public class RecensioniService {
     }
     
     public synchronized void deleteRecensione(String email, int ID_Film) {
-        // Elimina la recensione, le valutazioni e i report associati
-        RecensioneDAO.delete(email, ID_Film);
-        ValutazioneDAO.deleteValutazioni(email, ID_Film);
+        // Prima elimina i report associati
         ReportDAO.deleteReports(email, ID_Film);
+
+        // Poi elimina le valutazioni
+        ValutazioneDAO.deleteValutazioni(email, ID_Film);
+
+        // Infine elimina la recensione
+        RecensioneDAO.delete(email, ID_Film);
 
         // Recupera il film e aggiorna la valutazione media
         FilmBean film = FilmDAO.findById(ID_Film);
         List<RecensioneBean> recensioni = RecensioneDAO.findByIdFilm(ID_Film);
 
         if (recensioni.isEmpty()) {
-            // Nessuna recensione rimasta: impostare valutazione a 0
-            film.setValutazione(0);
+            // Nessuna recensione rimasta: impostare valutazione al valore minimo consentito
+            film.setValutazione(1); // Il valore 1 è il minimo consentito dal CHECK constraint
         } else {
             int somma = 0;
             for (RecensioneBean recensionefilm : recensioni) {
@@ -155,6 +159,8 @@ public class RecensioniService {
         // Aggiorna il film con la nuova valutazione
         FilmDAO.update(film);
     }
+
+
 
     
     public void deleteReports(String email, int ID_Film) {

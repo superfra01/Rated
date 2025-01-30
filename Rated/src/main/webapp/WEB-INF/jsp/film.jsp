@@ -133,20 +133,45 @@
                     <%= film.getAnno() %> - <%= film.getGeneri() %>
                 </p>
                 <p class="film-description"><%= film.getTrama() %></p>
-
+				<%
+				    boolean userHasReviewed = false;
+				    if (user != null && "RECENSORE".equals(user.getTipoUtente()) && recensioni != null) {
+				        for (RecensioneBean r : recensioni) {
+				            if (r.getEmail().equals(user.getEmail())) {
+				                userHasReviewed = true;
+				                break;
+				            }
+				        }
+				    }
+				%>
                 <div class="rate-film">
-                    <% if (user != null && "RECENSORE".equals(user.getTipoUtente()) && (user.getNWarning() < 3)) { %>
-                        <button type="button" class="btn-rate" onclick="showReviewForm()">RATE IT</button>
-                    <% } else { %>
-                        <button type="button" class="btn-rate" disabled>RATE IT</button>
-                    <% } %>
-                </div>
+				    <% if (user != null && "RECENSORE".equals(user.getTipoUtente()) && (user.getNWarning() < 3)) { %>
+				        
+				        <% if (userHasReviewed) { %>
+				            <!-- Mostra un pulsante che fa uscire l’alert -->
+				            <button type="button" class="btn-rate" 
+				                    onclick="alert('Hai già recensito questo film!')">
+				                RATE IT
+				            </button>
+				        <% } else { %>
+				            <!-- Mostra un pulsante che apre il form -->
+				            <button type="button" class="btn-rate" id="btnRateFilm" onclick="showReviewForm()">
+				                RATE IT
+				            </button>
+				        <% } %>
+				
+				    <% } else { %>
+				        <button type="button" class="btn-rate" disabled>RATE IT</button>
+				    <% } %>
+				</div>
+
 
                 <% if (user != null && "GESTORE".equals(user.getTipoUtente())) { %>
                     <div class="manage-film">
-                        <button type="button" class="btn-delete" onclick="deleteFilm('<%= film.getIdFilm() %>')">Elimina Film</button>
-                        <button type="button" class="btn-modify" onclick="showModifyForm()">Modifica Informazioni Film</button>
-                    </div>
+					    <button type="button" class="btn-delete" onclick="deleteFilm('<%= film.getIdFilm() %>')">Elimina Film</button>
+					    <button type="button" class="btn-modify" onclick="showModifyForm()">Modifica Informazioni Film</button>
+					</div>
+
                 <% } %>
             </div>
         </div>
@@ -191,7 +216,7 @@
     <div class="overlay-content">
         <span class="close-btn" onclick="hideModifyForm()">&times;</span>
         <h2>Modifica Informazioni Film</h2>
-        <form action="<%= request.getContextPath() %>/filmModify" method="post">
+        <form action="<%= request.getContextPath() %>/filmModify" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="idFilm" value="<%= film.getIdFilm() %>" />
 
                 <label for="nomeFilm">Nome Film:</label>

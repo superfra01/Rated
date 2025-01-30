@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 
 import model.DAO.UtenteDAO;
 import model.Entity.UtenteBean;
+import utilities.PasswordUtility;
 import model.Entity.RecensioneBean;
 
 
@@ -25,11 +26,13 @@ public class ProfileService {
     }
     
     public UtenteBean ProfileUpdate(String username, String email, String password, String biografia, byte[] icon) {
-    	if(UtenteDAO.findByUsername(username)!=null)
+    	
+    	UtenteBean u= UtenteDAO.findByUsername(username);
+    	if(u!=null&& !(u.getEmail().equals(email)))
     		return null;
     	UtenteBean user = UtenteDAO.findByEmail(email);
     	user.setUsername(username);
-    	user.setPassword(password);
+    	user.setPassword(PasswordUtility.hashPassword(password));
     	user.setBiografia(biografia);
     	user.setIcona(icon);
     	UtenteDAO.update(user);
@@ -43,7 +46,7 @@ public class ProfileService {
     	if(user==null)
     		return null;
     	
-    	user.setPassword(password);
+    	user.setPassword(PasswordUtility.hashPassword(password));
     	UtenteDAO.update(user);
     	
     	return user;

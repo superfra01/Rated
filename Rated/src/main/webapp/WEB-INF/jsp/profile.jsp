@@ -45,8 +45,9 @@
                 }
             }
         %>
+        <% if (visitedUser.getTipoUtente().equals("RECENSORE")&&visitedUser.getIcona()!=null) { %>
         <img src="data:image/png;base64,<%= iconaBase64 %>" alt="User Icon" />
-
+		<%} %>
         <div>
             <div class="username"><%= visitedUser.getUsername() %></div>
             <div class="biografia"><%= visitedUser.getBiografia() %></div>
@@ -57,7 +58,9 @@
     <% if (isProfileOwner) { %>
     <div class="buttons-container">
         <button onclick="openOverlay('changePasswordOverlay')">Cambia Password</button>
+        <%if(user.getTipoUtente().equals("RECENSORE")){ %>
         <button onclick="openOverlay('changeProfileOverlay')">Modifica Profilo</button>
+        <%} %>
         <!-- Pulsante di Logout -->
         <form method="get" action="<%= request.getContextPath() %>/logout" style="display: inline;">
             <button type="submit">Logout</button>
@@ -132,7 +135,7 @@
     <div class="modal">
         <button class="close-modal" onclick="closeOverlay('changeProfileOverlay')">&times;</button>
         <h2>Modifica Profilo</h2>
-        <form method="post" action="<%= request.getContextPath() %>/profileModify">
+        <form method="post" action="<%= request.getContextPath() %>/profileModify" enctype="multipart/form-data">
             <input type="hidden" name="operationType" value="ProfileModify" />
 
             <label for="username">Username</label>

@@ -41,6 +41,7 @@ public class RimuoviFilmServlet extends HttpServlet {
     		int idFilm = Integer.parseInt(request.getParameter("idFilm"));
     		
     		CatalogoService.removeFilm(idFilm);
+    		//response.sendRedirect(request.getContextPath() + "/catalogo");
     		response.sendRedirect(request.getContextPath() + "/catalogo");
     		
     	}else {
