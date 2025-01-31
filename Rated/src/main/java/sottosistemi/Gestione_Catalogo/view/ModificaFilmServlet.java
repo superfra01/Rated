@@ -50,7 +50,7 @@ public class ModificaFilmServlet extends HttpServlet {
     		String Trama = request.getParameter("tramaFilm");
     		
     		byte[] locandina = null;
-    		Part filePart = request.getPart("LocandinaFilm");
+    		Part filePart = request.getPart("locandinaFilm");
             if (filePart != null && filePart.getSize() > 0) {
                 try (InputStream inputStream = filePart.getInputStream()) {
                     locandina = inputStream.readAllBytes();

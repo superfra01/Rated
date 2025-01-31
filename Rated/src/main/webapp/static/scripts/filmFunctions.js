@@ -23,7 +23,15 @@ function voteReview(idFilm, emailRecensore, valutazione) {
 }
 
 function showReviewForm() {
+    // Mostra l'overlay
     document.getElementById('reviewOverlay').style.display = 'flex';
+
+    // Disabilita il bottone "RATE IT" dopo il primo click
+    // (se hai messo l'ID "btnRateFilm" nel JSP)
+    const rateButton = document.getElementById('btnRateFilm');
+    if (rateButton) {
+        rateButton.disabled = true;
+    }
 }
 
 function hideReviewForm() {
@@ -52,25 +60,21 @@ function validateReviewForm() {
 
 function deleteFilm(idFilm) {
     if (confirm("Sei sicuro di voler eliminare questo film? Questa azione non può essere annullata.")) {
-        const formData = new URLSearchParams();
-        formData.append("idFilm", idFilm);
+        // Crea un form temporaneo
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'deleteFilm';
 
-        fetch("deleteFilm", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: formData.toString()
-        })
-            .then(response => {
-                if (response.ok) {
-                    window.location.href = "/catalogo";
-                } else {
-                    alert("Errore durante l'eliminazione. Riprova più tardi.");
-                }
-            })
-            .catch(error => {
-                console.error("Errore nella richiesta:", error);
-                alert("Errore durante l'eliminazione. Riprova più tardi.");
-            });
+        // Aggiungi l'input nascosto
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'idFilm';
+        input.value = idFilm;
+        form.appendChild(input);
+
+        // Aggiungi il form al body e sottometti
+        document.body.appendChild(form);
+        form.submit();
     }
 }
 
