@@ -25,6 +25,11 @@ public class ReportDAO {
             throw new RuntimeException("Error initializing DataSource: " + e.getMessage());
         }
     }
+    
+    public ReportDAO(DataSource testDataSource) {
+    	dataSource = testDataSource;
+	}
+
 
     public void save(ReportBean report) {
         String query = "INSERT INTO Report (email, email_Recensore, ID_Film) VALUES (?, ?, ?)";

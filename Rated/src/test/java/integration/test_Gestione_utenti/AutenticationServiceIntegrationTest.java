@@ -3,25 +3,56 @@ package integration.test_Gestione_utenti;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
+import integration.DatabaseSetupForTest;
 import sottosistemi.Gestione_Utenti.service.AutenticationService;
 import model.DAO.UtenteDAO;
 import model.Entity.UtenteBean;
 import utilities.PasswordUtility;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class AutenticationServiceIntegrationTest {
 
+    private static DataSource testDataSource;
     private AutenticationService authService;
     private UtenteDAO utenteDAO;
 
+    // 1. Configurazione del Database (Eseguita una sola volta)
+    @BeforeAll
+    static void beforeAll() {
+    	testDataSource = DatabaseSetupForTest.getH2DataSource();
+    }
+
+    // 2. Setup prima di ogni singolo test
     @BeforeEach
     void setUp() {
-        utenteDAO = new UtenteDAO();
+        // IMPORTANTE: Passiamo il DataSource al DAO, non usiamo il costruttore vuoto!
+        utenteDAO = new UtenteDAO(testDataSource);
         authService = new AutenticationService(utenteDAO);
+        
+        // Pulizia preventiva per assicurare che gli utenti di test non esistano
+        cleanDb("nuovo.utente@example.com");
     }
 
     @AfterEach
     void tearDown() {
-        // pulizia
+        // Pulizia dopo il test
+        cleanDb("nuovo.utente@example.com");
+    }
+
+    // Metodo helper per pulire il DB dai dati di test
+    private void cleanDb(String email) {
+        try (Connection conn = testDataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("DELETE FROM Utente_Registrato WHERE email = ?")) {
+            ps.setString(1, email);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -29,56 +60,68 @@ public class AutenticationServiceIntegrationTest {
         // ESEMPIO “TC07.1”: registrazione con successo
         UtenteBean user = authService.register("NuovoUtente", "nuovo.utente@example.com", 
                                                "passwordSicura123", "Bio di test", null);
+        
         assertNotNull(user, "La registrazione deve restituire un utente non nullo.");
         assertEquals("NuovoUtente", user.getUsername());
-        assertEquals("RECENSORE", user.getTipoUtente(), "Tipo utente di default dev’essere 'RECENSORE' in questo scenario.");
+        assertEquals("RECENSORE", user.getTipoUtente(), "Tipo utente di default dev’essere 'RECENSORE'.");
+        
+        // Verifica extra: l'utente è davvero nel DB?
+        assertNotNull(utenteDAO.findByEmail("nuovo.utente@example.com"));
     }
 
     @Test
     void testRegister_ExistingEmail_ShouldFail() {
-        // ESEMPIO “TC07.2”: Email già registrata
+        // Preparazione: Inserisco manualmente un utente nel DB
         UtenteBean existing = new UtenteBean();
-        existing.setEmail("alice.rossi@example.com");
+        existing.setEmail("nuovo.utente@example.com"); // Uso la stessa email del test sopra per comodità
         existing.setUsername("alice.rossi");
         existing.setPassword(PasswordUtility.hashPassword("alice123"));
         existing.setTipoUtente("RECENSORE");
         utenteDAO.save(existing);
 
-        // Provo a registrare un nuovo utente con la stessa email
-        UtenteBean result = authService.register("NuovoNome", "alice.rossi@example.com", 
+        // Azione: Provo a registrare un NUOVO utente con la STESSA email
+        UtenteBean result = authService.register("AltroNome", "nuovo.utente@example.com", 
                                                  "pass123", "Bio", null);
+        
+        // Verifica
         assertNull(result, "Se l'email è già presente, la registrazione deve fallire (null).");
     }
 
     @Test
     void testLogin_CorrectCredentials_ShouldReturnUser() {
-        // ESEMPIO “TC08.1”: login corretto
+        // Preparazione: Creo l'utente
+        String email = "nuovo.utente@example.com";
+        String pass = "chiara123";
+        
         UtenteBean user = new UtenteBean();
-        user.setEmail("chiara.neri@example.com");
+        user.setEmail(email);
         user.setUsername("chiara.neri");
-        user.setPassword(PasswordUtility.hashPassword("chiara123"));
+        user.setPassword(PasswordUtility.hashPassword(pass)); // Importante: Salvare la password HASHATA
         user.setTipoUtente("RECENSORE");
         utenteDAO.save(user);
 
-        // Prova login
-        UtenteBean loggedUser = authService.login("chiara.neri@example.com", "chiara123");
+        // Azione: Login con password IN CHIARO
+        UtenteBean loggedUser = authService.login(email, pass);
+        
+        // Verifica
         assertNotNull(loggedUser, "Login deve avere successo.");
         assertEquals("chiara.neri", loggedUser.getUsername());
     }
 
     @Test
     void testLogin_WrongPassword_ShouldReturnNull() {
-        // ESEMPIO “TC08.4”: password errata
+        // Preparazione
+        String email = "nuovo.utente@example.com";
         UtenteBean user = new UtenteBean();
-        user.setEmail("alice.rossi@example.com");
+        user.setEmail(email);
         user.setUsername("alice.rossi");
         user.setPassword(PasswordUtility.hashPassword("alice123"));
         utenteDAO.save(user);
 
-        // Prova login con password errata
-        UtenteBean result = authService.login("alice.rossi@example.com", "wrongPass");
+        // Azione: Password sbagliata
+        UtenteBean result = authService.login(email, "wrongPass");
+        
+        // Verifica
         assertNull(result, "Login deve fallire con password sbagliata.");
     }
-
-    
 }

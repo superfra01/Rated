@@ -1,45 +1,67 @@
 package integration.test_Gestione_catalogo;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.*;
 
+import integration.DatabaseSetupForTest;
 import sottosistemi.Gestione_Catalogo.service.CatalogoService;
 import model.DAO.FilmDAO;
 import model.Entity.FilmBean;
 
-
 import javax.sql.DataSource;
 
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class CatalogoServiceIntegrationTest {
 
-    private static DataSource testDataSource; // DataSource condiviso per tutti i test
-
+    private static DataSource testDataSource; 
     private FilmDAO filmDAO;
     private CatalogoService catalogoService;
 
-   
+    // 1. QUESTO MANCAVA: Inizializzazione del DataSource
+    @BeforeAll
+    static void beforeAll() {
+    	testDataSource = DatabaseSetupForTest.getH2DataSource();
+    }
+
+    // 2. Metodo per pulire il DB (Consigliato per evitare errori di ID duplicati)
+    private void cleanDb() {
+        try (Connection conn = testDataSource.getConnection();
+             Statement stmt = conn.createStatement()) {
+            
+            stmt.execute("SET FOREIGN_KEY_CHECKS = 0");
+            // Cancelliamo solo i Film e le tabelle collegate, se necessario
+            // Se cancelli un film, devi assicurarti che non ci siano recensioni collegate
+            stmt.executeUpdate("TRUNCATE TABLE Valutazione");
+            stmt.executeUpdate("TRUNCATE TABLE Report");
+            stmt.executeUpdate("TRUNCATE TABLE Recensione");
+            stmt.executeUpdate("TRUNCATE TABLE Film");
+            stmt.execute("SET FOREIGN_KEY_CHECKS = 1");
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @BeforeEach
     void setUp() {
+        // Pulizia prima di ogni test
+        cleanDb();
         
+        // Ora testDataSource NON è null
         filmDAO = new FilmDAO(testDataSource);
         catalogoService = new CatalogoService(filmDAO);
-
-        
     }
 
-  
     @Test
     void testGetFilms_ReturnsAllFilms() {
         List<FilmBean> films = catalogoService.getFilms();
         assertNotNull(films, "La lista dei film non dovrebbe essere null.");
-        // Se il DB è vuoto, la size potrebbe essere 0. Puoi fare assertTrue(films.isEmpty()) se sai di averlo pulito
     }
 
     @Test
@@ -68,7 +90,8 @@ public class CatalogoServiceIntegrationTest {
         FilmBean film = new FilmBean();
         film.setNome("Inception");
         film.setAnno(2010);
-        filmDAO.save(film);
+        // Assicurati di usare il metodo add/save corretto che hai sistemato prima
+        filmDAO.save(film); // O 'save' se non hai rinominato, ma ricorda il RETURN_GENERATED_KEYS
 
         // Ora cerchiamo
         List<FilmBean> risultati = catalogoService.ricercaFilm("Inception");
@@ -78,8 +101,7 @@ public class CatalogoServiceIntegrationTest {
 
     @Test
     void testRimuoviFilm_ShouldDeleteFromDB() {
-        // Prepariamo un film di test
-    	String nome = "FilmToRemove";
+        String nome = "FilmToRemove";
         int anno = 2022;
         int durata = 120;
         String generi = "Azione";
@@ -88,10 +110,8 @@ public class CatalogoServiceIntegrationTest {
         byte[] locandina = "s".getBytes(); 
         String trama = "Trama di test.";
         
-
         catalogoService.aggiungiFilm(nome, anno, durata, generi, regista, attori, locandina, trama);
 
-        // Recupero dal DB per ottenerne l'ID
         List<FilmBean> all = filmDAO.findAll();
         FilmBean toRemove = all.stream()
                 .filter(f -> "FilmToRemove".equals(f.getNome()))
@@ -99,10 +119,8 @@ public class CatalogoServiceIntegrationTest {
                 .orElse(null);
         assertNotNull(toRemove);
 
-        // Rimuoviamolo via CatalogoService
         catalogoService.rimuoviFilm(toRemove);
 
-        // Verifica che non esista più
         FilmBean check = filmDAO.findById(toRemove.getIdFilm());
         assertNull(check, "Il film dovrebbe essere stato rimosso dal database.");
     }

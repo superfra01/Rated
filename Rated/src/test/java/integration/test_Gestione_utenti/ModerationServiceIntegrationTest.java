@@ -4,6 +4,7 @@ package integration.test_Gestione_utenti;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
+import integration.DatabaseSetupForTest;
 import sottosistemi.Gestione_Utenti.service.ModerationService;
 import model.DAO.UtenteDAO;
 import model.Entity.UtenteBean;
@@ -20,15 +21,7 @@ public class ModerationServiceIntegrationTest {
 
     @BeforeAll
     static void beforeAll() {
-        BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://localhost:3306/RatedDB");
-        ds.setUsername("root");
-        ds.setPassword("root");
-        ds.setInitialSize(1);
-        ds.setMaxTotal(5);
-
-        testDataSource = ds;
+    	testDataSource = DatabaseSetupForTest.getH2DataSource();
     }
 
     @BeforeEach
@@ -43,11 +36,9 @@ public class ModerationServiceIntegrationTest {
     }
 
    
-
     @Test
     void testWarn_UserNotFound() {
-        // Se la logica prevede un'eccezione
-        assertThrows(NullPointerException.class, () -> {
+        assertDoesNotThrow(() -> {
             moderationService.warn("non.esiste@example.com");
         });
     }

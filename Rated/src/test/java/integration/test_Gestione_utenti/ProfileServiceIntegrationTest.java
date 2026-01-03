@@ -4,6 +4,9 @@ package integration.test_Gestione_utenti;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
+import integration.DatabaseSetupForTest;
+import utilities.PasswordUtility;
+
 import sottosistemi.Gestione_Utenti.service.ProfileService;
 import model.DAO.UtenteDAO;
 import model.Entity.UtenteBean;
@@ -17,6 +20,10 @@ import java.util.List;
 
 import model.Entity.RecensioneBean;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class ProfileServiceIntegrationTest {
 
     private static DataSource testDataSource;
@@ -26,15 +33,7 @@ public class ProfileServiceIntegrationTest {
 
     @BeforeAll
     static void beforeAll() {
-        BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://localhost:3306/RatedDB");
-        ds.setUsername("root");
-        ds.setPassword("root");
-        ds.setInitialSize(1);
-        ds.setMaxTotal(5);
-
-        testDataSource = ds;
+    	testDataSource = DatabaseSetupForTest.getH2DataSource();
     }
 
     @BeforeEach
@@ -45,35 +44,69 @@ public class ProfileServiceIntegrationTest {
 
     @AfterEach
     void tearDown() {
-        // pulizia se necessario
-    }
+        // List of all emails used in your tests
+        String[] emailsToDelete = {
+            "test@example.com", 
+            "a@example.com", 
+            "b@example.com", 
+            "pw@example.com", 
+            "mail1@example.com", 
+            "mail2@example.com"
+        };
 
+        try (Connection conn = testDataSource.getConnection()) {
+            // Disable auto-commit for batch performance (optional but good practice)
+            conn.setAutoCommit(false);
+            
+            try (PreparedStatement ps = conn.prepareStatement("DELETE FROM Utente_Registrato WHERE email = ?")) {
+                for (String email : emailsToDelete) {
+                    ps.setString(1, email);
+                    ps.addBatch();
+                }
+                ps.executeBatch();
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
     @Test
     void testProfileUpdate_Success() {
-        // Creo un utente esistente
+        // 1. Creo un utente esistente
         String email = "test@example.com";
         UtenteBean existingUser = new UtenteBean();
         existingUser.setEmail(email);
         existingUser.setUsername("olduser");
-        existingUser.setPassword("oldpass");
+        existingUser.setPassword(PasswordUtility.hashPassword("oldpass")); // Salvo già hashata per coerenza
         existingUser.setBiografia("vecchia bio");
         utenteDAO.save(existingUser);
 
-        // Modifichiamo
+        // 2. Dati per la modifica
         String newUsername = "newUsername";
-        String newPassword = "newPassword";
+        String newPasswordClear = "newPassword"; // Password in chiaro
         String newBio = "New biography";
         byte[] icon = new byte[]{1,2,3};
 
-        UtenteBean updatedUser = profileService.ProfileUpdate(newUsername, email, newPassword, newBio, icon);
+        // 3. Eseguo l'update
+        UtenteBean updatedUser = profileService.ProfileUpdate(newUsername, email, newPasswordClear, newBio, icon);
 
         assertNotNull(updatedUser);
         assertEquals(newUsername, updatedUser.getUsername());
-        assertEquals(newPassword, updatedUser.getPassword());
+        
+        // --- IMPLEMENTAZIONE HASH NEL TEST ---
+        // Calcolo l'hash della password in chiaro per confrontarlo con quello nel DB
+        String expectedHash = PasswordUtility.hashPassword(newPasswordClear);
+        assertEquals(expectedHash, updatedUser.getPassword(), "La password nel DB deve corrispondere all'hash della nuova password");
+        // -------------------------------------
+
         assertEquals(newBio, updatedUser.getBiografia());
         assertArrayEquals(icon, updatedUser.getIcona());
     }
-
+    
     @Test
     void testProfileUpdate_UsernameAlreadyExists() {
         // Creo due utenti
@@ -93,7 +126,6 @@ public class ProfileServiceIntegrationTest {
         UtenteBean result = profileService.ProfileUpdate("UserA", "b@example.com", "passB", "Bio", null);
         assertNull(result, "Se l'username è già in uso, il metodo ritorna null.");
     }
-
     @Test
     void testPasswordUpdate_Success() {
         String email = "pw@example.com";
@@ -103,10 +135,17 @@ public class ProfileServiceIntegrationTest {
         user.setPassword("oldPass");
         utenteDAO.save(user);
 
-        String newPassword = "newPass";
-        UtenteBean updated = profileService.PasswordUpdate(email, newPassword);
+        String newPasswordClear = "newPass";
+        
+        // Eseguo l'update
+        UtenteBean updated = profileService.PasswordUpdate(email, newPasswordClear);
+        
         assertNotNull(updated);
-        assertEquals(newPassword, updated.getPassword());
+        
+        // --- IMPLEMENTAZIONE HASH NEL TEST ---
+        String expectedHash = PasswordUtility.hashPassword(newPasswordClear);
+        assertEquals(expectedHash, updated.getPassword());
+        // -------------------------------------
     }
 
     @Test

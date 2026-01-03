@@ -57,9 +57,8 @@ public class CatalogoService {
     	
     	HashMap<Integer, FilmBean> FilmMap = new HashMap<>();
     	for(RecensioneBean Recensione:recensioni) {
-    		CatalogoService CatalogoService = new CatalogoService();
     		int key = Recensione.getIdFilm();
-    		FilmBean Film = CatalogoService.getFilm(key);
+    		FilmBean Film = this.getFilm(key);
     		FilmMap.put(key, Film);
     	}
         return FilmMap;

@@ -4,38 +4,39 @@ package integration.test_Gestione_recensioni;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
+import integration.DatabaseSetupForTest;
 import sottosistemi.Gestione_Recensioni.service.RecensioniService;
 import model.DAO.RecensioneDAO;
+import model.DAO.ReportDAO;
+import model.DAO.UtenteDAO;
 import model.DAO.FilmDAO;
 import model.DAO.ValutazioneDAO;
 import model.Entity.RecensioneBean;
+import model.Entity.UtenteBean;
 import model.Entity.FilmBean;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import javax.sql.DataSource;
 
 import java.util.List;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.SQLException;
 
 public class RecensioniServiceIntegrationTest {
 
     private static DataSource testDataSource;
 
     private RecensioneDAO recensioneDAO;
+    private UtenteDAO utenteDAO;
+    private ReportDAO reportDAO;
     private FilmDAO filmDAO;
     private ValutazioneDAO valutazioneDAO;
     private RecensioniService recensioniService;
 
     @BeforeAll
     static void beforeAll() {
-        BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://localhost:3306/RatedDB");
-        ds.setUsername("root");
-        ds.setPassword("root");
-        ds.setInitialSize(1);
-        ds.setMaxTotal(5);
-
-        testDataSource = ds;
+    	testDataSource = DatabaseSetupForTest.getH2DataSource();
     }
 
     @BeforeEach
@@ -43,17 +44,44 @@ public class RecensioniServiceIntegrationTest {
         recensioneDAO = new RecensioneDAO(testDataSource);
         filmDAO = new FilmDAO(testDataSource);
         valutazioneDAO = new ValutazioneDAO(testDataSource);
+        utenteDAO = new UtenteDAO(testDataSource);
+        reportDAO = new ReportDAO(testDataSource);
+        recensioniService = new RecensioniService(recensioneDAO, valutazioneDAO, reportDAO, filmDAO);
+        
 
-        recensioniService = new RecensioniService(recensioneDAO, valutazioneDAO, null, filmDAO);
+        try (Connection conn = testDataSource.getConnection();
+                Statement stmt = conn.createStatement()) {
+               
+               // Ordine CRITICO: dai figli ai padri
+               stmt.executeUpdate("DELETE FROM Valutazione");
+               stmt.executeUpdate("DELETE FROM Report");
+               stmt.executeUpdate("DELETE FROM Recensione");
+               
+               // Ora puoi cancellare i padri
+               stmt.executeUpdate("DELETE FROM Film");
+               stmt.executeUpdate("DELETE FROM Utente_Registrato");
+               
+           } catch (SQLException e) {
+               e.printStackTrace();
+           }
     }
 
 
     @Test
     void testAddRecensione_Valid_ShouldCreateAndUpdateFilmRating() {
+    	UtenteBean alice = new UtenteBean();
+        alice.setEmail("alice@example.com");
+        alice.setUsername("Alice");
+        alice.setPassword("password");
+        utenteDAO.save(alice);
+        
         FilmBean film = new FilmBean();
         film.setNome("FilmTest");
         filmDAO.save(film);
-
+        
+        List<FilmBean> lista = (List<FilmBean>) filmDAO.findByName(film.getNome());
+        film = lista.get(0);
+        
         recensioniService.addRecensione("alice@example.com", film.getIdFilm(), "Ottimo film", "Recensione Alice", 5);
 
         RecensioneBean rec = recensioneDAO.findById("alice@example.com", film.getIdFilm());
@@ -67,10 +95,19 @@ public class RecensioniServiceIntegrationTest {
 
     @Test
     void testAddRecensione_Duplicate_ShouldNotCreate() {
+    	UtenteBean bob = new UtenteBean();
+        bob.setEmail("bob@example.com");
+        bob.setUsername("bob");
+        bob.setPassword("password");
+        utenteDAO.save(bob);
+        
         FilmBean film = new FilmBean();
         film.setNome("Film DoubleRec");
         filmDAO.save(film);
-
+        
+        List<FilmBean> lista = (List<FilmBean>) filmDAO.findByName(film.getNome());
+        film = lista.get(0);
+        
         recensioniService.addRecensione("bob@example.com", film.getIdFilm(), "Prima", "Titolo1", 3);
         // Riprovo con la stessa email + stesso film
         recensioniService.addRecensione("bob@example.com", film.getIdFilm(), "Seconda", "Titolo2", 5);
@@ -82,9 +119,25 @@ public class RecensioniServiceIntegrationTest {
 
     @Test
     void testAddValutazione_NewLike_ShouldIncrementNLike() {
+    	UtenteBean y = new UtenteBean();
+    	y.setEmail("y@example.com");
+        y.setUsername("y");
+        y.setPassword("password");
+        utenteDAO.save(y);
+        
+    	UtenteBean x = new UtenteBean();
+    	x.setEmail("x@example.com");
+        x.setUsername("x");
+        x.setPassword("password");
+        utenteDAO.save(x);
+        
+        
         FilmBean film = new FilmBean();
         film.setNome("FilmLikeTest");
         filmDAO.save(film);
+        
+        List<FilmBean> lista = (List<FilmBean>) filmDAO.findByName(film.getNome());
+        film = lista.get(0);
 
         recensioniService.addRecensione("y@example.com", film.getIdFilm(), "Rec di Y", "Titolo Rec Y", 3);
 
@@ -98,9 +151,25 @@ public class RecensioniServiceIntegrationTest {
 
     @Test
     void testDeleteRecensione_ShouldRemoveAndUpdateFilmRating() {
+    	UtenteBean bob = new UtenteBean();
+        bob.setEmail("bob@example.com");
+        bob.setUsername("bob");
+        bob.setPassword("password");
+        utenteDAO.save(bob);
+        
+        UtenteBean alice = new UtenteBean();
+        alice.setEmail("alice@example.com");
+        alice.setUsername("Alice");
+        alice.setPassword("password");
+        utenteDAO.save(alice);
+        
         FilmBean film = new FilmBean();
-        film.setNome("FilmDeleteTest");
+        film.setNome("Film DoubleRec");
         filmDAO.save(film);
+        
+        List<FilmBean> lista = (List<FilmBean>) filmDAO.findByName(film.getNome());
+        film = lista.get(0);
+        
 
         recensioniService.addRecensione("alice@example.com", film.getIdFilm(), "Rec Alice", "Tit1", 4);
         recensioniService.addRecensione("bob@example.com", film.getIdFilm(), "Rec Bob", "Tit2", 2);

@@ -22,6 +22,8 @@ import model.Entity.RecensioneBean;
 import model.Entity.UtenteBean;
 import sottosistemi.Gestione_Utenti.service.ProfileService;
 
+import utilities.PasswordUtility;
+
 
 class ProfileServiceTest {
 
@@ -46,18 +48,19 @@ class ProfileServiceTest {
         profileService = new ProfileService(mockDataSource);
         profileService.UtenteDAO = mockUtenteDAO;
     }
-
     @Test
     void testProfileUpdate_Success() {
         String email = "test@example.com";
         String username = "newUsername";
-        String password = "newPassword";
+        String password = "newPassword"; // Password in chiaro
         String biografia = "New biography";
         byte[] icon = new byte[]{1, 2, 3};
 
         // Simula un utente esistente
         UtenteBean existingUser = new UtenteBean();
         existingUser.setEmail(email);
+        // È importante settare una password vecchia, per essere sicuri che sia cambiata
+        existingUser.setPassword("oldPassword"); 
 
         when(mockUtenteDAO.findByEmail(email)).thenReturn(existingUser);
         when(mockUtenteDAO.findByUsername(username)).thenReturn(null);
@@ -68,13 +71,17 @@ class ProfileServiceTest {
         // Verifica
         assertNotNull(updatedUser);
         assertEquals(username, updatedUser.getUsername());
-        assertEquals(password, updatedUser.getPassword());
+        
+        // --- MODIFICA QUI: Calcoliamo l'hash atteso usando la stessa utility del Service ---
+        String expectedHash = PasswordUtility.hashPassword(password);
+        assertEquals(expectedHash, updatedUser.getPassword()); 
+        
         assertEquals(biografia, updatedUser.getBiografia());
         assertArrayEquals(icon, updatedUser.getIcona());
 
         verify(mockUtenteDAO).update(existingUser);
     }
-
+    
     @Test
     void testProfileUpdate_UsernameAlreadyExists() {
         String email = "test@example.com";
@@ -89,7 +96,6 @@ class ProfileServiceTest {
         // Verifica
         assertNull(result);
     }
-
     @Test
     void testPasswordUpdate_Success() {
         String email = "test@example.com";
@@ -98,6 +104,7 @@ class ProfileServiceTest {
         // Simula un utente esistente
         UtenteBean existingUser = new UtenteBean();
         existingUser.setEmail(email);
+        existingUser.setPassword("oldPassword");
 
         when(mockUtenteDAO.findByEmail(email)).thenReturn(existingUser);
 
@@ -106,7 +113,10 @@ class ProfileServiceTest {
 
         // Verifica
         assertNotNull(updatedUser);
-        assertEquals(newPassword, updatedUser.getPassword());
+        
+        // --- MODIFICA QUI: Anche qui confrontiamo l'hash ---
+        String expectedHash = PasswordUtility.hashPassword(newPassword);
+        assertEquals(expectedHash, updatedUser.getPassword());
 
         verify(mockUtenteDAO).update(existingUser);
     }

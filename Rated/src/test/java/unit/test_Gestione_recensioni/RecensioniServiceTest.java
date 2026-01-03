@@ -129,14 +129,28 @@ class RecensioniServiceTest {
 
     @Test
     void testReport() {
-        String email = "user@example.com";
-        String emailRecensore = "reviewer@example.com";
+        String email = "user@example.com";         // The user reporting the review
+        String emailRecensore = "reviewer@example.com"; // The author of the review
         int idFilm = 1;
 
+        // 1. Mock that the user hasn't reported this review yet (Existing code)
         when(mockReportDAO.findById(email, emailRecensore, idFilm)).thenReturn(null);
 
+        // 2. FIX: Mock the existence of the review being reported
+        // The service needs to fetch the review to increment the report count
+        RecensioneBean recensioneTarget = new RecensioneBean();
+        recensioneTarget.setNReports(0); 
+        
+        // Assuming the Service looks up the review by the author's email and film ID
+        when(mockRecensioneDAO.findById(emailRecensore, idFilm)).thenReturn(recensioneTarget);
+
+        // Action
         recensioniService.report(email, emailRecensore, idFilm);
 
+        // Verify
         verify(mockReportDAO).save(any(ReportBean.class));
+        
+        // Optional: Verify that the review's report count was actually updated in the DB
+        verify(mockRecensioneDAO).update(recensioneTarget); 
     }
 }
